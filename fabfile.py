@@ -25,3 +25,8 @@ def push():
 		result = local("git push origin develop")
 		if result.failed and not confirm("Git add and commit has failed. Continue anyway?"):
 			abort("Aborting by user request")
+
+
+def bootstrap_pombola_server():
+	"Install and configure the required packages on conf/packages file"
+	host  = "unknown"
