@@ -1,0 +1,113 @@
+{% extends 'base.html' %}
+{% load thumbnail %}
+
+{% block title %}Home{% endblock %}
+
+{% block css_headers %}
+  {{ block.super }}
+  <link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}css/libs/responsive-carousel.css" />
+{% endblock %}
+
+{% block extra_js_to_load %}
+    pombola_settings.extra_js.push( 'js/feeds.js' );
+    pombola_settings.extra_js.push( 'js/libs/responsive-carousel.js' );
+{% endblock %}
+
+{% block body_attributes %} class="home" {% endblock %}
+
+{% block breadcrumbs %}
+    {# Hide bread crumbs on the home page. #}
+{% endblock %}
+
+{% block intro_content %}
+    <div id="front_intro">
+        <div class="page-wrapper wrapper ">
+
+            <div class="home-right">
+                <h2 id="home-intro">
+                    We would never want a dull society. We would never want a civil society that only sucks up to the ruling party. South Africa is not a dull society and it should not have a dull Parliament <small> &ndash; Mr M Booi (ANC MP), 11th October 2013</small>
+                </h2>
+            </div>
+
+            <div class="home-left">
+                <h2>Spotlight</h2>
+                <div id="home-carousel" class="carousel">
+                  {% include "spinner/carousel-slides.html" %}
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <div class="home-rep-search">
+        <div class="wrapper">
+            <h2>Find your representatives</h2>
+            <form action="{% url "core_geocoder_search" %}" class="geocoder-search-form">
+                <label for="geocoder-search">Or search by location</label>
+                <input id="geocoder-search" type="text" name="q" value="" placeholder="Enter your location"><button type="submit" class="button">Search</button>
+            </form>
+        </div>
+    </div>
+
+{% endblock %}
+
+{% block content %}
+
+    <div id="news">
+
+      {% for category, articles in news_categories %}
+
+        <div class="home-news">
+            <h2><a href="{% url 'info_blog_category' slug=category.slug %}">{{ category.name }}</a></h2>
+            <ul class="home-news-list">
+            {% for article in articles %}
+            <li>
+                <h3>
+                <a href="{{ article.get_absolute_url }}">{{ article.title }}</a>
+                </h3>
+                <p class="meta">{{ article.publication_date|date }}</p>
+                <p>{{ article.content|truncatewords_html:32 }}</p>
+                <p><a class="readmore" href="{{ article.get_absolute_url }}">More &#187;</a></p>
+            </li>
+            {% endfor %}
+            </ul>
+            <a href="{% url 'info_blog_category' slug=category.slug %}">see all posts</a>
+        </div>
+
+      {% endfor %}
+
+    </div>
+    <div class="col-2">
+
+    {% if settings.POLLDADDY_WIDGET_ID %}
+    <div id="poll">
+        <h2>Survey</h2>
+        <style>
+            .pds-box { width: 100% !important; }
+            #polldaddy { margin-bottom: 30px; width: 304px; float: left; }
+        </style>
+
+        <div id="polldaddy">
+            <!-- <h2>Latest Poll</h2> -->
+            <script type="text/javascript" charset="utf-8" src="http://static.polldaddy.com/w/{{ settings.POLLDADDY_WIDGET_ID }}.js"></script>
+            <noscript><a href="http://polldaddy.com/w.php?p={{ settings.POLLDADDY_WIDGET_ID }}/">Take Our Poll</a></noscript>
+        </div>
+    </div>
+    {% endif %}
+
+    {% if settings.TWITTER_USERNAME and settings.TWITTER_WIDGET_ID %}
+        <div id="twitter">
+            <h2>Twitter</h2>
+
+            <a class="twitter-timeline"
+              data-chrome="nofooter transparent noheader noborders"
+              height="375"
+              href="https://twitter.com/{{ settings.TWITTER_USERNAME }}"
+              data-widget-id="{{ settings.TWITTER_WIDGET_ID }}"
+            >Tweets by @{{ settings.TWITTER_USERNAME }}</a>
+        </div>
+    {% endif %}
+
+    </div>
+
+
+{% endblock %}
