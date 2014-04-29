@@ -185,6 +185,8 @@ if config.get('DEBUG_TOOLBAR', True):
 
 ROOT_URLCONF = 'pombola.urls'
 
+POSTGIS_VERSION = ( 2, 1 )
+
 TEMPLATE_DIRS = (
     # Put strings here, like "/home/html/django_templates" or "C:/www/django/templates".
     # Always use forward slashes, even on Windows.
