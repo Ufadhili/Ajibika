@@ -54,9 +54,19 @@ class SAHomeView(HomeView):
             try:
                 c = Category.objects.get(slug=slug)
                 context['news_categories'].append(
-                    (c, articles.filter(categories=c)[:4]))
+                    (c, articles.filter(categories=c)[:3]))
             except Category.DoesNotExist:
                 pass
+
+        context['other_news_categories'] = []
+        for slug in ('advocacy-campaigns', 'commentary', 'mp-corner'):
+            try:
+                c = Category.objects.get(slug=slug)
+                context['other_news_categories'].append(
+                    (c, articles.filter(categories=c)[:1]))
+            except Category.DoesNotExist:
+                pass
+
         return context
 
 class SAGeocoderView(GeocoderView):
@@ -239,23 +249,30 @@ class SAPlaceDetailSub(PlaceDetailSub):
 
         return context
 
-
 def key_position_sort_last_name(position):
-    """Take a position and return its person's last name
+    """Take a position and return a tuple for sorting it with.
 
     This is intended for use as the key attribute of .sort() or
     sorted() when sorting positions, so that the positions are sorted
-    by the last name of the associated person.  It's possible with the
-    current code for a person to have an empty legal name (although
-    presumably this is an error) in which case return an empty string
-    so that these broken cases are obvious at the beginning of the
-    sort."""
+    by the appropriate name of the associated person. It also needs to sort by
+    the person's id so as to avoid mixing up people with the similar names,
+    and additionally, it puts positions which are membership
+    of a parliament at the top of the group of positions for a single
+    person.
+    """
 
-    if position.person.legal_name:
-        return position.person.legal_name.split()[-1]
-    else:
-        return ''
+    org_kind_slug = position.organisation.kind.slug
+    title_slug = position.title and position.title.slug
+    is_parliamentary = org_kind_slug == 'parliament'
+    is_member = title_slug in ('member', 'delegate')
 
+    return (
+        position.person.sort_name,
+        position.person.id,
+        # False if the position is member or delegate to a parliament
+        # (False sorts to before True)
+        not(is_parliamentary and is_member),
+        )
 
 class SAOrganisationDetailView(OrganisationDetailView):
 
@@ -269,7 +286,8 @@ class SAOrganisationDetailView(OrganisationDetailView):
         # of their holder's last name.
         context['positions'] = sorted(
             context['positions'],
-            key=key_position_sort_last_name)
+            key=key_position_sort_last_name,
+            )
 
         return context
 
@@ -300,62 +318,75 @@ class SAOrganisationDetailView(OrganisationDetailView):
 
 
 class SAOrganisationDetailSub(OrganisationDetailSub):
+    sub_page = None
+
+    def add_sub_page_context(self, context):
+        pass
+
     def get_context_data(self, *args, **kwargs):
         context = super(SAOrganisationDetailSub, self).get_context_data(*args, **kwargs)
 
-        if self.kwargs['sub_page'] == 'people':
-            all_positions = self.object.position_set.all()
-            context['office_filter'] = False
-            context['historic_filter'] = False
-            context['all_filter'] = False
-            context['current_filter'] = False
-
-            if self.request.GET.get('all'):
-                context['all_filter'] = True
-                context['sorted_positions'] = all_positions
-            elif self.request.GET.get('historic') and not self.request.GET.get('office'):
-                context['historic_filter'] = True
-                #FIXME - limited to members and delegates so that current members who are no longer officials are not displayed, but this
-                #means that if a former member was an official this is not shown
-                context['sorted_positions'] = all_positions.filter(Q(title__slug='member') | Q(title__slug='delegate')).currently_inactive()
-            elif self.request.GET.get('historic'):
-                context['historic_filter'] = True
-                context['sorted_positions'] = all_positions.currently_inactive()
-            else:
-                context['current_filter'] = True
-                context['sorted_positions'] = all_positions.currently_active()
-
-            if self.request.GET.get('office'):
-                context['office_filter'] = True
-                context['current_filter'] = False
-                context['sorted_positions'] = context['sorted_positions'].exclude(title__slug='member').exclude(title__slug='delegate')
-
-            if self.object.slug=='ncop':
-                context['membertitle'] = 'delegate'
-            else:
-                context['membertitle'] = 'member'
-
-        if self.kwargs['sub_page'] == 'party':
-            context['party'] = get_object_or_404(models.Organisation,slug=self.kwargs['sub_page_identifier'])
-
-            context['sorted_positions'] = context['all_positions'] = self.object.position_set.filter(person__position__organisation__slug=self.kwargs['sub_page_identifier'])
-
-            if self.request.GET.get('all'):
-                context['sorted_positions'] = context['sorted_positions']
-            elif self.request.GET.get('historic'):
-                context['historic'] = True
-                #FIXME - limited to members and delegates so that current members who are no longer officials are not displayed, but this
-                #means that if a former member was an official this is not shown
-                context['sorted_positions'] = context['sorted_positions'].filter(Q(title__slug='member') | Q(title__slug='delegate')).currently_inactive()
-            else:
-                context['historic'] = True
-                context['sorted_positions'] = context['sorted_positions'].currently_active()
+        self.add_sub_page_context(context)
 
         context['sorted_positions'] = sorted(
                 context['sorted_positions'],
                 key=key_position_sort_last_name)
 
         return context
+
+class SAOrganisationDetailSubParty(SAOrganisationDetailSub):
+    sub_page = 'party'
+
+    def add_sub_page_context(self, context):
+        context['party'] = get_object_or_404(models.Organisation,slug=self.kwargs['sub_page_identifier'])
+
+        context['sorted_positions'] = context['all_positions'] = self.object.position_set.filter(person__position__organisation__slug=self.kwargs['sub_page_identifier'])
+
+        if self.request.GET.get('all'):
+            context['sorted_positions'] = context['sorted_positions']
+        elif self.request.GET.get('historic'):
+            context['historic'] = True
+            #FIXME - limited to members and delegates so that current members who are no longer officials are not displayed, but this
+            #means that if a former member was an official this is not shown
+            context['sorted_positions'] = context['sorted_positions'].filter(Q(title__slug='member') | Q(title__slug='delegate')).currently_inactive()
+        else:
+            context['historic'] = True
+            context['sorted_positions'] = context['sorted_positions'].currently_active()
+
+class SAOrganisationDetailSubPeople(SAOrganisationDetailSub):
+    sub_page = 'people'
+
+    def add_sub_page_context(self, context):
+        all_positions = self.object.position_set.all()
+        context['office_filter'] = False
+        context['historic_filter'] = False
+        context['all_filter'] = False
+        context['current_filter'] = False
+
+        if self.request.GET.get('all'):
+            context['all_filter'] = True
+            context['sorted_positions'] = all_positions
+        elif self.request.GET.get('historic') and not self.request.GET.get('office'):
+            context['historic_filter'] = True
+            #FIXME - limited to members and delegates so that current members who are no longer officials are not displayed, but this
+            #means that if a former member was an official this is not shown
+            context['sorted_positions'] = all_positions.filter(Q(title__slug='member') | Q(title__slug='delegate')).currently_inactive()
+        elif self.request.GET.get('historic'):
+            context['historic_filter'] = True
+            context['sorted_positions'] = all_positions.currently_inactive()
+        else:
+            context['current_filter'] = True
+            context['sorted_positions'] = all_positions.currently_active()
+
+        if self.request.GET.get('office'):
+            context['office_filter'] = True
+            context['current_filter'] = False
+            context['sorted_positions'] = context['sorted_positions'].exclude(title__slug='member').exclude(title__slug='delegate')
+
+        if self.object.slug == 'ncop':
+            context['membertitle'] = 'delegate'
+        else:
+            context['membertitle'] = 'member'
 
 
 class PersonSpeakerMappings(object):
@@ -446,13 +477,22 @@ class SAPersonDetail(PersonDetail):
 
         return tabulated
 
+    def list_contacts(self, kind_slugs):
+        return self.object.contacts.filter(kind__slug__in=kind_slugs).values_list(
+            'value', flat=True)
+
     def get_context_data(self, **kwargs):
         context = super(SAPersonDetail, self).get_context_data(**kwargs)
-        context['twitter_contacts'] = self.object.contacts.filter(kind__slug='twitter')
-        context['email_contacts'] = self.object.contacts.filter(kind__slug='email')
-        context['phone_contacts'] = self.object.contacts.filter(kind__slug__in=('cell', 'voice'))
-        context['fax_contacts'] = self.object.contacts.filter(kind__slug='fax')
-        context['address_contacts'] = self.object.contacts.filter(kind__slug='address')
+        context['twitter_contacts'] = self.list_contacts(('twitter',))
+        # The email attribute of the person might also be duplicated
+        # in a contact of type email, so create a set of email
+        # addresses:
+        context['email_contacts'] = set(self.list_contacts(('email',)))
+        if self.object.email:
+            context['email_contacts'].add(self.object.email)
+        context['phone_contacts'] = self.list_contacts(('cell', 'voice'))
+        context['fax_contacts'] = self.list_contacts(('fax',))
+        context['address_contacts'] = self.list_contacts(('address',))
         context['positions'] = self.object.politician_positions().filter(organisation__slug__in=self.important_organisations)
 
         # FIXME - the titles used here will need to be checked and fixed.

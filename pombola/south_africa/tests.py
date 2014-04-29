@@ -4,7 +4,7 @@ from datetime import date, time
 from StringIO import StringIO
 from urlparse import urlparse
 
-import mock
+from mock import patch
 
 from django.contrib.gis.geos import Polygon, Point
 from django.test import TestCase
@@ -27,9 +27,6 @@ from pombola.south_africa.views import PersonSpeakerMappings
 from instances.models import Instance
 from pombola.interests_register.models import Category, Release, Entry, EntryLineItem
 from pombola.search.tests.views import fake_geocoder
-
-import pombola.search.geocoder
-pombola.search.geocoder.geocoder = mock.Mock(side_effect=fake_geocoder)
 
 from nose.plugins.attrib import attr
 
@@ -185,11 +182,14 @@ class SASearchViewTest(WebTest):
         results_div = response.html.find('div', class_='geocoded_results')
         return results_div.find('ul').findAll('li')
 
-    def test_unknown_place(self):
+    @patch('pombola.search.views.geocoder', side_effect=fake_geocoder)
+    def test_unknown_place(self, mocked_geocoder):
         lis = self.get_search_result_list_items('anywhere')
         self.assertEqual(len(lis), 0)
+        mocked_geocoder.assert_called_once_with(q='anywhere', country='za')
 
-    def test_single_result_place(self):
+    @patch('pombola.search.views.geocoder', side_effect=fake_geocoder)
+    def test_single_result_place(self, mocked_geocoder):
         response = self.app.get(
             "{0}?q={1}".format(self.search_location_url, 'Cape Town'))
         # If there's only a single result (as with Cape Town) we
@@ -197,13 +197,16 @@ class SASearchViewTest(WebTest):
         self.assertEqual(response.status_code, 302)
         path = urlparse(response.location).path
         self.assertEqual(path, '/place/latlon/-33.925,18.424/')
+        mocked_geocoder.assert_called_once_with(q='Cape Town', country='za')
 
-    def test_multiple_result_place(self):
+    @patch('pombola.search.views.geocoder', side_effect=fake_geocoder)
+    def test_multiple_result_place(self, mocked_geocoder):
         lis = self.get_search_result_list_items('Trafford Road')
         self.assertEqual(len(lis), 3)
         self.assertEqual(lis[0].a['href'], '/place/latlon/-29.814,30.839/')
         self.assertEqual(lis[1].a['href'], '/place/latlon/-33.969,18.703/')
         self.assertEqual(lis[2].a['href'], '/place/latlon/-32.982,27.868/')
+        mocked_geocoder.assert_called_once_with(q='Trafford Road', country='za')
 
 
 @attr(country='south_africa')
@@ -421,6 +424,58 @@ class SAOrganisationPartySubPageTest(TestCase):
         self.assertEqual(context1['sorted_positions'][4].person.slug, 'person3')
         self.assertEqual(context2['sorted_positions'][0].person.slug, 'person4')
         self.assertEqual(context2['sorted_positions'][1].person.slug, 'person5')
+
+
+@attr(country='south_africa')
+class SAOrganisationPeopleSubPageTest(TestCase):
+
+    def setUp(self):
+        org_kind_party = models.OrganisationKind.objects.create(name='Party', slug='party')
+        org_kind_parliament = models.OrganisationKind.objects.create(name='Parliament', slug='parliament')
+
+        ncop = models.Organisation.objects.create(name='NCOP', slug='ncop', kind=org_kind_parliament)
+
+        whip = models.PositionTitle.objects.create(name='Whip', slug='whip')
+        delegate = models.PositionTitle.objects.create(name='Delegate', slug='delegate')
+
+        aardvark = models.Person.objects.create(legal_name='Anthony Aardvark', slug='aaardvark')
+        alice = models.Person.objects.create(legal_name='Alice Smith', slug='asmith')
+        bob = models.Person.objects.create(legal_name='Bob Smith', slug='bsmith')
+        charlie = models.Person.objects.create(legal_name='Charlie Bucket', slug='cbucket')
+        zebra = models.Person.objects.create(legal_name='Zoe Zebra', slug='zzebra')
+        anon = models.Person.objects.create(legal_name='', slug='anon')
+
+        self.aardvark_ncop = aardvark_ncop= models.Position.objects.create(person=aardvark, organisation=ncop, title=delegate)
+        self.alice_ncop = alice_ncop = models.Position.objects.create(person=alice, organisation=ncop, title=delegate)
+        self.bob_ncop = bob_ncop = models.Position.objects.create(person=bob, organisation=ncop, title=delegate)
+        self.alice_ncop_whip = alice_ncop_whip = models.Position.objects.create(person=alice, organisation=ncop, title=whip)
+        self.zebra_ncop = zebra_ncop = models.Position.objects.create(person=zebra, organisation=ncop, title=delegate)
+        self.anon_ncop = models.Position.objects.create(person=anon, organisation=ncop, title=delegate)
+
+        self.charlie_ncop = models.Position.objects.create(person=charlie, organisation=ncop, title=None)
+
+    def test_members_with_same_surname(self):
+        context = self.client.get(reverse('organisation_people', kwargs={'slug': 'ncop'})).context
+
+        expected = [
+            x.id for x in
+            (
+                # First any positions of people with blank legal_name
+                self.anon_ncop,
+                # Then alphabetical order by 'surname'
+                self.aardvark_ncop,
+                # This should happen even if the person has a missing title
+                self.charlie_ncop,
+                # Inside alphabetical order, positions for the same person should be grouped
+                # by person with the parliamentary membership first
+                self.alice_ncop, self.alice_ncop_whip,
+                self.bob_ncop,
+                # Surnames beginning with Z should be at the end
+                self.zebra_ncop,
+                )
+            ]
+
+        self.assertEqual([x.id for x in context['sorted_positions']], expected)
 
 
 @attr(country='south_africa')
