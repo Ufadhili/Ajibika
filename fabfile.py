@@ -1,13 +1,15 @@
 from fabric.api import run, local, settings, abort, env, sudo
 from fabric.contrib.console import confirm
-from fabric.operations import prompt
-from cuisine import package_install
+from fabric.operations import prompt, put
+from fabric.colors import red, green, blue, cyan, magenta
+from fabric.utils import puts
+from cuisine import package_install, file_exists
 
 
-env.hosts = ['54.73.196.197']
-# env.hosts = ["ec2-54-228-1-80.eu-west-1.compute.amazonaws.com"]
+env.hosts = ['54.216.238.139']
 env.user = 'ubuntu'
 env.key_filename = '/home/james/Downloads/eumicro.pem'
+web_root = '/var/www/ufadhili/'
 
 def host_type():
     run('uname -s')
@@ -25,13 +27,11 @@ def commit():
 		if commit_files.failed and not confirm("Command git commit has failed. Continue anyway?"):
 			abort("Aborting by user request")
 
-
 def push():
 	with settings(warn_only=True):
 		result = local("git push origin develop")
 		if result.failed and not confirm("Git add and commit has failed. Continue anyway?"):
 			abort("Aborting by user request")
-
 
 def bootstrap_pombola_server():
 	"""
@@ -55,8 +55,6 @@ def update_server():
 	run("sudo aptitude -y safe-upgrade")
 
 def install_postgres_postgis():
-	# run("sudo add-apt-repository ppa:ubuntugis/ubuntugis-unstable")
-	# run("sudo apt-get -y install postgis postgresql-9.3 postgresql-9.3-postgis-2.1")
 	package_install("postgresql postgresql-client postgresql-contrib pgadmin3 postgis postgresql-9.3-postgis-2.1")
 
 def configure_db_template():
@@ -77,12 +75,17 @@ def configure_db_template():
 
 def gdal_setup():
 	package_install("libgdal1-dev python-gdal gdal-bin")
-	# run("wget http://download.osgeo.org/gdal/gdal-1.9.0.tar.gz")
-	# run("tar xvfz gdal-1.9.0.tar.gz")
-	# run("cd gdal-1.9.0")
-	# run("./configure --with-python")
-	# run("make")
-	# run("sudo make install")
+	"""
+	--------Alternatively you can install gdal directly from osgeo----------
+	--------Warning: This takes long to compile ---------------
+
+	run("wget http://download.osgeo.org/gdal/gdal-1.9.0.tar.gz")
+	run("tar xvfz gdal-1.9.0.tar.gz")
+	run("cd gdal-1.9.0")
+	run("./configure --with-python")
+	run("make")
+	run("sudo make install")
+	"""
 
 def install_elasticsearch():
 	package_install("openjdk-7-jre-headless")
@@ -92,3 +95,47 @@ def install_elasticsearch():
 
 def get_the_code():
 	run("git clone https://github.com/mysociety/pombola.git")
+
+def configure_nginx():
+	#Do this for new servers only	
+	run("sudo /etc/init.d/nginx start")	
+	print green("Copying nginx.config virtual host file for ajibika.org to the sites-available directory")
+	with settings(warn_only=True):
+		if not file_exists("/etc/nginx/sites-available/www.ajibika.org"):
+			result = put("conf/www.ajibika.org", "/etc/nginx/sites-available/", use_sudo=True)
+			if result.failed and not confirm("Unable to copy www.ajibika.org to sites-enabled dir. Continue anyway?"):
+				abort("Aborting at user request.")
+	print green("conf/www.ajibika.org has been copied")
+	print red("Removing old nginx configs")	
+	if file_exists("/etc/nginx/sites-enabled/default"):
+		result = run("sudo rm /etc/nginx/sites-enabled/default")
+		if result.failed and not confirm("Unable to Removing old nginx configs. Continue anyway?"):
+			abort("Aborting at user request.")
+	print magenta("Now Symlinking the ajibika virtual host file to sites sites-enabled")
+	if not file_exists("/etc/nginx/sites-enabled/www.ajibika.org"):
+		with settings(warn_only=True):
+			result = run("sudo ln -s /etc/nginx/sites-available/www.ajibika.org /etc/nginx/sites-enabled/www.ajibika.org")
+			if result.failed and not confirm("Unable to symlink the angani \
+			 virtual host file to sites sites-enabled. Continue anyway?"):
+				abort("Aborting at user request.")
+
+	print "sudo reload nginx"
+	run("sudo /etc/init.d/nginx reload")
+
+def configure_gunicorn():
+	print green("We will now daemonize gunicorn")
+	with settings(warn_only=True):
+		if not file_exists("/etc/init/ajibika.conf"):
+			result = put("conf/ajibika.conf", "/etc/init/", use_sudo=True)
+			if result.failed and not confirm("Unable to copy ajibika.conf to /etc/init/. Continue anyway?"):
+				abort("Aborting at user request.")
+			puts(green("Now adding a soft link to upstart for the ajibika.conf job"))
+			#This helps us do service ajibika restart
+			run("sudo ln -s /lib/init/upstart-job /etc/init.d/ajibika")
+		else:
+			print red("Gunicorn has already been daemonized")
+
+def remote_logs():	
+	run("sudo cat /var/www/logs/gunicorn/access.log")
+	run("sudo cat /var/www/logs/nginx/access.log")
+	run("sudo cat  /var/www/logs/nginx/error.log")
