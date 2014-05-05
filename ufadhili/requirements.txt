@@ -1,0 +1,138 @@
+# List all Python package requirements this project has.
+#
+# more details: http://www.pip-installer.org/en/latest/requirements.html
+
+### General useful bits
+py-bcrypt==0.4
+PyYAML==3.10
+Mercurial==2.9
+Pillow==2.3.1
+
+### Database drivers
+psycopg2==2.5.2
+
+### Django related
+Django==1.6.3
+django-pagination==1.0.7
+South==0.8.4
+
+
+### Pombola dependencies
+sorl-thumbnail==11.12
+django_date_extensions==0.1dev
+django-ajax-selects==1.3.3
+django-autocomplete-light==2.0.0a15
+
+Markdown==2.4
+
+# Note that django-markitup (for v2.1 at least) adds a recent jQuery (v2.0.3) to
+# the admin pages, which other code then relies on, for example the
+# django-autocomplete-light. If removing/changing this requirement please ensure
+# that the behaviour is not altered. If you need to reintroduce jQuery manually
+# into the admin then commit c5fdf97df10782c098592e89503fce461840dcda may be
+# useful as a reference.
+django-markitup==2.1
+
+requests==2.2.1
+pyelasticsearch==0.6.1
+django-haystack==2.1.0
+
+# Testing helpers
+django-nose==1.2
+yanc==0.2.4
+httplib2==0.8
+WebTest==2.0.14
+django-webtest==1.7.6
+git+git://github.com/nathforge/django-mechanize.git@d9537ccf8cc66bc7913df0c95fd532699ec88fdc
+selenium==2.40.0
+django-selenium==0.9.6
+
+# Hansard parsing is quite particular
+BeautifulSoup==3.2.1
+beautifulsoup4==4.3.2
+Unidecode==0.04.14
+python-memcached==1.53
+
+# django-mapit
+django-mapit==1.0.3
+
+# SayIt and ZA hansard scrapers - need to be made available to be added as an optional app
+# Note, if the subsequent -e are ever removed, please remove manually from virtualenv/src !
+-e git+git://github.com/mysociety/sayit.git@55a4bba537ada6b822c1b01a904c9452e86de13d#egg=django-sayit
+-e git+git://github.com/mysociety/za-hansard.git@master#egg=za-hansard
+git+git://github.com/mysociety/popit-resolver@abcfc79d787c8ca054560a4911352fed8aa8c40d
+-e git+git://github.com/mysociety/popit-django@a11ef97919f2ae35ef1ef1e2a3f0553ad1ba1e6d#egg=popit-django
+
+# popit-python is needed by the core_send_people_to_popit command
+-e git+git://github.com/mysociety/popit-python.git@88f2c6b3b8c122d4bd4bd4b4edf9afe87df0bd08#egg=popit-python
+
+python-dateutil==2.2
+
+# Packages that are helpful for development:
+coverage==3.7.1
+django-debug-toolbar==1.0.1
+
+## votematch
+django-model-utils==2.0.2
+
+parsedatetime==1.2
+
+pygeocoder==1.2.2
+
+# Dependencies of our dependencies
+Django-Select2==4.2.2
+Shapely==1.3.0
+WebOb==1.3.1
+amqp==1.4.4
+anyjson==0.3.3
+audioread==1.0.1
+billiard==3.3.0.16
+bleach==1.4
+celery==3.1.9
+chardet==2.2.1
+cssselect==0.9.1
+django-bleach==0.2.0
+django-celery==3.1.9
+django-qmethod==0.0.3
+django-subdomain-instances==0.1
+django-tastypie==0.11.0
+html5lib==0.999
+kombu==3.0.13
+lxml==3.3.2
+mechanize==0.2.5
+mimeparse==0.1.3
+mock==1.0.1
+nose==1.3.0
+numpy==1.8.0
+parslepy==0.2.0
+python-magic==0.4.6
+pytz==2013.9
+simplejson==3.3.3
+six==1.5.2
+slumber==0.6.0
+sqlparse==0.1.11
+virtualenv==1.11.4
+waitress==0.8.8
+wsgi-intercept==0.6.1
+wsgiref==0.1.2
+
+# We cannot pin these to specific versions, because they're OS/Python version
+# dependant, and there's no single version which will work for the variety of
+# environments we have to support.
+
+# This is a pain to install, if you're on a recent Debian-based system, you
+# probably want version 1.9.0 or greater and this:
+# http://gis.stackexchange.com/a/74060 might be of use if you have compile
+# errors
+GDAL
+
+# This comes as standard in Python 2.7+ anyway
+# Pinned to 1.1 rather than 1.2.1 to save us having to use --allow-all-external
+argparse==1.1
+
+# Used for keeping an eye on this file.
+pip-tools==0.3.4
+
+# Other things presumably installed as dependencies of stuff above
+distribute==0.7.3
+python-mimeparse==0.1.4
