@@ -11,7 +11,7 @@
 
 PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
 SITE_HOME=/var/www/ufadhili
-NAME=ufadhili
+NAME=ajibika
 DESC="Pombola app server"
 USER=ubuntu
 
