@@ -10,7 +10,7 @@
 ### END INIT INFO
 
 PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
-SITE_HOME=/var/www/ufadhili
+SITE_HOME=/var/www/ufadhili/ufadhili
 NAME=pombola
 DESC="Pombola app server"
 USER=pombola-user
