@@ -131,16 +131,19 @@ def reload_nginx():
 
 def configure_gunicorn():
 	print green("We will now daemonize gunicorn")
-	with settings(warn_only=True):
-		if not file_exists("/etc/init/ajibika.conf"):
-			result = put("conf/ajibika.conf", "/etc/init/", use_sudo=True)
-			if result.failed and not confirm("Unable to copy ajibika.conf to /etc/init/. Continue anyway?"):
-				abort("Aborting at user request.")
-			puts(green("Now adding a soft link to upstart for the ajibika.conf job"))
-			#This helps us do service ajibika restart
-			run("sudo ln -s /lib/init/upstart-job /etc/init.d/ajibika")
-		else:
-			print red("Gunicorn has already been daemonized")
+	print red("Removing old gunicorn configs")	
+	if file_exists("/etc/init/ajibika.conf"):
+		result = run("sudo rm /etc/init/ajibika.conf")
+		if result.failed and not confirm("Unable to remove old gunicorn configs. Continue anyway?"):
+			abort("Aborting at user request.")
+	with settings(warn_only=True):		
+		result = put("conf/ajibika.conf", "/etc/init/", use_sudo=True)
+		if result.failed and not confirm("Unable to copy ajibika.conf to /etc/init/. Continue anyway?"):
+			abort("Aborting at user request.")
+		puts(green("Now adding a soft link to upstart for the ajibika.conf job"))
+		#This helps us do service ajibika restart
+		run("sudo ln -s /lib/init/upstart-job /etc/init.d/ajibika")
+		green("Gunicorn has been daemonized")
 
 def restart_gunicorn():
 	puts(green("Now Restarting Gunicorn"))
