@@ -1,4 +1,4 @@
-from fabric.api import run, local, settings, abort, env, sudo
+from fabric.api import run, local, settings, abort, env, sudo, cd
 from fabric.contrib.console import confirm
 from fabric.operations import prompt, put
 from fabric.colors import red, green, blue, cyan, magenta
@@ -9,7 +9,7 @@ from cuisine import package_install, file_exists
 env.hosts = ['54.73.56.28']
 env.user = 'ubuntu'
 env.key_filename = '/home/james/Downloads/eumicro.pem'
-web_root = '/var/www/ufadhili/'
+WEB_ROOT = '/var/www/ufadhili/'
 
 def host_type():
     run('uname -s')
@@ -163,3 +163,82 @@ def install_local_packages():
 	local("sudo apt-get install build-essential python-pip nginx libgdal1-dev python-gdal gdal-bin")
 	local("sudo apt-get install libxml2-dev libxslt1-dev libjpeg-dev mercurial python-docutils poppler-utils \
 					python-markdown python-yaml python-openid python-beautifulsoup python-dateutil antiword")
+
+
+def deploy():
+	"""
+	---------what to do here -------
+
+	1) add all untracked files to git.
+	2) Commit all files to the develop branch.
+	3) Push changes to remote. 
+	4) Log into the ajibika web server.
+	4) acivate virtualenv
+	4) Pull all changes from remote develop branch
+	5) Collect static files 
+	6) Syncdb and run any migrations. 
+	7) reload gunicorn
+	8) reload nginx.
+
+	"""
+
+	commit()
+	push()
+	checkout_dev_branch()
+	fetch_remote()
+	activate_virtualenv()	
+	sync_database()
+	migrate_database()
+	collect_static()
+	restart_gunicorn()
+	reload_nginx()
+
+
+def activate_virtualenv():	
+	with prefix("source /var/www/ufadhili/pombola-virtualenv/bin/activate"):
+		yield
+
+def checkout_dev_branch():
+	with cd("%sufadhili/" % (WEB_ROOT)):
+		result = run("sudo git checkout develop")
+		if result.failed and not confirm("Unable to change git branch to develop"):
+			abort("Aborting at user request")
+
+def fetch_remote():
+	with cd("%sufadhili/" % (WEB_ROOT)):
+		# result = run("sudo git fetch && git merge origin/develop")
+		result = run("sudo git pull origin develop")
+		if result.failed and not confirm("Unable to fetch remote git branch"):
+			abort("Aborting at user request")
+
+def collect_static():
+	#Collect static files to s3
+	puts(green("Now collecting static files to ../collected_static"))
+	with cd("%sufadhili/" % (WEB_ROOT)):
+		activate_virtualenv()
+		with settings(warn_only=True):
+			result = run("sudo ./manage.py collectstatic --noinput")
+			if result.failed and not confirm("collectstatic failed or cancelled. Continue anyway?"):
+				abort("Aborting at user request.")
+
+def migrate_database():
+	#Run db migrations
+	puts(green("Now running database migrations"))
+	with cd("%sufadhili/" % (WEB_ROOT)):
+		activate_virtualenv()
+		with settings(warn_only=True):
+			result = run("sudo ./manage.py migrate")
+			if result.failed and not confirm("migrations failed or cancelled. Continue anyway?"):
+				abort("Aborting at user request.")
+
+def sync_database():
+	#Syncing the database
+	puts(green("Now syncing the database"))
+	with cd("%sufadhili/" % (WEB_ROOT)):
+		activate_virtualenv()
+		with settings(warn_only=True):
+			result = run("sudo ./manage.py syncdb --noinput")
+			if result.failed and not confirm("syncdb failed or cancelled. Continue anyway?"):
+				abort("Aborting at user request.")
+
+
