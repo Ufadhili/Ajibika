@@ -1,0 +1,57 @@
+# Debian packages that we need.
+
+libapache2-mod-wsgi
+
+# On non-debian systems you'll need to build these using the appropriate tools
+# (eg on Mac consider using Homebrew: http://mxcl.github.com/homebrew/).
+
+
+# Database - we use postgres with the postgis addons
+postgresql
+postgis
+postgresql-9.1-postgis | postgresql-8.4-postgis
+libpq-dev
+
+# For mapit
+libgdal1-1.6.0 | libgdal1-1.5.0 | libgdal1
+python-gdal
+
+# Search (elasticsearch is not in stock debian, note)
+openjdk-7-jre-headless | openjdk-6-jre-headless
+elasticsearch
+
+# Python - the language that the site is written in, and additional tools needed
+# to build the virtualenv - may already be included with your python install
+python-dev
+python-pip
+python-virtualenv
+
+# Various miscellaneous tools - needed for the python libraries to be built.
+libxml2-dev
+libxslt1-dev
+libjpeg-dev
+
+# libjpeg - needed on non-debian. On debian installed as a requirement for others so no need to list seperately
+
+
+############################################################
+# The following can be installed by Python's pip into the virtual environment.
+# If you are not on Debian let pip do the installing for you.
+
+# Some dependencies in requirements.txt are listed as repos, so we need the
+# various repo management tools to fetch them.
+mercurial
+
+# May as well use the Debian maintained versions.
+python-docutils
+python-markdown
+python-yaml
+python-openid
+python-beautifulsoup
+python-dateutil
+
+# For hansard parsing - need pdftohtml
+poppler-utils
+
+# For ZA hansard parsing
+antiword
