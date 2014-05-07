@@ -10,10 +10,10 @@
 ### END INIT INFO
 
 PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
-SITE_HOME=/var/www/ufadhili/ufadhili
-NAME=pombola
+SITE_HOME=/var/www/ufadhili
+NAME=ubuntu
 DESC="Pombola app server"
-USER=pombola-user
+USER=ubuntu
 
 echo $DAEMON
 test -f $DAEMON || exit 0
@@ -21,7 +21,7 @@ test -f $DAEMON || exit 0
 set -e
 
 start_daemon() {
-  cd $SITE_HOME/pombola && $SITE_HOME/pombola-virtualenv/bin/python /usr/bin/gunicorn \
+  cd $SITE_HOME/ufadhili && $SITE_HOME/pombola-virtualenv/bin/python /usr/bin/gunicorn \
      --user=$USER \
      --group=$USER \
      -D \
