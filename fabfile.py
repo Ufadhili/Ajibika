@@ -148,7 +148,7 @@ def configure_gunicorn():
 def restart_gunicorn():
 	puts(green("Now Restarting Gunicorn"))
 	with settings(warn_only=True):
-		result = run("sudo service ajibika restart")
+		result = run("sudo restart ufadhili")
 		if result.failed and not confirm("Failed to start gunicorn. Continue anyway?"):
 			abort("Aborting at user request.")
 
