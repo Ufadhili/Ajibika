@@ -132,17 +132,17 @@ def reload_nginx():
 def configure_gunicorn():
 	print green("We will now daemonize gunicorn")
 	print red("Removing old gunicorn configs")	
-	if file_exists("/etc/init/ajibika.conf"):
-		result = run("sudo rm /etc/init/ajibika.conf")
+	if file_exists("/etc/init/ufadhili.conf"):
+		result = run("sudo rm /etc/init/ufadhili.conf")
 		if result.failed and not confirm("Unable to remove old gunicorn configs. Continue anyway?"):
 			abort("Aborting at user request.")
 	with settings(warn_only=True):		
-		result = put("conf/ajibika.conf", "/etc/init/", use_sudo=True)
-		if result.failed and not confirm("Unable to copy ajibika.conf to /etc/init/. Continue anyway?"):
+		result = put("conf/ufadhili.conf", "/etc/init/", use_sudo=True)
+		if result.failed and not confirm("Unable to copy ufadhili.conf to /etc/init/. Continue anyway?"):
 			abort("Aborting at user request.")
-		puts(green("Now adding a soft link to upstart for the ajibika.conf job"))
-		#This helps us do service ajibika restart
-		run("sudo ln -s /lib/init/upstart-job /etc/init.d/ajibika")
+		puts(green("Now adding a soft link to upstart for the ufadhili.conf job"))
+		#This helps us do service ufadhili restart
+		run("sudo ln -s /lib/init/upstart-job /etc/init.d/ufadhili")
 		green("Gunicorn has been daemonized")
 
 def restart_gunicorn():
@@ -154,8 +154,8 @@ def restart_gunicorn():
 
 def remote_logs():	
 	run("sudo cat /var/www/logs/gunicorn/access.log")
-	run("sudo cat /var/www/logs/nginx/access.log")
-	run("sudo cat  /var/www/logs/nginx/error.log")
+	# run("sudo cat /var/www/logs/nginx/access.log")
+	# run("sudo cat  /var/www/logs/nginx/error.log")
 
 def update_server():
 	run("sudo aptitude update")
