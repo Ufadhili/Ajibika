@@ -235,7 +235,7 @@ def migrate_database():
 				abort("Aborting at user request.")
 
 def sync_database():
-	#Syncing the database
+	#Syncing the database.... so much trouble
 	puts(green("Now syncing the database"))
 	with cd("%sufadhili/" % (WEB_ROOT)):
 		activate_virtualenv()
