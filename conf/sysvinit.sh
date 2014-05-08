@@ -21,7 +21,7 @@ test -f $DAEMON || exit 0
 set -e
 
 start_daemon() {
-  cd $SITE_HOME/ufadhili && $SITE_HOME/pombola-virtualenv/bin/python /usr/bin/gunicorn \
+  cd $SITE_HOME/ufadhili && $SITE_HOME/pombola-virtualenv/bin/python /usr/local/bin/gunicorn \
      --user=$USER \
      --group=$USER \
      -D \
