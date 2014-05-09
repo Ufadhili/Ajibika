@@ -91,8 +91,10 @@ urlpatterns += patterns('',
     (r'^search/', include('pombola.search.urls')),
 )
 
-#Ufadhili
-
+#Ufadhili app
+urlpatterns += patterns('',
+    (r'^ufadhili/', include('pombola.ufadhili.urls')),
+    )
 
 
 # feedback
