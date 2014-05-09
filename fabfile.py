@@ -203,7 +203,7 @@ def activate_virtualenv():
 
 def checkout_dev_branch():
 	with cd("%sufadhili/" % (WEB_ROOT)):
-		result = run("sudo git checkout develop")
+		result = run("sudo git checkout develop && sudo git stash")
 		if result.failed and not confirm("Unable to change git branch to develop"):
 			abort("Aborting at user request")
 
