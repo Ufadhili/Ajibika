@@ -354,6 +354,8 @@ INSTALLED_APPS = (
     'django.contrib.humanize',
     'django.contrib.gis',
 
+
+    'bootstrap_admin',
     'pombola.admin_additions',
     'django.contrib.admin',
     'django.contrib.admindocs',
