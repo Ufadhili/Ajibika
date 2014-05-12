@@ -11,17 +11,17 @@
 
 
 <li><a href="{% url "home" %}">Home</a></li>
-<li><a href="{% url "info_page" slug='democracy-resources' %}">Democracy Resources</a>
+<li><a href="{% url "info_page" slug='democracy-resources' %}">County Resources</a>
     {% if include_sub_menu_entries %}
     <ul id="democracy-resources">
         <li>
             <a href="{% url "info_page" slug='citizens-rights' %}">Citizens Rights &amp; Responsibilities</a>
         </li>
         <li>
-            <a href="{% url "info_page" slug='how-democracy-works' %}">How Our Democracy Works</a>
+            <a href="{% url "info_page" slug='how-democracy-works' %}">How Our County Works</a>
         </li>
         <li>
-            <a href="{% url "info_page" slug='democracy-faq' %}">Democracy FAQs</a>
+            <a href="{% url "info_page" slug='democracy-faq' %}">County FAQs</a>
         </li>
         <li>
             <a href="{% url "info_page" slug='constitution-2010' %}">Constitution 2010</a>

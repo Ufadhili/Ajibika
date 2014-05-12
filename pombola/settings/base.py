@@ -313,6 +313,7 @@ DISQUS_USE_IDENTIFIERS = config.get( 'DISQUS_USE_IDENTIFIERS', True )
 # to be changed without having to alter the settings or HTML. If left blank
 # then no poll will be shown.
 POLLDADDY_WIDGET_ID = config.get( 'POLLDADDY_WIDGET_ID', None );
+POLLDADDY_WIDGET_ID = None
 
 
 # RSS feed to the blog related to this site. If present will cause the 'Latest
