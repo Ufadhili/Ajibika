@@ -13,7 +13,6 @@ from django.core.urlresolvers import reverse
 
 from django.db.models import Q
 from django.db import transaction
-from django.db.models.signals import post_init
 
 from django.utils.dateformat import DateFormat
 
@@ -57,10 +56,6 @@ class ModelBase(models.Model):
             args=[self.id]
         )
         return url
-
-    def get_popolo_id(self, id_scheme):
-        table_name = self._meta.db_table
-        return '{0}/{1}/{2}'.format(id_scheme, table_name, self.id)
 
     @property
     def show_active(self):
@@ -275,32 +270,18 @@ class Person(ModelBase, HasImageMixin, ScorecardMixin, IdentifierMixin):
     title = models.CharField(max_length=100, blank=True)
     legal_name = models.CharField(max_length=300)
     slug = models.SlugField(max_length=200, unique=True, help_text="auto-created from first name and last name")
-    gender = models.CharField(max_length=20, help_text="this is typically, but not restricted to, 'male' or 'female'")
+    gender = models.CharField(max_length=1, choices=(('m','Male'),('f','Female')) )
     date_of_birth = ApproximateDateField(blank=True, help_text=date_help_text)
     date_of_death = ApproximateDateField(blank=True, help_text=date_help_text)
     # religion
     # tribe
     summary = MarkupField(blank=True, default='')
 
-    # The "primary" email address in some sense - there may be others
-    # (or this one) in contacts.
-    email = models.EmailField(blank=True)
-
     contacts = generic.GenericRelation(Contact)
     images = generic.GenericRelation(Image)
     objects = PersonManager()
 
     can_be_featured = models.BooleanField(default=False, help_text="can this person be featured on the home page (e.g., is their data appropriate and extant)?")
-
-    # Additional fields added largely for Popolo spec compliance:
-    biography = MarkupField(blank=True, default='')
-    national_identity = models.CharField(max_length=100, blank=True)
-    family_name = models.CharField(max_length=300, blank=True)
-    given_name = models.CharField(max_length=300, blank=True)
-    additional_name = models.CharField(max_length=300, blank=True)
-    honorific_prefix = models.CharField(max_length=300, blank=True)
-    honorific_suffix = models.CharField(max_length=300, blank=True)
-    sort_name = models.CharField(max_length=300, blank=True)
 
     @property
     def name(self):
@@ -325,7 +306,7 @@ class Person(ModelBase, HasImageMixin, ScorecardMixin, IdentifierMixin):
         return result
 
     @transaction.commit_on_success
-    def add_alternative_name(self, alternative_name, name_to_use=False, note=''):
+    def add_alternative_name(self, alternative_name, name_to_use=False):
         if name_to_use:
             # Make sure that no other alternative names are set as
             # the name to use:
@@ -334,8 +315,7 @@ class Person(ModelBase, HasImageMixin, ScorecardMixin, IdentifierMixin):
                 an.save()
         alternative_name = re.sub(r'\s+', ' ', alternative_name).strip()
         AlternativePersonName.objects.update_or_create({'person': self,
-                                                        'alternative_name': alternative_name,
-                                                        'note': note},
+                                                        'alternative_name': alternative_name},
                                                        {'name_to_use': name_to_use})
         apn = AlternativePersonName(person=self,
                                     alternative_name=alternative_name,
@@ -475,37 +455,15 @@ class Person(ModelBase, HasImageMixin, ScorecardMixin, IdentifierMixin):
        ordering = ["slug"]
 
 
-def update_sort_name(**kwargs):
-    """A signal handler function to set a default sort_name"""
-    person = kwargs.get('instance')
-    if person.legal_name and not person.sort_name:
-        person.sort_name = person.legal_name.strip().split()[-1]
-
-post_init.connect(update_sort_name, Person)
-
-
 class AlternativePersonName(ModelBase):
     person = models.ForeignKey(Person, related_name='alternative_names')
     alternative_name = models.CharField(max_length=300)
     name_to_use = models.BooleanField(default=False)
 
-    start_date = ApproximateDateField(blank=True, help_text=date_help_text)
-    end_date = ApproximateDateField(blank=True, help_text=date_help_text)
-    note = models.CharField(max_length=300)
-
-    family_name = models.CharField(max_length=300, blank=True)
-    given_name = models.CharField(max_length=300, blank=True)
-    additional_name = models.CharField(max_length=300, blank=True)
-    honorific_prefix = models.CharField(max_length=300, blank=True)
-    honorific_suffix = models.CharField(max_length=300, blank=True)
-
     objects = ManagerBase()
 
     def __unicode__(self):
         return self.alternative_name + (" [*]" if self.name_to_use else "")
-
-    def get_admin_url(self):
-        return False
 
     class Meta:
         unique_together = ("person", "alternative_name")
@@ -700,7 +658,7 @@ class Place(ModelBase, ScorecardMixin):
                                reverse=True)
         # Order the people by last name:
         return sorted(result_dict.items(),
-                      key=lambda t: t[0].sort_name)
+                      key=lambda t: t[0].legal_name.split()[-1])
 
     def related_people_child_places(self, positions_filter=significant_positions_filter):
         """Find significant people associated with child places"""
@@ -817,12 +775,6 @@ class Place(ModelBase, ScorecardMixin):
                                'Future': 'will be in'}}
 
         result = {}
-
-        # Occasionally a place will not have a MapIt area associated
-        # with it; in these cases we can't find which boundaries it
-        # overlaps with, so just return an empty dictionary.
-        if self.mapit_area is None:
-            return result
 
         for key, session in (('previous', previous_session),
                              ('next', next_session)):
