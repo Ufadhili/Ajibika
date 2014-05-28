@@ -8,12 +8,14 @@ from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 
 #----------------------code for Ajibika API-------------------------------
 from tastypie.api import Api
-from pombola.ajibika.api import PlaceResource, PersonResource, PositionResource
+from pombola.ajibika.api import PlaceResource, PersonResource, PositionResource, CountyResource, PlaceKindResource
 
 api = Api(api_name='v1')
 api.register(PlaceResource())
 api.register(PersonResource())
 api.register(PositionResource())
+api.register(CountyResource())
+api.register(PlaceKindResource())
 #------------------------------------------------------
 
 urlpatterns = []
