@@ -8,7 +8,7 @@ from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 
 #----------------------code for Ajibika API-------------------------------
 from tastypie.api import Api
-from pombola.ajibika.api.resources import PlaceResource, PersonResource, PositionResource, CountyResource, PlaceKindResource
+from .ajibika.api.resources import PlaceResource, PersonResource, PositionResource, CountyResource, PlaceKindResource
 
 api = Api(api_name='v1')
 api.register(PlaceResource())
