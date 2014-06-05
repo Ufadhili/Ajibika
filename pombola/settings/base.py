@@ -180,8 +180,8 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.messages.middleware.MessageMiddleware',
     'pagination.middleware.PaginationMiddleware',
 )
-if config.get('DEBUG_TOOLBAR', True):
-    MIDDLEWARE_CLASSES += ( 'debug_toolbar.middleware.DebugToolbarMiddleware', )
+# if config.get('DEBUG_TOOLBAR', True):
+#     MIDDLEWARE_CLASSES += ( 'debug_toolbar.middleware.DebugToolbarMiddleware', )
 
 ROOT_URLCONF = 'pombola.urls'
 
