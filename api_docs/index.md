@@ -11,7 +11,7 @@ Version = v1
 -------
 
 
-This you can do for now
+Things you can do for now
 
 
   - List all counties
