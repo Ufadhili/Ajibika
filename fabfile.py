@@ -6,7 +6,7 @@ from fabric.utils import puts
 from cuisine import package_install, file_exists
 
 
-env.hosts = ['54.73.56.28']
+env.hosts = ['54.247.108.178']
 env.user = 'ubuntu'
 env.key_filename = '/home/james/Downloads/eumicro.pem'
 WEB_ROOT = '/var/www/ufadhili/'
@@ -89,9 +89,16 @@ def gdal_setup():
 
 def install_elasticsearch():
 	package_install("openjdk-7-jre-headless")
-	run("wget https://download.elasticsearch.org/elasticsearch/elasticsearch/elasticsearch-1.1.1.deb")
-	run("sudo dpkg -i elasticsearch-1.1.1.deb")
+	run("wget https://download.elasticsearch.org/elasticsearch/elasticsearch/elasticsearch-1.2.1.deb")
+	run("sudo dpkg -i elasticsearch-1.2.1.deb")
 	run("sudo service elasticsearch start")
+
+def restart_elasticsearch():
+	puts(green("Restarting elasticsearch"))
+	with(settings(warn_only=True)):
+		result = run("sudo /etc/init.d/elasticsearch restart")
+		if result.failed and not confirm("There was a problem restarting elasticsearch. Continue anyway?"):
+			abort("Aborting at your request")
 
 def get_the_code():
 	run("git clone https://github.com/mysociety/pombola.git")

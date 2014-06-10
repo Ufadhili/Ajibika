@@ -273,6 +273,17 @@ HAYSTACK_CONNECTIONS = {
 
 HAYSTACK_SIGNAL_PROCESSOR = 'haystack.signals.RealtimeSignalProcessor'
 
+
+
+# Moving to whoosh because of port 9200 nightmare
+
+HAYSTACK_CONNECTIONS = {
+    'default': {
+        'ENGINE': 'haystack.backends.whoosh_backend.WhooshEngine',
+        'PATH': os.path.join(root_dir, 'whoosh_index'),
+    },
+}
+
 # Admin autocomplete
 AJAX_LOOKUP_CHANNELS = {
     'person_name'       : dict(model='core.person',        search_field='legal_name'),
