@@ -21,23 +21,24 @@ from pombola.info.models import InfoPage
 
 class HomeView(TemplateView):
 
-    template_name = 'home.html'
+    template_name = 'ajibika/index.html'
 
     def get_context_data(self, **kwargs):
 
         context = super(HomeView, self).get_context_data(**kwargs)
 
-        before, after = (self.request.GET.get(k) for k in ('before', 'after'))
-        current_slug = before or after
+        # before, after = (self.request.GET.get(k) for k in ('before', 'after'))
+        # current_slug = before or after
 
-        context['featured_person'] = \
-            models.Person.objects.get_next_featured(current_slug,
-                                                    want_previous=before)
+        # context['featured_person'] = \
+        #     models.Person.objects.get_next_featured(current_slug,
+        #                                             want_previous=before)
 
         # For the election homepage produce a list of all the featured people.
         # Shuffle it each time to avoid any bias.
-        context['featured_persons'] = list(models.Person.objects.get_featured())
-        random.shuffle(context['featured_persons'])
+        # context['featured_persons'] = list(models.Person.objects.get_featured())
+        context['counties'] = models.Place.objects.filter(kind__slug='county')
+        # random.shuffle(context['featured_persons'])
 
         return context
 
