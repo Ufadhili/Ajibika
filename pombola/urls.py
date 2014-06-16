@@ -5,6 +5,19 @@ from django.conf.urls import patterns, include, url
 from django.conf.urls.static import static
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 
+
+#----------------------code for Ajibika API-------------------------------
+from tastypie.api import Api
+from .ajibika.api.resources import PlaceResource, PersonResource, PositionResource, CountyResource, PlaceKindResource
+
+api = Api(api_name='v1')
+api.register(PlaceResource())
+api.register(PersonResource())
+api.register(PositionResource())
+api.register(CountyResource())
+api.register(PlaceKindResource())
+#------------------------------------------------------
+
 urlpatterns = []
 
 
@@ -91,9 +104,9 @@ urlpatterns += patterns('',
     (r'^search/', include('pombola.search.urls')),
 )
 
-#Ufadhili app
+#the Ajibika API endpoint
 urlpatterns += patterns('',
-    (r'^ufadhili/', include('pombola.ufadhili.urls')),
+    (r'^api/', include(api.urls)),
     )
 
 

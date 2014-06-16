@@ -164,8 +164,8 @@ class PersonAdmin(admin.ModelAdmin):
         ContactInlineAdmin,
         InformationSourceInlineAdmin,
         ImageAdminInline,
-        ScorecardInlineAdmin,
-        IdentifierInlineAdmin,
+        # ScorecardInlineAdmin,
+        # IdentifierInlineAdmin,
         ]
     list_display = ['slug', 'name', 'date_of_birth']
     list_filter = ['can_be_featured']

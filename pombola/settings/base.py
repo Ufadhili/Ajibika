@@ -180,8 +180,8 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.messages.middleware.MessageMiddleware',
     'pagination.middleware.PaginationMiddleware',
 )
-if config.get('DEBUG_TOOLBAR', True):
-    MIDDLEWARE_CLASSES += ( 'debug_toolbar.middleware.DebugToolbarMiddleware', )
+# if config.get('DEBUG_TOOLBAR', True):
+#     MIDDLEWARE_CLASSES += ( 'debug_toolbar.middleware.DebugToolbarMiddleware', )
 
 ROOT_URLCONF = 'pombola.urls'
 
@@ -262,16 +262,27 @@ PAGINATION_DEFAULT_ORPHANS         = 2
 PAGINATION_INVALID_PAGE_RAISES_404 = True
 
 # haystack config - interface to search engine
-HAYSTACK_CONNECTIONS = {
-    'default': {
-        'ENGINE': 'haystack.backends.elasticsearch_backend.ElasticsearchSearchEngine',
-        'URL': 'http://127.0.0.1:9200/',
-        'INDEX_NAME': config.get('POMBOLA_DB_NAME'),
-        'EXCLUDED_INDEXES': [],
-    },
-}
+# HAYSTACK_CONNECTIONS = {
+#     'default': {
+#         'ENGINE': 'haystack.backends.elasticsearch_backend.ElasticsearchSearchEngine',
+#         'URL': 'http://127.0.0.1:9200/',
+#         'INDEX_NAME': config.get('POMBOLA_DB_NAME'),
+#         'EXCLUDED_INDEXES': [],
+#     },
+# }
 
 HAYSTACK_SIGNAL_PROCESSOR = 'haystack.signals.RealtimeSignalProcessor'
+
+
+
+# Moving to whoosh because of port 9200 nightmare
+
+HAYSTACK_CONNECTIONS = {
+    'default': {
+        'ENGINE': 'haystack.backends.whoosh_backend.WhooshEngine',
+        'PATH': os.path.join(root_dir, 'whoosh_index'),
+    },
+}
 
 # Admin autocomplete
 AJAX_LOOKUP_CHANNELS = {
@@ -382,6 +393,7 @@ INSTALLED_APPS = (
     'pombola.search',
     'pombola.file_archive',
     'pombola.map',
+    'pombola.ajibika',
 
     'django_nose',
 )
