@@ -73,7 +73,7 @@
 								<div class="col-md-3"></div>
 								<div class="col-md-4">									
 										<select id="select-county" class="form-control">
-										  <option>-- Choose one -- </option>
+										  <option value="">-- Select County -- </option>
                       {% for county in counties %}
 										  <option value="{{county.get_absolute_url}}">{{county.name}}</option>
                       {% endfor %}
@@ -123,7 +123,7 @@
       enterBtn.click(function(){
         value = selectCounty.val()
         console.log(value);
-        window.location.href = value;
+        value = "" ? alert("Please select a County"): window.location.href = value;
       });
     })
     </script>
