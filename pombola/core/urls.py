@@ -52,7 +52,7 @@ place_patterns = patterns('pombola.core.views',
     url( r'^is/(?P<slug>[-\w]+)/(?P<session_slug>[-\w]+)/?', PlaceKindList.as_view(), name='place_kind'     ),
 
     url(r'^(?P<slug>[-\w]+)/$',
-        PlaceDetailView.as_view(),
+        PlaceDetailView.as_view(template_name = 'ajibika/county_detail.html'),
         name='place'),
 
     # redirect .../candidates to .../aspirants so that the URL wording matches

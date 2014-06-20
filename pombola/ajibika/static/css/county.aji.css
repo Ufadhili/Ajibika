@@ -4,6 +4,9 @@ html {
   position: relative;
   min-height: 100%;
 }
+body {
+	padding-top: 0px;
+}
 
 body {
   /* Margin bottom by footer height */
@@ -11,17 +14,23 @@ body {
   background-color:#e5e5e5;
 }
 
-.landing-page{
-	background:url(../img/slider/home.jpg) center center;
+.county-slider-wrap{
+	background:url(../img/county/machakos.jpg) center center;
+	min-height:400px;
+	margin-top:-20px;
 }
-
+.county-body{
+	background:url(../img/county/bg.jpg) repeat;
+	margin:0;
+}
 .footer {
   position: absolute;
   bottom: 0;
   width: 100%;
   /* Set the fixed height of the footer here */
   height: 60px;
-  background-color: #f5f5f5;
+  border-top:1px solid #ccc;
+  border-bottom:1px solid #ccc;
 }
 
 
@@ -208,4 +217,119 @@ body {
 	-webkit-border-radius: 5px;
 	-moz-border-radius: 5px;
 	border-radius: 5px;
+}
+.county-active{
+	margin-top:10px;
+	padding: 5px 10px;
+	font-size: 16px !important;
+	background:#ccc;
+	-webkit-border-radius: 3px;
+	-moz-border-radius: 3px;
+	border-radius: 3px;
+}
+.county-active:hover{
+	margin-top:10px;
+	padding: 5px 10px ;
+	font-size: 16px !important;
+	background:#ccc;
+	-webkit-border-radius: 3px;
+	-moz-border-radius: 3px;
+	border-radius: 3px;
+}
+.navbar-nav>li>a {
+	padding-top: 22px;
+	padding-bottom: 22px;
+	font-size: 16px;
+}
+.county-menu-wrap{
+	margin:67px 0 0 0;
+}
+.navbar-brand{
+	z-index: 1000;
+}
+.navbar-static-top {
+	z-index: 10;
+	border-width: 0 0 1px;
+}
+.county-slider-wrap{
+	color:#fff;
+}
+.county-slider-wrap p, .county-slider-wrap a{
+	color:#fff;
+}
+.call-to-action{
+	
+}
+
+.call-to-action p{
+	font-size:2em;
+	font-weight:100;
+}
+.btn-ajibika{
+	color: #fff;
+	background-color: #660000;
+	border: #971c1f 2px solid;
+}
+.btn-ajibika:focus, .btn-ajibika:hover{
+	background-color: #971c1f;
+	color: #fff;
+	border: #660000 3px solid;
+}
+.county-slider-wrap{
+	padding:100px 0;
+}
+.county-news{
+	padding:20px; 0;
+	border-bottom:1px solid #ccc;
+}
+.nomargin{
+	margin:0;
+}
+.color-aji{
+	color:#37b34a;
+}
+a{
+	color:#971c1f;
+}
+a:focus, a:hover{
+	color:#660000;
+}
+.bg-white-aji{
+	background:#fff;
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	border-radius: 5px;
+	padding:15px;
+}
+.listnone{
+	list-style-type: none;
+}
+.nopadding{
+	padding:0;
+}
+.large-date{
+	font-size:1.4em;
+	font-weight:100;
+	color:#666666;
+}
+.county-resources, .county-resources p, .county-resources a{
+	color:#666;
+}
+.county-resources a:focus, .county-resources a:hover{
+	color:#000;
+}
+.cont-body{
+	padding:20px 0;
+}
+.cont-body p{
+	font-size:15px;
+}
+.small-month{
+	font-size:15px;
+}
+.cont-body ul>li{
+	padding:10px 0;
+}
+.county-resources{
+	padding:30px 0;
 }
