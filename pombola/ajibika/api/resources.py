@@ -70,7 +70,8 @@ class CountyResource(ModelResource):
 		bundle.data["county_people_uri"] = "%speople/" %(bundle.data["resource_uri"])
 		bundle.data["county_projects_uri"] = "%sprojects/" %(bundle.data["resource_uri"])
 		bundle.data["county_news_uri"] = "%snews/" %(bundle.data["resource_uri"])
-
+		bundle.data["county_positions_uri"] = "%spositions/" %(bundle.data["resource_uri"])
+		bundle.data["county_organisations_uri"] = "%sorganisations/" %(bundle.data["resource_uri"])
 		return bundle
 
 	def prepend_urls(self):
@@ -84,10 +85,17 @@ class CountyResource(ModelResource):
     	url(r"^(?P<resource_name>%s)/(?P<pk>\w[\w/-]*)/news%s$" %
                 (self._meta.resource_name, trailing_slash()),
                 self.wrap_view('county_news'), name="api_county_news"),
+    	url(r"^(?P<resource_name>%s)/(?P<pk>\w[\w/-]*)/positions%s$" %
+                (self._meta.resource_name, trailing_slash()),
+                self.wrap_view('positions_in_a_county'), name="api_county_positions"),
+    	url(r"^(?P<resource_name>%s)/(?P<pk>\w[\w/-]*)/organisations%s$" %
+                (self._meta.resource_name, trailing_slash()),
+                self.wrap_view('organisations_in_a_county'), name="api_county_organisations"),
     	url(r"^(?P<resource_name>%s)/(?P<pk>\w[\w/-]*)/transcripts%s$" %
                 (self._meta.resource_name, trailing_slash()),
                 self.wrap_view('county_transcripts'), name="api_county_transcripts"),
     	]
+
 	def people(self, request, **kwargs):
 		""" proxy for the all_related_current_politicians method """  
 
@@ -102,8 +110,50 @@ class CountyResource(ModelResource):
              **self.remove_api_resource_names(kwargs))
 
 		people = build_place_people_dict(county.all_related_positions())
+		# people = [st.__dict__ for st in county.all_related_positions()]
 
 		return self.create_response(request, people)
+
+	def positions_in_a_county(self, request, **kwargs):
+		""" Proxy for all the people in a county """
+		fields_to_hide = ["_state", "sorting_end_date", "sorting_end_date_high",\
+		 "sorting_start_date", "sorting_start_date_high"]
+		self.method_check(request, allowed=['get'])
+		basic_bundle = self.build_bundle(request=request)
+		county = self.cached_obj_get(
+			bundle=basic_bundle,
+			**self.remove_api_resource_names(kwargs))
+		positions = [st.__dict__ for st in county.all_related_positions()]
+		for org in positions:
+			position =[st.__dict__ for st in PositionTitle.objects.filter(id=org["title_id"])]
+			org['title'] = position[0]['name']
+			for field in fields_to_hide:
+				org.pop(field)
+
+		return self.create_response(request, positions)
+
+	def organisations_in_a_county(self, request, **kwargs):
+		fields_to_hide = ["_summary_rendered", "_state", "summary", "created", "ended", "kind_id"]
+		self.method_check(request, allowed=['get'])
+		basic_bundle = self.build_bundle(request=request)
+		county = self.cached_obj_get(
+			bundle=basic_bundle,
+			**self.remove_api_resource_names(kwargs))
+		organisations = []
+		ids = []
+		people = [st.__dict__ for st in county.all_related_positions()]
+		for person in people:
+			ids.append(person['organisation_id'])
+
+		unique_ids = set(ids)
+		for x in unique_ids:			
+			org = [st.__dict__ for st in Organisation.objects.filter(id=x)][0]
+			for field in fields_to_hide:
+				org.pop(field)
+			organisations.append(org)
+
+		return self.create_response(request, organisations)
+
 
 """
 Pombola's Place model methods don't have a clean way of returning 
@@ -112,21 +162,28 @@ all people in a particular place so I have to hack this.
 """        
 def build_place_people_dict(queryset):
 	people = [st.__dict__ for st in queryset]
-	fields_to_hide = ["_state","sorting_end_date","organisation_id","person_id",\
+	fields_to_hide = ["_state","sorting_end_date",\
 		"sorting_end_date_high","sorting_start_date", "sorting_start_date_high"]
+	bio_fields_to_hide = ["_state","family_name","given_name","honorific_prefix","honorific_suffix",\
+	"_biography_rendered","_summary_rendered","can_be_featured"]
+		
 	for person in people:	        	
 			bio = [st.__dict__ for st in Person.objects.filter(id=person["person_id"])][0]
-			bio.pop("_state")
+			for field in bio_fields_to_hide:
+				bio.pop(field)
+
 			person["personal_details"] = bio    
 			org = [st.__dict__ for st in Organisation.objects.filter(id=person["organisation_id"])][0]
-			org.pop("_state")
-			person["organisation_details"] = org
+			# org.pop("_state")
+			# person["organisation_details"] = org
 			person["organisation"] = org["name"]
+			# person["organisation_id"] =
 			title = [st.__dict__ for st in PositionTitle.objects.filter(id=person["title_id"])][0]
-			title.pop("_state")
-			person["position_details"] = title
+			# title.pop("_state")
+			# person["position_details"] = title
 			person["name"] = bio["legal_name"]
-			person["position"] = title["name"]
+			person["title"] = title["name"]
+			# person["position_id"] = title["id"]
 			for x in fields_to_hide:
 				person.pop(x)
 	return people
