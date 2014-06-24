@@ -115,7 +115,7 @@ class CountyResource(ModelResource):
 		return self.create_response(request, people)
 
 	def positions_in_a_county(self, request, **kwargs):
-		""" Proxy for all the people in a county """
+		""" Proxy for all the positions in a county """
 		fields_to_hide = ["_state", "sorting_end_date", "sorting_end_date_high",\
 		 "sorting_start_date", "sorting_start_date_high"]
 		self.method_check(request, allowed=['get'])
