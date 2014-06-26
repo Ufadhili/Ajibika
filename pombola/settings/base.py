@@ -394,6 +394,8 @@ INSTALLED_APPS = (
     'pombola.file_archive',
     'pombola.map',
     'pombola.ajibika',
+    'pombola.bills',
+
 
     'django_nose',
 )

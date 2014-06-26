@@ -10,15 +10,16 @@ class Project(models.Model):
     created = models.DateTimeField(auto_now_add=True, default=datetime.datetime.now)
     updated = models.DateTimeField(auto_now=True, default=datetime.datetime.now)
 
-    cdf_index = models.IntegerField(unique=True)
+    # cdf_index = models.IntegerField(unique=True)
 
-    constituency = models.ForeignKey(Place)
+    # constituency = models.ForeignKey(Place)
+    county = models.ForeignKey(Place)
 
     project_name = models.CharField(max_length=400)
     location_name = models.CharField(max_length=400)
 
     sector = models.CharField(max_length=400)
-    mtfe_sector = models.CharField(max_length=400)
+    # mtfe_sector = models.CharField(max_length=400)
     econ1 = models.CharField(max_length=400)
     econ2 = models.CharField(max_length=400)
 
