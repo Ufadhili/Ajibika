@@ -5,10 +5,12 @@ from django.views.generic import TemplateView, ListView, RedirectView
 from pombola.core import models
 from pombola.core.views import (HomeView, PlaceDetailView,
     OrganisationList, OrganisationKindList, PlaceKindList, PersonDetail,
-    PersonDetailSub, PlaceDetailSub, OrganisationDetailSub,
+    PersonDetailSub, PlaceDetailSub, OrganisationDetailSub, ProfileDetails,
     OrganisationDetailView)
 
 person_patterns = patterns('pombola.core.views',
+    url(r'^$', ProfileDetails.as_view(template_name = 'ajibika/profile.html'),
+        name='test'), 
     url(r'^all/',
         ListView.as_view(model=models.Person),
         name='person_list'),
@@ -28,6 +30,7 @@ person_patterns = patterns('pombola.core.views',
         name='featured_person'),
 
     url(r'^(?P<slug>[-\w]+)/$', PersonDetail.as_view(), name='person'),
+
 
   )
 

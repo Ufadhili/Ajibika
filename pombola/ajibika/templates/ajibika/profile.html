@@ -1,0 +1,127 @@
+{% extends 'ajibika/base.html' %}
+{% load thumbnail %}
+{% block css %}
+  <link href="{{ STATIC_URL }}css/county.aji.css" rel="stylesheet">
+ {% endblock %}
+ {% block content %}
+ <!-- Disqus javascript -->
+ {% include "disqus_javascript.html" %}
+ 	<div class="county-header-wrap">
+		<div class="container">
+			<div class="row">
+				<div class="col-md-9">
+					<div class="call-to-action">
+						<h1 class="nomargin">Senator</h1>
+					</div>
+						
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="county-body inside-page">
+		<div class="county-resouces">
+			<div class="container">
+				<div class="row">
+					<div class="col-md-12">
+						<!-- <div class="bg-white-aji projects-wra prof-title">
+							<h2 class="normagin">Gideon Moi</h2>
+						</div> -->
+						<div class="bg-white-aji projects-wra">
+							<div class="row">
+								<div class="col-md-3">
+									<div class="profile-pic-wrap">
+										<div class="profile-img-wrap">										
+											 <div class="profile-pic">
+									          {% thumbnail object.primary_image "210x210" crop="center" as im %}
+									          <img src="{{ im.url }}" alt="{{ object.name }}" width="{{ im.width }}" height="{{ im.height }}" />
+									          {% empty %}
+									          <img src="{{STATIC_URL}}images/{{object.css_class}}-210x210.jpg" />
+									          {% endthumbnail %}        
+									      </div>
+										</div>
+									</div>
+									<div class="profile-info-wrap">
+										<div class="Profile-content-wrap">
+											<b class="profile-cont-label">Constituency</b>
+											<p><a href="">Baringo Central</a></p>
+										</div>
+										<div class="Profile-content-wrap">
+											<b class="profile-cont-label">County</b>
+											<p><a href="">Baringo Central</a></p>
+										</div>
+										<div class="Profile-content-wrap">
+											<b class="profile-cont-label">Coalition</b>
+											<p><a href="">Jubileee Coalition</a></p>
+											<p><a href="">Jubileee Coalition</a></p>
+											<p><a href="">Jubileee Coalition</a></p>
+											
+										</div>
+									</div>
+									
+								</div>
+								<div class="col-md-9">
+									<div class="name-field">
+										<h2 class="normagin">{{ object.title }} {{ object.name }}</h2>
+									</div>
+									<div class="other-prof-wrap">
+										<div class="row">
+											<div class="col-md-5">
+												<div class="section-title-wrap">
+													<h3><i class="fa fa-files-o color-aji"></i> Experience</h3>
+												</div>
+												<div class="content-wrap-profile">
+													<b>Senator of REPUBLIC OF KENYA for Baringo</b>
+													<p><i>Started 11th March 2013</i></p>
+												</div>
+												<div class="content-wrap-profile">
+													<b>Senator of REPUBLIC OF KENYA for Baringo</b>
+													<p><i>Started 11th March 2013</i></p>
+												</div>
+												<div class="content-wrap-profile">
+													<b>Senator of REPUBLIC OF KENYA for Baringo</b>
+													<p><i>Started 11th March 2013</i></p>
+												</div>
+												<div class="content-wrap-profile">
+													<b>Senator of REPUBLIC OF KENYA for Baringo</b>
+													<p><i>Started 11th March 2013</i></p>
+												</div>
+											</div>
+											
+											
+											
+											<div class="col-md-7">
+												<div class="section-title-wrap">
+													<h3><i class="fa fa-files-o color-aji"></i> Parliamentary Proceedings</h3>
+												</div>
+												<div class="content-wrap-profile">
+													<b><a href="">What a wonderful day</a></b>
+													<p><i>Senate, 11th March 2013</i></p>
+												</div>
+												<div class="content-wrap-profile">
+													<b><a href="">What a wonderful day</a></b>
+													<p><i>Senate, 11th March 2013</i></p>
+												</div>
+												<div class="content-wrap-profile">
+													<b><a href="">What a wonderful day</a></b>
+													<p><i>Senate, 11th March 2013</i></p>
+												</div>
+												<div class="content-wrap-profile">
+													<b><a href="">What a wonderful day</a></b>
+													<p><i>Senate, 11th March 2013</i></p>
+												</div>
+											</div>
+										</div>
+										{% include 'disqus_comments.html' %}
+									</div>
+								</div>
+							</div>
+							 
+						</div>
+				</div>
+			</div>
+		</div>
+		
+	</div>
+
+
+   {% endblock %}

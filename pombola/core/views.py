@@ -46,8 +46,14 @@ class HomeView(TemplateView):
 class OrganisationList(ListView):
     model = models.Organisation
 
+class ProfileDetails(DetailView):
+    model = models.Person
+    template_name = 'ajibika/profile.html'
+
 class PersonDetail(DetailView):
     model = models.Person
+    template_name = 'ajibika/profile.html'
+
 
     def get(self, request, *args, **kwargs):
         # Check if this is old slug for redirection:
@@ -63,6 +69,7 @@ class PersonDetail(DetailView):
 class PersonDetailSub(DetailView):
     model = models.Person
 
+
     def get_template_names(self):
         return [ "core/person_%s.html" % self.kwargs['sub_page'] ]
 
@@ -74,6 +81,11 @@ class PlaceDetailView(DetailView):
         context = super(PlaceDetailView, self).get_context_data(**kwargs)
         context['place_type_count'] = models.Place.objects.filter(kind=self.object.kind).count()
         context['related_people'] = self.object.related_people()
+        context['governor'] = self.object.current_county_governor()
+        context['deputy_governor'] = self.object.current_county_deputy_governor()
+        context['senator'] = self.object.current_county_senator()
+        context['county_executive'] = self.object.county_executive()
+        context['county_assembly'] = self.object.county_assembly()
         return context
 
 class PlaceDetailSub(DetailView):
