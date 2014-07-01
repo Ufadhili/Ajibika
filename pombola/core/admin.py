@@ -181,6 +181,7 @@ class PlaceAdmin(admin.ModelAdmin):
         InformationSourceInlineAdmin,
         ScorecardInlineAdmin,
         IdentifierInlineAdmin,
+        ImageAdminInline,
         )
 
     def show_organisation(self, obj):
