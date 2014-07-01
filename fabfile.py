@@ -17,7 +17,7 @@ def host_type():
 def commit():	
 	with settings(warn_only=True):		
 		# add any new untracked files
-		add_files = local("git add .")
+		add_files = local("git add -A")
 		if add_files.failed and not confirm("Command git add has failed. Continue anyway?"):
 			abort("Aborting by user request")
 		#Promt for a commit message	
