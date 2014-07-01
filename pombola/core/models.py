@@ -654,6 +654,7 @@ class Place(ModelBase, ScorecardMixin):
 
     objects = PlaceManager()
     is_overall_scorecard_score_applicable = False
+    images = generic.GenericRelation(Image)
 
     @property
     def position_with_organisation_set(self):
