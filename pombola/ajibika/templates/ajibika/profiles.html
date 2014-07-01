@@ -1,0 +1,69 @@
+{% extends 'ajibika/county_base.html' %}
+{% load thumbnail %}
+ {% block content %}
+	<div class="county-header-wrap">
+		<div class="container">
+			<div class="row">
+				<div class="col-md-9">
+					<div class="call-to-action">
+						<h1 class="nomargin">{{category}}</h1>
+					</div>
+						
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="county-body inside-page">
+		<div class="county-resouces">
+			<div class="container">
+				<div class="row">
+					<div class="col-md-12">
+						
+						
+						<div class="profile-uls row">
+								{% for person in persons %}
+								<div class="col-md-2 margin-bottom">
+									<div class="profile-bg-ul">
+										<div class="profile-bg">
+											<div class="profile-header">
+												<h3 class="nomargin tcenter"><a href="{{person.get_absolute_url}}">{{person.name}}</a></h3>
+											</div>
+											<div class="profile-header">										
+												 {% for position in person.politician_positions%}
+											      <p>{{ position.title.name }}</p>										    
+											    {% endfor %}
+											</div>
+											<div class="profile-image">
+												<a href="{{person.get_absolute_url}}">
+												<!-- <img src="{{ person.primary_image.url }}" alt="{{ person.image.name }}" alt=""/> -->
+
+												 {% thumbnail person.primary_image "210x210" crop="center" as im %}
+									          <img src="{{ im.url }}" alt="{{ im.name }}" width="{{ im.width }}" height="{{ im.height }}" />
+									          {% empty %}
+									          <img src="{{STATIC_URL}}images/{{person.css_class}}-210x210.jpg" />
+									          {% endthumbnail %}  
+												 </a>
+											</div>
+											<div class="profile-footer">
+												<p class="tcenter nomargin"><a href="{{person.get_absolute_url}}">View &rarr;</a></p>
+											</div>
+										</div>
+									</div>
+								</div>
+								{% endfor %}
+							</div>
+							
+						</div>
+					</div>
+					
+					<div class="col-md-12">
+						<p class="nomargin tcenter load-more">
+							<a class="btn btn-ajibika" href="">Load more</a>
+						</p>
+					</div>
+				</div>
+			</div>
+		</div>
+		
+	</div>
+   {% endblock %}

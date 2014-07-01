@@ -744,6 +744,48 @@ class Place(ModelBase, ScorecardMixin):
         positions = self.all_related_positions().current_politician_positions()
         return Person.objects.filter(position__in=positions).distinct()
 
+    def current_county_governor(self):
+        try:
+            governor_position = PositionTitle.objects.get(slug='governor')
+            governor = Position.objects.filter(place__in=self.self_and_parents(), title_id=governor_position.id)
+            return Person.objects.get(position=governor)
+        except Exception, e:
+            return None
+        
+
+    def current_county_senator(self):
+        try:            
+            senator_position = PositionTitle.objects.get(slug='senator')
+            senator = Position.objects.filter(place__in=self.self_and_parents(), title_id=senator_position.id)
+            return Person.objects.get(position=senator)
+        except Exception, e:
+            return None
+
+    def current_county_deputy_governor(self):
+        try:
+            dp_governor_position = PositionTitle.objects.get(slug='deputy-govenor')
+            dp_governor = Position.objects.filter(place__in=self.self_and_parents(), title_id=dp_governor_position.id)
+            return Person.objects.get(position=dp_governor)
+        except Exception, e:
+            return None
+        
+
+    def county_executive(self):
+        try:            
+            organisation = Organisation.objects.get(slug='county-executive')
+            executives = Position.objects.filter(organisation=organisation)
+            return Person.objects.filter(position__in=executives)
+        except Exception, e:
+            return None
+
+    def county_assembly(self):
+        try:            
+            organisation = Organisation.objects.get(slug='county-assembly')
+            executives = Position.objects.filter(organisation=organisation)
+            return Person.objects.filter(position__in=executives)
+        except Exception, e:
+            return None
+
     def all_related_former_politicians(self):
         """Return a query set of all the former politicians for this place, and all parent places."""
         positions = self.all_related_positions().former_politician_positions()
