@@ -41,20 +41,38 @@
 										</div>
 									</div>
 									<div class="profile-info-wrap">
-										<div class="Profile-content-wrap">
-											<b class="profile-cont-label">Constituency</b>
-											<p><a href="">Baringo Central</a></p>
+									<div class="Profile-content-wrap">
+											<!-- <b class="profile-cont-label">County</b> -->
+											
+											{% with pos_set=object.position_set.all.currently_active %}
+											  <p>
+
+											    {% for position in pos_set|slice:":4" %}
+											      <strong>{{ position.title.name }}</strong>     
+											    {% empty %}
+											      No currently active positions found.
+											    {% endfor %}
+
+											    {% with remaining=pos_set.count|add:'-4' %}
+											      {% if remaining > 0 %}
+											        and {{ remaining }} more&hellip;
+											      {% endif %}
+											    {% endwith %}
+
+											  </p>
+											  {% endwith %}
 										</div>
 										<div class="Profile-content-wrap">
 											<b class="profile-cont-label">County</b>
-											<p><a href="">Baringo Central</a></p>
+											<p><a href="{{county.get_absolute_url}}">{{county.name}}</a></p>
 										</div>
+										
 										<div class="Profile-content-wrap">
 											<b class="profile-cont-label">Coalition</b>
-											<p><a href="">Jubileee Coalition</a></p>
-											<p><a href="">Jubileee Coalition</a></p>
-											<p><a href="">Jubileee Coalition</a></p>
-											
+											{% for coalition in object.parties_and_coalitions %}
+											<p><a href="">{{coalition.name}}</a></p>
+											{% endfor %}
+											 
 										</div>
 									</div>
 									

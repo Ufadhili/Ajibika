@@ -1,4 +1,6 @@
-<?php include_once 'header.php'; ?>
+{% extends 'ajibika/county_base.html' %}
+
+ {% block content %}
 	<div class="county-header-wrap">
 		<div class="container">
 			<div class="row">
@@ -16,10 +18,7 @@
 			<div class="container">
 				<div class="row">
 					<div class="col-md-12">
-						<?php 
-							for ($i=0; $i < 8 ; $i++) { 
-								
-						?>
+						
 						
 						<div class="bg-white-aji projects-wra">
 							<div class="project-wrap">
@@ -50,13 +49,7 @@
 								</div>
 							</div>
 						</div>
-						
-						
-						<?php 
-						
-						}
-						?>
-						
+					
 						
 					</div>
 					<div class="col-md-12">
@@ -74,4 +67,4 @@
 		</div>
 		
 	</div>
-   <?php include_once 'footer.php'; ?>
+ {% endblock %}

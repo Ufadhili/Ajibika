@@ -50,9 +50,130 @@ class ProfileDetails(DetailView):
     model = models.Person
     template_name = 'ajibika/profile.html'
 
+class CountyExecutive(DetailView):
+    model = models.Place
+    context_object_name = "county"
+    
+    def get_context_data(self, **kwargs):
+        # Call the base implementation first to get a context
+        context = super(CountyExecutive, self).get_context_data(**kwargs)
+        context['persons'] = models.Place.objects.get(slug=self.kwargs['slug']).county_executive()
+        context['category'] = 'County Executive'
+        context['counties'] = models.Place.objects.filter(kind__slug='county')
+        context['governor'] = self.object.current_county_governor()
+        context['deputy_governor'] = self.object.current_county_deputy_governor()
+        context['senator'] = self.object.current_county_senator()
+        return context
+
+class CountyAssembly(DetailView):
+    model = models.Place
+    context_object_name = "county"
+    
+    def get_context_data(self, **kwargs):
+        context = super(CountyAssembly, self).get_context_data(**kwargs)
+        context['persons'] = models.Place.objects.get(slug=self.kwargs['slug']).county_assembly()
+        context['category'] = 'County Assembly'
+        context['counties'] = models.Place.objects.filter(kind__slug='county')
+        context['governor'] = self.object.current_county_governor()
+        context['deputy_governor'] = self.object.current_county_deputy_governor()
+        context['senator'] = self.object.current_county_senator()
+        return context
+
+class AboutCounty(DetailView):
+    model = models.Place
+    context_object_name = 'county'
+
+    def get_context_data(self, **kwargs):
+        context = super(AboutCounty, self).get_context_data(**kwargs)
+        context['about'] = models.Place.objects.get(slug=self.kwargs['slug'])
+        context['counties'] = models.Place.objects.filter(kind__slug='county')
+        context['governor'] = self.object.current_county_governor()
+        context['deputy_governor'] = self.object.current_county_deputy_governor()
+        context['senator'] = self.object.current_county_senator()
+        return context
+
+class CountyBills(DetailView):
+    model = models.Place
+    context_object_name = 'county'
+
+    def get_context_data(self, **kwargs):
+        context = super(CountyBills, self).get_context_data(**kwargs)
+        context['about'] = models.Place.objects.get(slug=self.kwargs['slug'])
+        context['counties'] = models.Place.objects.filter(kind__slug='county')
+        context['governor'] = self.object.current_county_governor()
+        context['deputy_governor'] = self.object.current_county_deputy_governor()
+        context['senator'] = self.object.current_county_senator()
+        return context
+
+class CountyProjects(DetailView):
+    model = models.Place
+    context_object_name = 'county'
+
+    def get_context_data(self, **kwargs):
+        context = super(CountyProjects, self).get_context_data(**kwargs)
+        context['about'] = models.Place.objects.get(slug=self.kwargs['slug'])
+        context['counties'] = models.Place.objects.filter(kind__slug='county')
+        context['governor'] = self.object.current_county_governor()
+        context['deputy_governor'] = self.object.current_county_deputy_governor()
+        context['senator'] = self.object.current_county_senator()
+        return context
+
+class CountyPlan(DetailView):
+    model = models.Place
+    context_object_name = 'county'
+
+    def get_context_data(self, **kwargs):
+        context = super(CountyPlan, self).get_context_data(**kwargs)
+        context['about'] = models.Place.objects.get(slug=self.kwargs['slug'])
+        context['counties'] = models.Place.objects.filter(kind__slug='county')
+        context['governor'] = self.object.current_county_governor()
+        context['deputy_governor'] = self.object.current_county_deputy_governor()
+        context['senator'] = self.object.current_county_senator()
+        return context
+
+class CountyBudget(DetailView):
+    model = models.Place
+    context_object_name = 'county'
+
+    def get_context_data(self, **kwargs):
+        context = super(CountyBudget, self).get_context_data(**kwargs)
+        context['about'] = models.Place.objects.get(slug=self.kwargs['slug'])
+        context['counties'] = models.Place.objects.filter(kind__slug='county')
+        context['governor'] = self.object.current_county_governor()
+        context['deputy_governor'] = self.object.current_county_deputy_governor()
+        context['senator'] = self.object.current_county_senator()
+        return context
+
+class CountyTranscripts(DetailView):
+    model = models.Place
+    context_object_name = 'county'
+
+    def get_context_data(self, **kwargs):
+        context = super(CountyTranscripts, self).get_context_data(**kwargs)
+        context['about'] = models.Place.objects.get(slug=self.kwargs['slug'])
+        context['counties'] = models.Place.objects.filter(kind__slug='county')
+        context['governor'] = self.object.current_county_governor()
+        context['deputy_governor'] = self.object.current_county_deputy_governor()
+        context['senator'] = self.object.current_county_senator()
+        return context
+        
+class CountyOtherDocs(DetailView):
+    model = models.Place
+    context_object_name = 'county'
+
+    def get_context_data(self, **kwargs):
+        context = super(CountyOtherDocs, self).get_context_data(**kwargs)
+        context['about'] = models.Place.objects.get(slug=self.kwargs['slug'])
+        context['counties'] = models.Place.objects.filter(kind__slug='county')
+        context['governor'] = self.object.current_county_governor()
+        context['deputy_governor'] = self.object.current_county_deputy_governor()
+        context['senator'] = self.object.current_county_senator()
+        return context
+
 class PersonDetail(DetailView):
     model = models.Person
     template_name = 'ajibika/profile.html'
+
 
 
     def get(self, request, *args, **kwargs):
@@ -66,6 +187,14 @@ class PersonDetail(DetailView):
         except models.SlugRedirect.DoesNotExist:
             return super(PersonDetail, self).get(request, *args, **kwargs)
 
+    def get_context_data(self, **kwargs):
+        context  = super(PersonDetail, self).get_context_data(**kwargs)
+        context['county'] = self.object.constituencies()[0]
+        context['counties'] = models.Place.objects.filter(kind__slug='county')
+        context['coalitions'] = self.object.coalitions()
+        context['position'] = self.object.politician_positions()[0]
+        return context
+
 class PersonDetailSub(DetailView):
     model = models.Person
 
@@ -75,17 +204,20 @@ class PersonDetailSub(DetailView):
 
 class PlaceDetailView(DetailView):
     model = models.Place
+    context_object_name = "county"
+    template_name = 'ajibika/county_detail.html'
 
     def get_context_data(self, **kwargs):
         # Call the base implementation first to get a context
         context = super(PlaceDetailView, self).get_context_data(**kwargs)
-        context['place_type_count'] = models.Place.objects.filter(kind=self.object.kind).count()
-        context['related_people'] = self.object.related_people()
+        # context['place_type_count'] = models.Place.objects.filter(kind=self.object.kind).count()
+        # context['related_people'] = self.object.related_people()
         context['governor'] = self.object.current_county_governor()
         context['deputy_governor'] = self.object.current_county_deputy_governor()
         context['senator'] = self.object.current_county_senator()
-        context['county_executive'] = self.object.county_executive()
-        context['county_assembly'] = self.object.county_assembly()
+        # context['county_executive'] = self.object.county_executive()
+        # context['county_assembly'] = self.object.county_assembly()
+        context['counties'] = models.Place.objects.filter(kind__slug='county')
         return context
 
 class PlaceDetailSub(DetailView):
