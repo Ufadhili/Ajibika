@@ -19,15 +19,15 @@ class Document(models.Model):
 					('CBT','Budget'),
 					('CPN','Plan'),
 					('CTT','Transcript'),
-					('COR','OTHER'),
+					('COR','Other'),
 			)
 	created = models.DateTimeField(auto_now_add=True, default=datetime.datetime.now)
 	updated = models.DateTimeField(auto_now=True, default=datetime.datetime.now)
 	county = models.ForeignKey(Place)
 	document_type = models.CharField(max_length=3, choices=COUNTY_DOCUMENT_CHOICES,default=BILL)
 	title = models.CharField(max_length=1000)
-	summary = models.TextField(blank=True)
 	slug = models.SlugField( unique=True )
+	summary = models.TextField(blank=True)	
 	file = models.FileField( upload_to='file_archive' )
 
 	def __unicode__(self):
