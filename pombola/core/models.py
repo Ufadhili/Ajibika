@@ -761,6 +761,11 @@ class Place(ModelBase, ScorecardMixin):
         except Exception, e:
             return None
 
+    def featured_in_the_county(self):
+        people = Position.objects.filter(place__in=self.self_and_parents())
+        featured = people.order_by('?')[0]
+        return Person.objects.get(position=featured)
+
     def current_county_deputy_governor(self):
         try:
             dp_governor_position = PositionTitle.objects.get(slug='deputy-governor')

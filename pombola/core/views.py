@@ -116,9 +116,7 @@ class CountyBills(DetailView):
         context['governor'] = self.object.current_county_governor()
         context['deputy_governor'] = self.object.current_county_deputy_governor()
         context['senator'] = self.object.current_county_senator()
-
         context['bills'] = self.object.document_set.filter(document_type='CBL')
-
         context['speaker'] = self.object.current_county_assembly_speaker()
 
         return context
@@ -238,19 +236,21 @@ class PersonDetailSub(DetailView):
 class PlaceDetailView(DetailView):
     model = models.Place
     context_object_name = "county"
-    template_name = 'ajibika/county_detail.html'
+    template_name = 'ajibika/index2.html'
 
     def get_context_data(self, **kwargs):
         # Call the base implementation first to get a context
         context = super(PlaceDetailView, self).get_context_data(**kwargs)
         # context['place_type_count'] = models.Place.objects.filter(kind=self.object.kind).count()
-        # context['related_people'] = self.object.related_people()
+        context['related_people'] = self.object.related_people()
         context['governor'] = self.object.current_county_governor()
         context['deputy_governor'] = self.object.current_county_deputy_governor()
         context['senator'] = self.object.current_county_senator()
-        # context['county_executive'] = self.object.county_executive()
-        # context['county_assembly'] = self.object.county_assembly()
+        context['bills'] = self.object.document_set.filter(document_type='CBL')
         context['counties'] = models.Place.objects.filter(kind__slug='county')
+        context['featured'] = self.object.featured_in_the_county()
+        context['images'] = self.object.images.all()[1:]
+        context['active_image'] = self.object.images.all()[0]
         return context
 
 class PlaceDetailSub(DetailView):

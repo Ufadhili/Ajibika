@@ -1,4 +1,10 @@
-<?php include_once 'header.php'; ?>
+
+{% extends 'ajibika/county_base.html' %}
+
+ {% block content %}
+
+
+
 	<div class="container">
 		<div class="row">
 			<div class="col-md-8">
@@ -11,8 +17,33 @@
 				        <li data-target="#myCarousel" data-slide-to="2"></li>
 				      </ol>
 				      <div class="carousel-inner">
+
+				      {% if images %}
+
 				        <div class="item active">
-				          <img src="/assets/img/slider/peoples-park.jpg" alt="First slide">
+				          <img src="{{active_image.image.url}}" alt="First slide">
+				          <div class="container">
+				            <div class="carousel-caption">
+				              <h1>One more for good measure.</h1>
+				              <p><a class="btn btn-lg btn-primary" href="#" role="button">Read more</a></p>
+				            </div>
+				          </div>
+				        </div>
+				      	{% for file in images %}
+				      	 <div class="item">
+				          <img src="{{file.image.url}}" alt="First slide">
+				          <div class="container">
+				            <div class="carousel-caption">
+				              <h1>One more for good measure.</h1>
+				              <p><a class="btn btn-lg btn-primary" href="#" role="button">Read more</a></p>
+				            </div>
+				          </div>
+				        </div>
+				      	{% endfor %}
+				      	{% else %} 
+
+				        <div class="item active">
+				          <img src="{{STATIC_URL}}img/slider/peoples-park.jpg" alt="First slide">
 				          <div class="container">
 				            <div class="carousel-caption">
 				              <h1>One more for good measure.</h1>
@@ -21,7 +52,7 @@
 				          </div>
 				        </div>
 				        <div class="item">
-				          <img src="/assets/img/slider/peoples-park.jpg" alt="First slide">
+				          <img src="{{STATIC_URL}}img/slider/peoples-park.jpg" alt="First slide">
 				          <div class="container">
 				            <div class="carousel-caption">
 				              <h1>One more for good measure.</h1>
@@ -29,6 +60,9 @@
 				            </div>
 				          </div>
 				        </div>
+				        {% endif %}
+
+
 				      </div>
 				      <a class="left carousel-control" href="#myCarousel" data-slide="prev"><span class="glyphicon glyphicon-chevron-left"></span></a>
 				      <a class="right carousel-control" href="#myCarousel" data-slide="next"><span class="glyphicon glyphicon-chevron-right"></span></a>
@@ -47,14 +81,18 @@
 							<div class="col-xs-4">
 								<div class="feat-profile-wrap">
 									<p class="tcenter nomargin">
-										<img src="/assets/img/profiles/profile.jpg" alt="Adan Duale" />
+											 {% if featured.primary_image %}
+									          <img src="{{ featured.primary_image.url }}" alt="{{ featured.primary_image.name }}"/>
+									          {% else %}
+									          <img src="{{STATIC_URL}}img/profiles/place-holder.jpg" />
+									          {% endif %}  
 									</p>
 								</div>
 							</div>
 							<div class="col-xs-8">
-								<h3 class="normagin"><a href="">Adan Duale</a>, <small>MCA</small></h3>
-								<p>Cras mattis consectetur purus sit amet fermentum. Praesent commodo cursus...<br/> 
-									<small><a class="nowrap" href="">read more &rarr;</a></small></p>
+								<h3 class="normagin"><a href="{{featured.get_absolute_url}}">{{featured.name}}</a></h3>
+								<p>{{featured.summary|truncatechars:90}}<br/> 
+									<small><a class="nowrap" href="{{featured.get_absolute_url}}">read more &rarr;</a></small></p>
 								
 							</div>
 						</div>
@@ -63,11 +101,11 @@
 				</div>
 				<div class="quicklinks-wrap">
 					<div class="quick-one">
-						<a href="">
+						<a href="{{county.get_absolute_url}}transcripts">
 							<div class="row">
 								<div class="col-xs-10">
 									<h2>Transcripts</h2>
-									<p>Vestibulum id ligula porta felis euismod semper.</p>
+									<p>View Transcripts for {{county.name}} county.</p>
 								</div>
 								<div class="col-xs-2 darker-one">
 									<p class="normagin"><i class="fa fa-arrow-circle-o-right"></i></p>
@@ -77,11 +115,11 @@
 					</div>
 					
 					<div class="quick-two">
-						<a href="">
+						<a href="{{county.get_absolute_url}}bills">
 							 <div class="row">
 								<div class="col-xs-10">
 									<h2>Bills</h2>
-									<p>Vestibulum id ligula porta felis euismod semper.</p>
+									<p>View bills for {{county.name}} county.</p>
 								</div>
 								<div class="col-xs-2 darker-two">
 									<p class="normagin"><i class="fa fa-arrow-circle-o-right"></i></p>
@@ -228,4 +266,4 @@
         interval: 5000 //changes the speed
     })
     </script>
-   <?php include_once 'footer.php'; ?>
+  {% endblock %}
