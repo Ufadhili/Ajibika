@@ -116,11 +116,11 @@ class CountyBills(DetailView):
         context['governor'] = self.object.current_county_governor()
         context['deputy_governor'] = self.object.current_county_deputy_governor()
         context['senator'] = self.object.current_county_senator()
-<<<<<<< HEAD
+
         context['bills'] = self.object.document_set.filter(document_type='CBL')
-=======
+
         context['speaker'] = self.object.current_county_assembly_speaker()
->>>>>>> ajibika-templates
+
         return context
 
 class CountyProjects(DetailView):
@@ -148,11 +148,9 @@ class CountyPlan(DetailView):
         context['governor'] = self.object.current_county_governor()
         context['deputy_governor'] = self.object.current_county_deputy_governor()
         context['senator'] = self.object.current_county_senator()
-<<<<<<< HEAD
         context['plans'] = self.object.document_set.filter(document_type='CPN')
-=======
         context['speaker'] = self.object.current_county_assembly_speaker()
->>>>>>> ajibika-templates
+
         return context
 
 class CountyBudget(DetailView):
@@ -166,11 +164,11 @@ class CountyBudget(DetailView):
         context['governor'] = self.object.current_county_governor()
         context['deputy_governor'] = self.object.current_county_deputy_governor()
         context['senator'] = self.object.current_county_senator()
-<<<<<<< HEAD
+
         context['bills'] = self.object.document_set.filter(document_type='CBT')
-=======
+
         context['speaker'] = self.object.current_county_assembly_speaker()
->>>>>>> ajibika-templates
+
         return context
 
 class CountyTranscripts(DetailView):
@@ -198,11 +196,11 @@ class CountyOtherDocs(DetailView):
         context['governor'] = self.object.current_county_governor()
         context['deputy_governor'] = self.object.current_county_deputy_governor()
         context['senator'] = self.object.current_county_senator()
-<<<<<<< HEAD
+
         context['other_docs'] = self.object.document_set.filter(document_type='COR')
-=======
+
         context['speaker'] = self.object.current_county_assembly_speaker()
->>>>>>> ajibika-templates
+
         return context
 
 class PersonDetail(DetailView):
