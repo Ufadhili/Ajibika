@@ -17,8 +17,7 @@
 		<div class="county-resouces">
 			<div class="container">
 				<div class="row">
-					<div class="col-md-12">
-						
+					<div class="col-md-12">		
 						
 						<div class="profile-uls row">
 								{% for person in persons %}
@@ -37,11 +36,11 @@
 												<a href="{{person.get_absolute_url}}">
 												<!-- <img src="{{ person.primary_image.url }}" alt="{{ person.image.name }}" alt=""/> -->
 
-												 {% thumbnail person.primary_image "210x210" crop="center" as im %}
-									          <img src="{{ im.url }}" alt="{{ im.name }}" width="{{ im.width }}" height="{{ im.height }}" />
-									          {% empty %}
-									          <img src="{{STATIC_URL}}images/{{person.css_class}}-210x210.jpg" />
-									          {% endthumbnail %}  
+												 {% if person.primary_image %}
+									          <img src="{{ person.primary_image.url }}" alt="{{ person.primary_image.name }}"/>
+									          {% else %}
+									          <img src="{{STATIC_URL}}img/profiles/place-holder.jpg" />
+									          {% endif %}  
 												 </a>
 											</div>
 											<div class="profile-footer">
