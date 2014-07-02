@@ -588,3 +588,6 @@ img{
 	color: #555;
 	background-color: #d1d0d0;
 }
+div.slide-wrap {
+overflow: hidden;
+}
