@@ -42,6 +42,15 @@ class HomeView(TemplateView):
 
         return context
 
+class AboutAjibikaView(TemplateView):
+
+    template_name = 'ajibika/about_ajibika.html'
+
+    def get_context_data(self, **kwargs):
+        context = super(AboutAjibikaView, self).get_context_data(**kwargs)
+        context['counties'] = models.Place.objects.filter(kind__slug='county')        
+        return context
+
 
 class OrganisationList(ListView):
     model = models.Organisation
@@ -63,6 +72,7 @@ class CountyExecutive(DetailView):
         context['governor'] = self.object.current_county_governor()
         context['deputy_governor'] = self.object.current_county_deputy_governor()
         context['senator'] = self.object.current_county_senator()
+        context['speaker'] = self.object.current_county_assembly_speaker()
         return context
 
 class CountyAssembly(DetailView):
@@ -77,6 +87,7 @@ class CountyAssembly(DetailView):
         context['governor'] = self.object.current_county_governor()
         context['deputy_governor'] = self.object.current_county_deputy_governor()
         context['senator'] = self.object.current_county_senator()
+        context['speaker'] = self.object.current_county_assembly_speaker()
         return context
 
 class AboutCounty(DetailView):
@@ -90,6 +101,7 @@ class AboutCounty(DetailView):
         context['governor'] = self.object.current_county_governor()
         context['deputy_governor'] = self.object.current_county_deputy_governor()
         context['senator'] = self.object.current_county_senator()
+        context['speaker'] = self.object.current_county_assembly_speaker()
         return context
 
 class CountyBills(DetailView):
@@ -103,6 +115,7 @@ class CountyBills(DetailView):
         context['governor'] = self.object.current_county_governor()
         context['deputy_governor'] = self.object.current_county_deputy_governor()
         context['senator'] = self.object.current_county_senator()
+        context['speaker'] = self.object.current_county_assembly_speaker()
         return context
 
 class CountyProjects(DetailView):
@@ -116,6 +129,7 @@ class CountyProjects(DetailView):
         context['governor'] = self.object.current_county_governor()
         context['deputy_governor'] = self.object.current_county_deputy_governor()
         context['senator'] = self.object.current_county_senator()
+        context['speaker'] = self.object.current_county_assembly_speaker()
         return context
 
 class CountyPlan(DetailView):
@@ -129,6 +143,7 @@ class CountyPlan(DetailView):
         context['governor'] = self.object.current_county_governor()
         context['deputy_governor'] = self.object.current_county_deputy_governor()
         context['senator'] = self.object.current_county_senator()
+        context['speaker'] = self.object.current_county_assembly_speaker()
         return context
 
 class CountyBudget(DetailView):
@@ -142,6 +157,7 @@ class CountyBudget(DetailView):
         context['governor'] = self.object.current_county_governor()
         context['deputy_governor'] = self.object.current_county_deputy_governor()
         context['senator'] = self.object.current_county_senator()
+        context['speaker'] = self.object.current_county_assembly_speaker()
         return context
 
 class CountyTranscripts(DetailView):
@@ -155,6 +171,7 @@ class CountyTranscripts(DetailView):
         context['governor'] = self.object.current_county_governor()
         context['deputy_governor'] = self.object.current_county_deputy_governor()
         context['senator'] = self.object.current_county_senator()
+        context['speaker'] = self.object.current_county_assembly_speaker()
         return context
         
 class CountyOtherDocs(DetailView):
@@ -168,6 +185,7 @@ class CountyOtherDocs(DetailView):
         context['governor'] = self.object.current_county_governor()
         context['deputy_governor'] = self.object.current_county_deputy_governor()
         context['senator'] = self.object.current_county_senator()
+        context['speaker'] = self.object.current_county_assembly_speaker()
         return context
 
 class PersonDetail(DetailView):

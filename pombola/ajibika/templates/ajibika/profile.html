@@ -41,24 +41,20 @@
 										</div>
 									</div>
 									<div class="profile-info-wrap">
+
+
+
 									<div class="Profile-content-wrap">
 											<!-- <b class="profile-cont-label">County</b> -->
 											
 											{% with pos_set=object.position_set.all.currently_active %}
 											  <p>
 
-											    {% for position in pos_set|slice:":4" %}
+											    {% for position in pos_set%}
 											      <strong>{{ position.title.name }}</strong>     
 											    {% empty %}
 											      No currently active positions found.
 											    {% endfor %}
-
-											    {% with remaining=pos_set.count|add:'-4' %}
-											      {% if remaining > 0 %}
-											        and {{ remaining }} more&hellip;
-											      {% endif %}
-											    {% endwith %}
-
 											  </p>
 											  {% endwith %}
 										</div>
