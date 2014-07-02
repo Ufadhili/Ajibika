@@ -18,6 +18,9 @@
 			<div class="container">
 				<div class="row">
 					<div class="col-md-12">
+					{% if plans %}
+						
+						{% for plan in plans %}
 						
 						<div class="bg-white-aji projects-wra">
 							<div class="project-wrap">
@@ -27,13 +30,13 @@
 												<div class="col-md-10">
 													
 												<div class="project-tit">
-														<h2><a href="">2014 - 2015 Integrated Plan</a></h2>
+														<h2><a href="{{plan.file.url}}">{{plan.title}}</a></h2>
 													</div>
 											</div>
 											<div class="col-md-2">
 												<div class="download-button">
 													<p class="tright nomargin">
-														<a class="btn btn-ajibika" href="">
+														<a class="btn btn-ajibika" href="{{plan.file.url}}">
 															<i class="fa fa-cloud-download"></i>  Download
 														</a>
 													</p>
@@ -45,14 +48,13 @@
 								</div>
 							</div>
 						</div>
-					
+					{% endfor %}
+						{% else %}
+						    <p><b>No plan found for {{county.name}} county.</b>
+						{% endif %}
 						
 					</div>
-					<div class="col-md-12">
-						<p class="nomargin tcenter load-more">
-							<a class="btn btn-ajibika" href="">Load more</a>
-						</p>
-					</div>
+					
 					
 					
 						
