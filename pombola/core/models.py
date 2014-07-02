@@ -763,17 +763,27 @@ class Place(ModelBase, ScorecardMixin):
 
     def current_county_deputy_governor(self):
         try:
-            dp_governor_position = PositionTitle.objects.get(slug='deputy-govenor')
+            dp_governor_position = PositionTitle.objects.get(slug='deputy-governor')
             dp_governor = Position.objects.filter(place__in=self.self_and_parents(), title_id=dp_governor_position.id)
             return Person.objects.get(position=dp_governor)
         except Exception, e:
             return None
         
+    def current_county_assembly_speaker(self):
+        try:
+            speaker_position = PositionTitle.objects.get(slug='speaker-county-assembly')
+            speaker = Position.objects.filter(place__in=self.self_and_parents(), title_id=speaker_position.id)
+            return Person.objects.get(position=speaker)
+        except Exception, e:
+            return None
+        
+
+        # speaker-county-assembly
 
     def county_executive(self):
         try:            
             organisation = Organisation.objects.get(slug='county-executive')
-            executives = Position.objects.filter(organisation=organisation)
+            executives = Position.objects.filter(place__in=self.self_and_parents(), organisation=organisation)
             return Person.objects.filter(position__in=executives)
         except Exception, e:
             return None
@@ -781,7 +791,7 @@ class Place(ModelBase, ScorecardMixin):
     def county_assembly(self):
         try:            
             organisation = Organisation.objects.get(slug='county-assembly')
-            executives = Position.objects.filter(organisation=organisation)
+            executives = Position.objects.filter(place__in=self.self_and_parents(), organisation=organisation)
             return Person.objects.filter(position__in=executives)
         except Exception, e:
             return None
