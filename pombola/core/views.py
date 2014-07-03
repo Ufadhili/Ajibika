@@ -58,7 +58,7 @@ class OrganisationList(ListView):
 
 class ProfileDetails(DetailView):
     model = models.Person
-    template_name = 'ajibika/profile.html'
+    # template_name = 'ajibika/profile2.html'
 
 class CountyExecutive(DetailView):
     model = models.Place
@@ -162,9 +162,7 @@ class CountyBudget(DetailView):
         context['governor'] = self.object.current_county_governor()
         context['deputy_governor'] = self.object.current_county_deputy_governor()
         context['senator'] = self.object.current_county_senator()
-
         context['bills'] = self.object.document_set.filter(document_type='CBT')
-
         context['speaker'] = self.object.current_county_assembly_speaker()
 
         return context
@@ -203,7 +201,7 @@ class CountyOtherDocs(DetailView):
 
 class PersonDetail(DetailView):
     model = models.Person
-    template_name = 'ajibika/profile.html'
+    template_name = 'ajibika/profile2.html'
 
 
 
@@ -221,9 +219,17 @@ class PersonDetail(DetailView):
     def get_context_data(self, **kwargs):
         context  = super(PersonDetail, self).get_context_data(**kwargs)
         context['county'] = self.object.constituencies()[0]
+        county = self.object.constituencies()[0]
         context['counties'] = models.Place.objects.filter(kind__slug='county')
         context['coalitions'] = self.object.coalitions()
         context['position'] = self.object.politician_positions()[0]
+        context['about'] = models.Place.objects.get(slug=county.slug)
+        context['counties'] = models.Place.objects.filter(kind__slug='county')
+        context['governor'] = county.current_county_governor()
+        context['deputy_governor'] = county.current_county_deputy_governor()
+        context['senator'] = county.current_county_senator()
+        context['bills'] = county.document_set.filter(document_type='CBT')
+        context['speaker'] = county.current_county_assembly_speaker()
         return context
 
 class PersonDetailSub(DetailView):

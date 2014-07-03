@@ -11,8 +11,8 @@ from pombola.core.views import (HomeView, PlaceDetailView,
     CountyOtherDocs)
 
 person_patterns = patterns('pombola.core.views',
-    url(r'^$', ProfileDetails.as_view(template_name = 'ajibika/profile.html'),
-        name='test'), 
+    url(r'^$', ProfileDetails.as_view(template_name = 'ajibika/profile2.html'),
+        name='profile'), 
     url(r'^all/',
         ListView.as_view(model=models.Person),
         name='person_list'),
