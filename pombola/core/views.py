@@ -162,7 +162,7 @@ class CountyBudget(DetailView):
         context['governor'] = self.object.current_county_governor()
         context['deputy_governor'] = self.object.current_county_deputy_governor()
         context['senator'] = self.object.current_county_senator()
-        context['bills'] = self.object.document_set.filter(document_type='CBT')
+        context['budgets'] = self.object.document_set.filter(document_type='CBT')
         context['speaker'] = self.object.current_county_assembly_speaker()
 
         return context
