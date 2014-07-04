@@ -7,18 +7,19 @@ from django.contrib.gis.geos import Point
 from pombola.core.models import Place
 
 
-
 class Document(models.Model):
 	BILL = 'CBL'
 	BUDGET = 'CBT'
 	PLAN = 'CPN'
 	TRANSCRIPT = 'CTT'
+	PROJECT = 'CPR'
 	OTHER = 'COR'
 	COUNTY_DOCUMENT_CHOICES = (	
 					('CBL', 'Bill'),
 					('CBT','Budget'),
 					('CPN','Plan'),
 					('CTT','Transcript'),
+					('CPR', 'Project'),
 					('COR','Other'),
 			)
 	created = models.DateTimeField(auto_now_add=True, default=datetime.datetime.now)

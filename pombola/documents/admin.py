@@ -1,5 +1,9 @@
 from django.contrib import admin
 from pombola.documents import models
+from django.contrib.contenttypes.generic import GenericTabularInline
+from sorl.thumbnail.admin import AdminImageMixin
+import models
+
 
 class DocumentAdmin(admin.ModelAdmin):
 	prepopulated_fields = {"slug": ["title"]}
@@ -7,5 +11,9 @@ class DocumentAdmin(admin.ModelAdmin):
 	search_fields = [ 'slug' ]
 	# exclude = ['slug']
 
+class DocumentAdminInline(admin.TabularInline):
+    model        = models.Document
+    
 
 admin.site.register( models.Document, DocumentAdmin )
+
