@@ -398,6 +398,7 @@ INSTALLED_APPS = (
     'pombola.documents',
     'pombola.videos',
     'pombola.news',
+    'pombola.ajibika_resources',
 
 
     'django_nose',

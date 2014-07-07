@@ -70,7 +70,7 @@ class Project(models.Model):
 
 class ProjectDocument(models.Model):
     file = models.FileField(upload_to='file_archive')
-    page = models.ForeignKey('Project')
+    project = models.ForeignKey('Project')
 
 class ProjectVideo(models.Model):
     video = models.ForeignKey(Video)
