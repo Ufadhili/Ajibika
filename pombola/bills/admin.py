@@ -7,4 +7,4 @@ class BillAdmin(admin.ModelAdmin):
 	search_fields = [ 'slug' ]
 
 
-admin.site.register( models.Bill, BillAdmin )
+# admin.site.register( models.Bill, BillAdmin )

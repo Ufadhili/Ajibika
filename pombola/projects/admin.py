@@ -14,12 +14,12 @@ class ProjectVideoInline(admin.StackedInline):
 
 
 class ProjectAdmin(admin.ModelAdmin):
-    list_display  = [ 'county', 'project_name' ]
+    list_display  = [ 'county', 'project_name', 'status' ]
     search_fields = [ 'county__name', 'project_name' ]
     prepopulated_fields = {"slug": ["project_name"]}
     inlines = [
-	    ImageAdminInline,
 	    ProjectDocumentInline,
+	    ImageAdminInline,	   
 	    ProjectVideoInline
     ]
     

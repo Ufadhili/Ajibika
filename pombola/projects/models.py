@@ -33,7 +33,7 @@ class Project(models.Model):
 
     project_name = models.CharField(max_length=400)
     slug = models.SlugField(max_length=400, unique=True, help_text="created from project name")
-    location_name = models.CharField(max_length=400)
+    location_name = models.CharField(max_length=400,blank=True, null=True)
 
     sector = models.CharField(max_length=400, blank=True, null=True)
     # mtfe_sector = models.CharField(max_length=400)
@@ -42,17 +42,19 @@ class Project(models.Model):
 
     # activity_to_be_done = models.CharField(max_length=400)
     # expected_output = models.CharField(max_length=400)
-    summary = models.TextField()
-    status = models.CharField(max_length=3, choices=PROJECT_STATUS_CHOICES,default=ONGOING)
-    remarks = models.CharField(max_length=400, blank=True, null=True)
+    summary = models.TextField(blank=True, null=True)
+    status = models.CharField(max_length=3, choices=PROJECT_STATUS_CHOICES,default=ONGOING)    
     images = generic.GenericRelation(Image)
+    
 
     # videos = 
 
-    estimated_cost = models.FloatField()
-    total_cost = models.FloatField()
+    estimated_cost = models.FloatField(blank=True, null=True)
+    total_cost = models.FloatField(blank=True, null=True)
 
     first_funding_year = models.IntegerField(blank=True, null=True)
+    contractor = models.CharField(max_length=400, blank=True, null=True)
+    remarks = models.TextField(blank=True, null=True)
 
     # location = models.PointField(srid=4326)
 
@@ -67,7 +69,7 @@ class Project(models.Model):
 
 
 class ProjectDocument(models.Model):
-    file = models.ImageField(upload_to='file_archive')
+    file = models.FileField(upload_to='file_archive')
     page = models.ForeignKey('Project')
 
 class ProjectVideo(models.Model):
