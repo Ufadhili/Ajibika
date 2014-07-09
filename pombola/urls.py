@@ -4,7 +4,7 @@ from django.conf import settings
 from django.conf.urls import patterns, include, url
 from django.conf.urls.static import static
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
-from .core.views import AboutAjibikaView
+from .core.views import AboutAjibikaView, AjibikaResourcesView
 
 #----------------------code for Ajibika API-------------------------------
 from tastypie.api import Api
@@ -65,6 +65,7 @@ urlpatterns += patterns('',
 )
 urlpatterns +=patterns('',
         (r'^about/', AboutAjibikaView.as_view()),
+        (r'^resources/', AjibikaResourcesView.as_view()),
     )
 # SayIt - speeches
 #if settings.ENABLED_FEATURES['speeches']:

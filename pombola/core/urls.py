@@ -8,7 +8,7 @@ from pombola.core.views import (HomeView, PlaceDetailView,
     PersonDetailSub, PlaceDetailSub, OrganisationDetailSub, ProfileDetails,
     OrganisationDetailView, CountyExecutive, CountyAssembly, AboutCounty, 
     CountyBills, CountyProjects, CountyPlan, CountyBudget, CountyTranscripts, 
-    CountyOtherDocs)
+    CountyOtherDocs, CountyGallery)
 
 person_patterns = patterns('pombola.core.views',
     url(r'^$', ProfileDetails.as_view(template_name = 'ajibika/profile2.html'),
@@ -82,6 +82,14 @@ place_patterns = patterns('pombola.core.views',
        url(  r'^(?P<slug>[-\w]+)/otherdocs/$', 
         CountyOtherDocs.as_view(template_name='ajibika/otherdocs.html'), 
         name='county_otherdocs', 
+        ),
+       url(  r'^(?P<slug>[-\w]+)/gallery/$', 
+        CountyGallery.as_view(template_name='ajibika/county_gallery.html'), 
+        name='county_gallery', 
+        ),
+       url(  r'^(?P<slug>[-\w]+)/news/$', 
+        CountyGallery.as_view(template_name='ajibika/county_news.html'), 
+        name='county_news', 
         ),
 
     url(r'^(?P<slug>[-\w]+)/$',
