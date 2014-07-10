@@ -242,7 +242,7 @@ admin.site.register(models.OrganisationKind, OrganisationKindAdmin)
 admin.site.register(models.Person, PersonAdmin)
 admin.site.register(models.Place, PlaceAdmin)
 admin.site.register(models.PlaceKind, PlaceKindAdmin)
-admin.site.register(models.Position, PositionAdmin)
+# admin.site.register(models.Position, PositionAdmin)
 admin.site.register(models.PositionTitle, PositionTitleAdmin)
 
 
