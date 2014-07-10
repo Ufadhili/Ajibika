@@ -378,7 +378,7 @@ INSTALLED_APPS = (
     'autocomplete_light',
     'markitup',
 
-    # 'mapit',
+    'mapit',
 
     'pombola.images',
     'sorl.thumbnail',
