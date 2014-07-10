@@ -177,10 +177,11 @@ class PlaceAdmin(admin.ModelAdmin):
     list_display = ('slug', 'name', 'kind', 'show_organisation')
     list_filter = ('kind',)
     search_fields = ('name', 'organisation__name')
+    fields = ['name', 'slug', 'kind', 'summary', 'organisation', 'parliamentary_session']
     inlines = (
-        InformationSourceInlineAdmin,
-        ScorecardInlineAdmin,
-        IdentifierInlineAdmin,
+        # InformationSourceInlineAdmin,
+        # ScorecardInlineAdmin,
+        # IdentifierInlineAdmin,
         ImageAdminInline,
         )
 
@@ -232,10 +233,10 @@ class PositionTitleAdmin(admin.ModelAdmin):
 
 
 # Add these to the admin
-admin.site.register(models.Contact, ContactAdmin)
+# admin.site.register(models.Contact, ContactAdmin)
 admin.site.register(models.ContactKind, ContactKindAdmin)
-admin.site.register(models.Identifier, IdentifierAdmin)
-admin.site.register(models.InformationSource, InformationSourceAdmin)
+# admin.site.register(models.Identifier, IdentifierAdmin)
+# admin.site.register(models.InformationSource, InformationSourceAdmin)
 admin.site.register(models.Organisation, OrganisationAdmin)
 admin.site.register(models.OrganisationKind, OrganisationKindAdmin)
 admin.site.register(models.Person, PersonAdmin)

@@ -121,8 +121,8 @@ class AliasAdmin(admin.ModelAdmin):
                 context_instance=RequestContext(request)
             )
 
-admin.site.register( models.Source,  SourceAdmin )
-admin.site.register( models.Venue,   VenueAdmin )
-admin.site.register( models.Sitting, SittingAdmin )
-admin.site.register( models.Entry,   EntryAdmin )
-admin.site.register( models.Alias,   AliasAdmin )
+# admin.site.register( models.Source,  SourceAdmin )
+# admin.site.register( models.Venue,   VenueAdmin )
+# admin.site.register( models.Sitting, SittingAdmin )
+# admin.site.register( models.Entry,   EntryAdmin )
+# admin.site.register( models.Alias,   AliasAdmin )

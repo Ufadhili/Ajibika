@@ -129,5 +129,5 @@ class TaskCategoryAdmin(admin.ModelAdmin):
 
 
 # Add these to the admin
-admin.site.register( models.Task,         TaskAdmin )
-admin.site.register( models.TaskCategory, TaskCategoryAdmin )
+# admin.site.register( models.Task,         TaskAdmin )
+# admin.site.register( models.TaskCategory, TaskCategoryAdmin )

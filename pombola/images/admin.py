@@ -29,4 +29,4 @@ class ImageAdminInline(AdminImageMixin, GenericTabularInline):
     extra        = 0
     can_delete   = True
 
-admin.site.register( models.Image, ImageAdmin )
+# admin.site.register( models.Image, ImageAdmin )

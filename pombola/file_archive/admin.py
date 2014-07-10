@@ -5,4 +5,4 @@ class FileAdmin(admin.ModelAdmin):
     list_display  = [ 'slug', 'updated' ]
     search_fields = [ 'slug' ]
 
-admin.site.register( models.File, FileAdmin )
+# admin.site.register( models.File, FileAdmin )

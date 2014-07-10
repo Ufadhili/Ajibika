@@ -10,4 +10,4 @@ class FeedbackAdmin(admin.ModelAdmin):
     raw_id_fields = ('user',)
     search_fields = ('comment', 'user__username', 'url', 'email')
 
-admin.site.register( Feedback, FeedbackAdmin )
+# admin.site.register( Feedback, FeedbackAdmin )
