@@ -18,6 +18,8 @@ from django.contrib.contenttypes.models import ContentType
 from pombola.core import models
 from pombola.info.models import InfoPage
 from pombola.documents.models import Document
+from pombola.ajibika_resources.models import Document as AjibikaDoc
+from pombola.projects.models import Project
 
 
 class HomeView(TemplateView):
@@ -25,22 +27,8 @@ class HomeView(TemplateView):
     template_name = 'ajibika/index.html'
 
     def get_context_data(self, **kwargs):
-
         context = super(HomeView, self).get_context_data(**kwargs)
-
-        # before, after = (self.request.GET.get(k) for k in ('before', 'after'))
-        # current_slug = before or after
-
-        # context['featured_person'] = \
-        #     models.Person.objects.get_next_featured(current_slug,
-        #                                             want_previous=before)
-
-        # For the election homepage produce a list of all the featured people.
-        # Shuffle it each time to avoid any bias.
-        # context['featured_persons'] = list(models.Person.objects.get_featured())
         context['counties'] = models.Place.objects.filter(kind__slug='county')
-        # random.shuffle(context['featured_persons'])
-
         return context
 
 class AboutAjibikaView(TemplateView):
@@ -53,7 +41,12 @@ class AboutAjibikaView(TemplateView):
         return context
 
 class AjibikaResourcesView(TemplateView):
-    template_name = 'ajibika/resources.html'
+    template_name = 'ajibika/ajibika_resources.html'
+    def get_context_data(self, **kwargs):
+        context = super(AjibikaResourcesView, self).get_context_data(**kwargs)
+        context['counties'] = models.Place.objects.filter(kind__slug='county') 
+        context['resources'] = AjibikaDoc.objects.all()      
+        return context
 
 class OrganisationList(ListView):
     model = models.Organisation
@@ -129,12 +122,7 @@ class CountyProjects(DetailView):
 
     def get_context_data(self, **kwargs):
         context = super(CountyProjects, self).get_context_data(**kwargs)
-        # context['about'] = models.Place.objects.get(slug=self.kwargs['slug'])
-        # context['counties'] = models.Place.objects.filter(kind__slug='county')
-        # context['governor'] = self.object.current_county_governor()
-        # context['deputy_governor'] = self.object.current_county_deputy_governor()
-        # context['senator'] = self.object.current_county_senator()
-        # context['speaker'] = self.object.current_county_assembly_speaker()
+        context['projects'] = Project.objects.filter(county=self.object)
         return context
 
 class CountyPlan(DetailView):
@@ -142,15 +130,8 @@ class CountyPlan(DetailView):
     context_object_name = 'county'
 
     def get_context_data(self, **kwargs):
-        context = super(CountyPlan, self).get_context_data(**kwargs)
-        # context['about'] = models.Place.objects.get(slug=self.kwargs['slug'])
-        # context['counties'] = models.Place.objects.filter(kind__slug='county')
-        # context['governor'] = self.object.current_county_governor()
-        # context['deputy_governor'] = self.object.current_county_deputy_governor()
-        # context['senator'] = self.object.current_county_senator()
+        context = super(CountyPlan, self).get_context_data(**kwargs)        
         context['plans'] = self.object.document_set.filter(document_type='CPN')
-        # context['speaker'] = self.object.current_county_assembly_speaker()
-
         return context
 
 class CountyBudget(DetailView):
@@ -159,11 +140,7 @@ class CountyBudget(DetailView):
 
     def get_context_data(self, **kwargs):
         context = super(CountyBudget, self).get_context_data(**kwargs)
-        # context['about'] = models.Place.objects.get(slug=self.kwargs['slug'])
-        # context['counties'] = models.Place.objects.filter(kind__slug='county')
-        # context['governor'] = self.object.current_county_governor()
-        # context['deputy_governor'] = self.object.current_county_deputy_governor()
-        # context['senator'] = self.object.current_county_senator()
+        
         context['budgets'] = self.object.document_set.filter(document_type='CBT')
         # context['speaker'] = self.object.current_county_assembly_speaker()
 
@@ -175,12 +152,7 @@ class CountyTranscripts(DetailView):
 
     def get_context_data(self, **kwargs):
         context = super(CountyTranscripts, self).get_context_data(**kwargs)
-        # context['about'] = models.Place.objects.get(slug=self.kwargs['slug'])
-        # context['counties'] = models.Place.objects.filter(kind__slug='county')
-        # context['governor'] = self.object.current_county_governor()
-        # context['deputy_governor'] = self.object.current_county_deputy_governor()
-        # context['senator'] = self.object.current_county_senator()
-        # context['speaker'] = self.object.current_county_assembly_speaker()
+        
         return context
         
 class CountyOtherDocs(DetailView):
@@ -189,11 +161,7 @@ class CountyOtherDocs(DetailView):
 
     def get_context_data(self, **kwargs):
         context = super(CountyOtherDocs, self).get_context_data(**kwargs)
-        # context['about'] = models.Place.objects.get(slug=self.kwargs['slug'])
-        # context['counties'] = models.Place.objects.filter(kind__slug='county')
-        # context['governor'] = self.object.current_county_governor()
-        # context['deputy_governor'] = self.object.current_county_deputy_governor()
-        # context['senator'] = self.object.current_county_senator()
+        
 
         context['other_docs'] = self.object.document_set.filter(document_type='COR')
 
@@ -207,21 +175,12 @@ class CountyGallery(DetailView):
 
     def get_context_data(self, **kwargs):
         context = super(CountyGallery, self).get_context_data(**kwargs)
-        # context['about'] = models.Place.objects.get(slug=self.kwargs['slug'])
-        # context['counties'] = models.Place.objects.filter(kind__slug='county')
-        # context['governor'] = self.object.current_county_governor()
-        # context['deputy_governor'] = self.object.current_county_deputy_governor()
-        # context['senator'] = self.object.current_county_senator()
-
-        # context['other_docs'] = self.object.document_set.filter(document_type='COR')
-
-        # context['speaker'] = self.object.current_county_assembly_speaker()
-
+        context['images'] = self.object.images.all()
         return context
 
 class PersonDetail(DetailView):
     model = models.Person
-    template_name = 'ajibika/profile2.html'
+    template_name = 'ajibika/person_detail.html'
 
 
 

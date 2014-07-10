@@ -6,7 +6,7 @@
 			<div class="row">
 				<div class="col-md-9">
 					<div class="call-to-action">
-						<h1 class="nomargin">Projects</h1>
+						<h1 class="nomargin">Projects in {{county.name}} county</h1>
 					</div>
 						
 				</div>
@@ -19,7 +19,8 @@
 				<div class="row">
 					<div class="col-md-12">
 						
-						
+						{% if projects %}
+						{% for project in projects %}
 						<div class="bg-white-aji projects-wra">
 							<div class="project-wrap">
 								<div class="row">
@@ -30,17 +31,17 @@
 									</div>
 									<div class="col-md-10">
 										<div class="project-title">
-											<h2><a href="">Construction of Maecenas sed diam eget risus varius blandit sit amet non magna.</a></h2>
+											<h2><a href="">{{project.project_name}}</a></h2>
 										</div>
 										<div class="project-attribes">
-											<p><b>Start Date:</b> 12 June 2012   &nbsp;&nbsp;    <b>Status:</b> In progress  &nbsp;&nbsp;    <b> Location:  </b>Kirna</p>
+											<p><b>Year funded:</b> {{project.first_funding_year}}   &nbsp;&nbsp;    <b>Status:</b> {{project.status}}  &nbsp;&nbsp;    <b> Location:  </b>{{project.location_name}}</p>
 										</div>
 										<div class="project-body">
-											<p>Cras justo odio, dapibus ac facilisis in, egestas eget quam. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Curabitur blandit tempus porttitor. </p>
+											<p>{{project.summary}} </p>
 										</div>
 										<div class="project-controls">
 											<p>
-												<a href="">
+												<a href="{{project.get_absolute_url}}">
 													Read more ...
 												</a>
 											</p>
@@ -50,14 +51,11 @@
 								</div>
 							</div>
 						</div>
+						{% endfor %}
+						{% endif %}
 						
 						
 						
-					</div>
-					<div class="col-md-12">
-						<p class="nomargin tcenter load-more">
-							<a class="btn btn-ajibika" href="">Load more</a>
-						</p>
 					</div>
 					
 					
