@@ -164,7 +164,15 @@ def remote_logs():
 	# run("sudo cat /var/www/logs/nginx/access.log")
 	# run("sudo cat  /var/www/logs/nginx/error.log")
 
+def sys_info():
+	run("sudo du -h")
+	run ("sudo df -h")
+
 def update_server():
+	"""
+	If it ain't broken.......... Actually, due to the large number of pombola depencies, 
+	I would refrain from doing this unless it's extemely necessary 
+	"""
 	run("sudo aptitude update")
 	run("sudo aptitude -y safe-upgrade")
 
