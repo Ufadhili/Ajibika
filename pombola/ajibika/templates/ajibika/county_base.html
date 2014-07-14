@@ -90,7 +90,7 @@
 	              <a href="#" class="dropdown-toggle" data-toggle="dropdown">County Executive <span class="caret"></span></a>
 	              <ul class="dropdown-menu" role="menu">
 	                <li><a href="{{governor.get_absolute_url}}">Governor</a></li>
-	                <li><a href="{{deputy_governor.get_absolute_url}}">D. Governor</a></li>
+	                <li><a href="{{deputy_governor.get_absolute_url}}">Deputy Governor</a></li>
 	                <li><a href="{{county.get_absolute_url}}county-executive">County Executive</a></li>
 	                <li><a href="{{county.get_absolute_url}}other-officials">Other Officials</a></li>
 	              </ul>
@@ -195,6 +195,7 @@
 							<div class="col-sm-11"><i class="fa fa-user"></i> FEATURED OFFICIAL </div>
 						</div>
 					</div>
+					{% if featured %}
 					<div class="cont-body profile">
 						<div class="row">
 							<div class="col-xs-4">
@@ -216,6 +217,10 @@
 							</div>
 						</div>
 					</div>
+					{% else %}
+					<p>No officials found for this county.</p>
+					{% endif %}
+
 					
 				</div>
 				<div class="quicklinks-wrap">
@@ -251,22 +256,28 @@
 		</div>
 	</div>
 	<div class="county-body">
+	{% if news %}
 		<div class="county-news">
 			<div class="container">
 				<div class="row">
 					<div class="col-md-10">
 						<p class="nomargin">
-							News:   <a href="">To see the difference between static and fixed top navbars, just scroll. <i class="fa fa-arrow-circle-right color-aji"></i></a>
+						{% with news|random as item %}
+							News:   <a href="{{county.get_absolute_url}}news/{{item.slug}}">{{item.title}} <i class="fa fa-arrow-circle-right color-aji"></i></a>
+						
+						{% endwith %}
 						</p>
 					</div>
 					<div class="col-md-2">
 						<p class="nomargin tright">
-							<a href="">Read more <i class="fa fa-chevron-right"></i></a>
+							<a href="{{county.get_absolute_url}}news">Read More<i class="fa fa-chevron-right"></i></a>
 						</p>
 					</div>
 				</div>
 			</div>
 		</div>
+
+		{% endif %}
 		<div class="county-resources">
 			<div class="container">
 				<div class="row">
@@ -278,19 +289,26 @@
 								</div>
 							</div>
 							<div class="cont-body">
+
+								{%if news %}
+							
 								<ul class="nopadding nomargin listnone">
-									
+								{% with news|slice:"5" as items %}	
+								{% for item in items %}								
 									<li>
 										<a href="">
 											<div class="row">
-												<div class="col-md-1"><span class="large-date">O4</span> <br/> <span class="small-month">JUNE</span> </div>
+												<div class="col-md-1"><span class="large-date">
+												{{item.publication_date|date:"d"}}</span> <br/> 
+												<span class="small-month">{{item.publication_date|date:"F"}}</span> </div>
 												<div class="col-md-11"> 
 													<div class="news-page">
 														<div class="newstitle">
-															<h4 class="nomargin"><a href="">Maecenas faucibus mollis interdumum.</a></h4>
+															<h4 class="nomargin">
+															<a href="{{county.get_absolute_url}}news/{{item.slug}}">{{item.title}}</a></h4>
 														</div>
 													<div class="news-excerpt">
-														<p class="nomargin">Cum sociis natoque penatibus et magnis dis parturient montes, na Maecenas faucibus mollis interdum. Maecenas faucibus mollis interdum. <a href="">read more...</a></p>
+														<p class="nomargin">{{item.message | truncatechars:140}} <a href="">read more...</a></p>
 													</div>
 													</div>
 												</div>
@@ -298,67 +316,20 @@
 										</a>
 										
 									</li>
-									<li>
-										<a href="">
-											<div class="row">
-												<div class="col-md-1"><span class="large-date">O4</span> <br/> <span class="small-month">JUNE</span> </div>
-												<div class="col-md-11"> 
-													<div class="news-page">
-														<div class="newstitle">
-															<h4 class="nomargin"><a href="">Maecenas faucibus mollis interdumum.</a></h4>
-														</div>
-													<div class="news-excerpt">
-														<p class="nomargin">Cum sociis natoque penatibus et magnis dis parturient montes, na Maecenas faucibus mollis interdum. Maecenas faucibus mollis interdum. <a href="">read more...</a></p>
-													</div>
-													</div>
-												</div>
-											</div>
-										</a>
-										
-									</li>
-									<li>
-										<a href="">
-											<div class="row">
-												<div class="col-md-1"><span class="large-date">O4</span> <br/> <span class="small-month">JUNE</span> </div>
-												<div class="col-md-11"> 
-													<div class="news-page">
-														<div class="newstitle">
-															<h4 class="nomargin"><a href="">Maecenas faucibus mollis interdumum.</a></h4>
-														</div>
-													<div class="news-excerpt">
-														<p class="nomargin">Cum sociis natoque penatibus et magnis dis parturient montes, na Maecenas faucibus mollis interdum. Maecenas faucibus mollis interdum. <a href="">read more...</a></p>
-													</div>
-													</div>
-												</div>
-											</div>
-										</a>
-										
-									</li>
-									<li>
-										<a href="">
-											<div class="row">
-												<div class="col-md-1"><span class="large-date">O4</span> <br/> <span class="small-month">JUNE</span> </div>
-												<div class="col-md-11"> 
-													<div class="news-page">
-														<div class="newstitle">
-															<h4 class="nomargin"><a href="">Maecenas faucibus mollis interdumum.</a></h4>
-														</div>
-													<div class="news-excerpt">
-														<p class="nomargin">Cum sociis natoque penatibus et magnis dis parturient montes, na Maecenas faucibus mollis interdum. Maecenas faucibus mollis interdum. <a href="">read more...</a></p>
-													</div>
-													</div>
-												</div>
-											</div>
-										</a>
-										
-									</li>
-									
+							
+							{% endfor %}
+
+							{% endwith %}
+							
+									{% else %}
+							<p>No news found for this county </p>
 									
 									
 									
 									
 									
 								</ul>
+								{% endif %}
 							</div>
 						</div>
 					</div>
@@ -366,12 +337,22 @@
 						<div class="bg-white-aji">
 							<div class="cont-title">
 								<div class="row">
-									<div class="col-sm-1"><i class="fa fa-tasks"></i></div><div class="col-sm-11"> FEATURED VIDEO </div>
+									<div class="col-sm-1">
+									<i class="fa fa-tasks"></i></div><div class="col-sm-11"> FEATURED VIDEO </div>
 								</div>
 							</div>
+							
 							<div class="cont-body videos-wrap">
-								<iframe width="100%" height="305" src="//www.youtube.com/embed/EgbEUrfdedQ" frameborder="0" allowfullscreen></iframe>
+							{% if videos %} 
+							{% with videos|random as featured_video%}
+								<div id="video-frame" value="{{featured_video.youtube_link}}" ></div>
+							{% endwith %}
+								{% else %}
+							
+							<div id="video-frame" value="" ></div>
+							{% endif %}
 							</div>
+
 							
 						</div>
 					</div>
@@ -381,9 +362,7 @@
 		
 	</div>
 	<script>
-    $('.carousel').carousel({
-        interval: 5000 //changes the speed
-    })
+   
     </script>
   {% endblock %}
     	<div class="cont-footer-wrap">
@@ -529,6 +508,35 @@
 	<script src="{{STATIC_URL}}js/bootstrap-image-gallery.min.js"></script>
 	<script src="{{STATIC_URL}}js/bootstrap-image-gallery.min.js"></script>
 	<script src="{{STATIC_URL}}js/image-resize.js"></script>
+	<script type="text/javascript">
+	$(function(){
+		 $('.carousel').carousel({
+		        interval: 5000 //changes the speed
+			    });
+
+		 //Ugly hack for youtube embeds.
+
+
+		 var regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/;
+		 var url = $("#video-frame").attr("value");
+		 var match = url.match(regExp);
+		 if (match && match[2].length == 11) {
+		 	var myId = match[2];
+		 	var src = "//www.youtube.com/embed/" + myId + "";
+		 	var code = 
+		 	"<iframe id='featured-vid' width='100%' height='305' src='"+src+"'frameborder='0' allowfullscreen></iframe>";
+			 	$("#video-frame").replaceWith(code);		 	
+				 } 
+
+		 // If we didn't find videos for this county default to this.
+
+		 else {		 	
+		 	var code = "<iframe id='featured-vid' width='100%' height='305' src='//www.youtube.com/embed/Z4IeRbDqMnE'frameborder='0' allowfullscreen></iframe>";
+		 	$("#video-frame").replaceWith(code)
+		 }
+	// }
+	})
+	</script>
 
 
   </body>

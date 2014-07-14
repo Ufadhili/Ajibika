@@ -42,50 +42,24 @@
 									<div class="col-sm-1"><i class="fa fa-tasks"></i></div><div class="col-sm-11"> TOP NEWS </div>
 								</div>
 							</div>
+							{%if news %}
+							{% for item in news %}
 							<div class="cont-body">
 								<ul class="nopadding nomargin listnone">
 									<li>
 										<a href="">
 											<div class="row">
-												<div class="col-md-3"><span class="large-date">O4</span> <br/> <span class="small-month">JUNE</span> </div>
-												<div class="col-md-9"> <p class="nomargin">Cum sociis natoque penatibus et magnis dis parturient montes, na</p></div>
+												<div class="col-md-3"><span class="large-date">O4</span> <br/> <span class="small-month">{{item.publication_date}}</span> </div>
+												<div class="col-md-9"> <p class="nomargin">{{item.title}}</p></div>
 											</div>
 										</a>
 										
-									</li>
-									
-									<li>
-										<a href="">
-											<div class="row">
-												<div class="col-md-3"><span class="large-date">O4</span> <br/> <span class="small-month">JUNE</span> </div>
-												<div class="col-md-9"> <p class="nomargin">Cum sociis natoque penatibus et magnis dis parturient montes, na</p></div>
-											</div>
-										</a>
-										
-									</li>
-									
-									<li>
-										<a href="">
-											<div class="row">
-												<div class="col-md-3"><span class="large-date">O4</span> <br/> <span class="small-month">JUNE</span> </div>
-												<div class="col-md-9"> <p class="nomargin">Cum sociis natoque penatibus et magnis dis parturient montes, na</p></div>
-											</div>
-										</a>
-										
-									</li>
-									<li>
-										<a href="">
-											<div class="row">
-												<div class="col-md-3"><span class="large-date">O4</span> <br/> <span class="small-month">JUNE</span> </div>
-												<div class="col-md-9"> <p class="nomargin">Cum sociis natoque penatibus et magnis dis parturient montes, na</p></div>
-											</div>
-										</a>
-										
-									</li>
-									
+									</li>								
 									
 								</ul>
 							</div>
+							{% endfor %}
+							{% endif %}
 						</div>
 					</div>
 					<div class="col-md-4">

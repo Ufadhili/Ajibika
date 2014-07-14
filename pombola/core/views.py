@@ -20,6 +20,8 @@ from pombola.info.models import InfoPage
 from pombola.documents.models import Document
 from pombola.ajibika_resources.models import Document as AjibikaDoc
 from pombola.projects.models import Project
+from pombola.news.models import NewsEntry
+from pombola.videos.models import Video as CountyVideo
 
 
 class HomeView(TemplateView):
@@ -168,6 +170,7 @@ class CountyProjects(DetailView):
         context['counties'] = models.Place.objects.filter(kind__slug='county')
         context['projects'] = Project.objects.filter(county=self.object)
         context['womens_rep'] = self.object.current_county_womens_rep()
+        context['speaker'] = self.object.current_county_assembly_speaker()
         return context
 
 class CountyPlan(DetailView):
@@ -190,8 +193,7 @@ class CountyBudget(DetailView):
         context['deputy_governor'] = self.object.current_county_deputy_governor()
         context['senator'] = self.object.current_county_senator()
         context['counties'] = models.Place.objects.filter(kind__slug='county')
-        context['womens_rep'] = self.object.current_county_womens_rep()
-        
+        context['womens_rep'] = self.object.current_county_womens_rep()        
         context['budgets'] = self.object.document_set.filter(document_type='CBT')
         context['speaker'] = self.object.current_county_assembly_speaker()
 
@@ -236,6 +238,24 @@ class CountyGallery(DetailView):
         context['senator'] = self.object.current_county_senator()
         context['counties'] = models.Place.objects.filter(kind__slug='county')
         context['womens_rep'] = self.object.current_county_womens_rep()
+        context['speaker'] = self.object.current_county_assembly_speaker()
+
+        return context
+
+class CountyNews(DetailView):
+    model = models.Place
+    context_object_name = 'county'
+
+    def get_context_data(self, **kwargs):
+        context = super(CountyNews, self).get_context_data(**kwargs)
+        context['images'] = self.object.images.all()
+        context['related_people'] = self.object.related_people()
+        context['governor'] = self.object.current_county_governor()
+        context['deputy_governor'] = self.object.current_county_deputy_governor()
+        context['senator'] = self.object.current_county_senator()
+        context['counties'] = models.Place.objects.filter(kind__slug='county')
+        context['womens_rep'] = self.object.current_county_womens_rep()
+        context['news'] = NewsEntry.objects.filter(county=self.object)
         return context
 
 class PersonDetail(DetailView):
@@ -295,6 +315,8 @@ class PlaceDetailView(DetailView):
         context['images'] = self.object.images.all()[1:]
         context['active_image'] = self.object.images.all()[0]
         context['womens_rep'] = self.object.current_county_womens_rep()
+        context['news'] = NewsEntry.objects.filter(county=self.object)
+        context['videos'] = CountyVideo.objects.filter(county=self.object)
         return context
 
 class PlaceDetailSub(DetailView):
