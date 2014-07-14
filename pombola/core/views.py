@@ -69,6 +69,7 @@ class CountyExecutive(DetailView):
         context['deputy_governor'] = self.object.current_county_deputy_governor()
         context['senator'] = self.object.current_county_senator()
         context['speaker'] = self.object.current_county_assembly_speaker()
+        context['womens_rep'] = self.object.current_county_womens_rep()
         return context
 
 class CountyAssembly(DetailView):
@@ -84,6 +85,42 @@ class CountyAssembly(DetailView):
         context['deputy_governor'] = self.object.current_county_deputy_governor()
         context['senator'] = self.object.current_county_senator()
         context['speaker'] = self.object.current_county_assembly_speaker()
+        context['womens_rep'] = self.object.current_county_womens_rep()
+        return context
+
+class CountyMembersOfParliament(DetailView):
+    model = models.Place
+    context_object_name = "county"
+    
+    def get_context_data(self, **kwargs):
+        context = super(CountyMembersOfParliament, self).get_context_data(**kwargs)
+        context['persons'] = models.Place.objects.get(slug=self.kwargs['slug']).county_members_of_parliament()
+        context['category'] = 'Members of Parliament'
+        context['counties'] = models.Place.objects.filter(kind__slug='county')
+        context['governor'] = self.object.current_county_governor()
+        context['deputy_governor'] = self.object.current_county_deputy_governor()
+        context['senator'] = self.object.current_county_senator()
+        context['speaker'] = self.object.current_county_assembly_speaker()
+        context['womens_rep'] = self.object.current_county_womens_rep()
+        return context
+
+# county_members_of_parliament
+
+
+class CountyOtherOfficials(DetailView):
+    model = models.Place
+    context_object_name = "county"
+    
+    def get_context_data(self, **kwargs):
+        context = super(CountyOtherOfficials, self).get_context_data(**kwargs)
+        context['persons'] = models.Place.objects.get(slug=self.kwargs['slug']).county_other_officials()
+        context['category'] = 'Other Officials'
+        context['counties'] = models.Place.objects.filter(kind__slug='county')
+        context['governor'] = self.object.current_county_governor()
+        context['deputy_governor'] = self.object.current_county_deputy_governor()
+        context['senator'] = self.object.current_county_senator()
+        context['speaker'] = self.object.current_county_assembly_speaker()
+        context['womens_rep'] = self.object.current_county_womens_rep()
         return context
 
 class AboutCounty(DetailView):
@@ -98,6 +135,7 @@ class AboutCounty(DetailView):
         context['deputy_governor'] = self.object.current_county_deputy_governor()
         context['senator'] = self.object.current_county_senator()
         context['speaker'] = self.object.current_county_assembly_speaker()
+        context['womens_rep'] = self.object.current_county_womens_rep()
         return context
 
 class CountyBills(DetailView):
@@ -113,6 +151,7 @@ class CountyBills(DetailView):
         context['senator'] = self.object.current_county_senator()
         context['bills'] = self.object.document_set.filter(document_type='CBL')
         context['speaker'] = self.object.current_county_assembly_speaker()
+        context['womens_rep'] = self.object.current_county_womens_rep()
 
         return context
 
@@ -128,6 +167,7 @@ class CountyProjects(DetailView):
         context['senator'] = self.object.current_county_senator()
         context['counties'] = models.Place.objects.filter(kind__slug='county')
         context['projects'] = Project.objects.filter(county=self.object)
+        context['womens_rep'] = self.object.current_county_womens_rep()
         return context
 
 class CountyPlan(DetailView):
@@ -150,6 +190,7 @@ class CountyBudget(DetailView):
         context['deputy_governor'] = self.object.current_county_deputy_governor()
         context['senator'] = self.object.current_county_senator()
         context['counties'] = models.Place.objects.filter(kind__slug='county')
+        context['womens_rep'] = self.object.current_county_womens_rep()
         
         context['budgets'] = self.object.document_set.filter(document_type='CBT')
         context['speaker'] = self.object.current_county_assembly_speaker()
@@ -176,11 +217,9 @@ class CountyOtherDocs(DetailView):
         context['deputy_governor'] = self.object.current_county_deputy_governor()
         context['senator'] = self.object.current_county_senator()
         context['counties'] = models.Place.objects.filter(kind__slug='county')
-        
-
         context['other_docs'] = self.object.document_set.filter(document_type='COR')
-
         context['speaker'] = self.object.current_county_assembly_speaker()
+        context['womens_rep'] = self.object.current_county_womens_rep()
 
         return context
 
@@ -196,6 +235,7 @@ class CountyGallery(DetailView):
         context['deputy_governor'] = self.object.current_county_deputy_governor()
         context['senator'] = self.object.current_county_senator()
         context['counties'] = models.Place.objects.filter(kind__slug='county')
+        context['womens_rep'] = self.object.current_county_womens_rep()
         return context
 
 class PersonDetail(DetailView):
@@ -228,6 +268,7 @@ class PersonDetail(DetailView):
         context['senator'] = county.current_county_senator()
         context['bills'] = county.document_set.filter(document_type='CBT')
         context['speaker'] = county.current_county_assembly_speaker()
+        context['womens_rep'] = county.current_county_womens_rep()
         return context
 
 class PersonDetailSub(DetailView):
@@ -253,6 +294,7 @@ class PlaceDetailView(DetailView):
         context['featured'] = self.object.featured_in_the_county()
         context['images'] = self.object.images.all()[1:]
         context['active_image'] = self.object.images.all()[0]
+        context['womens_rep'] = self.object.current_county_womens_rep()
         return context
 
 class PlaceDetailSub(DetailView):

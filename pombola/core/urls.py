@@ -8,7 +8,7 @@ from pombola.core.views import (HomeView, PlaceDetailView,
     PersonDetailSub, PlaceDetailSub, OrganisationDetailSub, ProfileDetails,
     OrganisationDetailView, CountyExecutive, CountyAssembly, AboutCounty, 
     CountyBills, CountyProjects, CountyPlan, CountyBudget, CountyTranscripts, 
-    CountyOtherDocs, CountyGallery)
+    CountyOtherDocs, CountyGallery, CountyMembersOfParliament, CountyOtherOfficials)
 
 person_patterns = patterns('pombola.core.views',
     url(r'^$', ProfileDetails.as_view(template_name = 'ajibika/profile2.html'),
@@ -108,10 +108,19 @@ place_patterns = patterns('pombola.core.views',
         r'^(?P<slug>[-\w]+)/(?P<category>county-executive)/$', 
         CountyExecutive.as_view(template_name='ajibika/profiles.html'), 
         name='county_executive'),
-      url(
+   url(
         r'^(?P<slug>[-\w]+)/(?P<category>county-assembly)/$', 
         CountyAssembly.as_view(template_name='ajibika/profiles.html'), 
         name='county_assembly'),
+     url(
+        r'^(?P<slug>[-\w]+)/(?P<category>other-officials)/$', 
+        CountyOtherOfficials.as_view(template_name='ajibika/profiles.html'), 
+        name='county_other_officials'),
+    url(
+        r'^(?P<slug>[-\w]+)/(?P<category>members-of-parliament)/$', 
+        CountyMembersOfParliament.as_view(template_name='ajibika/profiles.html'), 
+        name='county_members_of_parliament'),
+    # other-officials
     )
 
 # ugly, must be a better way

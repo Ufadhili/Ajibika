@@ -781,15 +781,42 @@ class Place(ModelBase, ScorecardMixin):
             return Person.objects.get(position=speaker)
         except Exception, e:
             return None
+
+    def current_county_womens_rep(self):
+        try:
+            position_title = PositionTitle.objects.get(slug='womens-representative')
+            womens_rep = Position.objects.filter(place__in=self.self_and_parents(), title_id=position_title.id)
+            return Person.objects.get(position=womens_rep)
+        except Exception, e:
+            return None
+
         
 
         # speaker-county-assembly
+        # womens-representative
+        # member-parliament
+    def county_members_of_parliament(self):
+        try:
+            mp_title = PositionTitle.objects.get(slug='member-parliament')
+            mps = Position.objects.filter(place__in=self.self_and_parents(), title__slug=mp_title)
+            return Person.objects.filter(position__in=mps)
+        except Exception, e:
+            return None
 
     def county_executive(self):
         try:            
             organisation = Organisation.objects.get(slug='county-executive')
             executives = Position.objects.filter(place__in=self.self_and_parents(), organisation=organisation)
-            return Person.objects.filter(position__in=executives)
+            return Person.objects.filter(position__in=executives).distinct()
+        except Exception, e:
+            return None
+
+    def county_other_officials(self):
+        slugs = ['senate', 'county-assembly', 'parliament', 'county-executive']
+        try:
+            other_orgs = Organisation.objects.exclude(slug__in=slugs)
+            executives = Position.objects.filter(place__in=self.self_and_parents(), organisation=other_orgs)
+            return Person.objects.filter(position__in=executives).distinct()
         except Exception, e:
             return None
 
