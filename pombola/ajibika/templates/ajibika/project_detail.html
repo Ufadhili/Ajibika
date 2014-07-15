@@ -1,0 +1,101 @@
+	
+{% extends 'ajibika/county_base.html' %}
+
+ {% block content %}
+  {% include "disqus_javascript.html" %}
+ 	<div class="county-header-wrap">
+		<div class="container">
+			<div class="row">
+				<div class="col-md-9">
+					<div class="call-to-action">
+						<h1 class="nomargin">Projects</h1>
+					</div>
+						
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class=""
+	<div class="county-body">
+		<div class="county-resources">
+			<div class="landing-inside">
+				<div class="container">
+					<div class="com-home">
+						<div class="row">
+							<div class="col-md-12">
+								<div class="home-cont news-container">
+									<div class="news-title">
+										<h1 class="nomargin">{{project.project_name}}</h1>
+									</div>
+									<div class="params-wrap">
+										<p><b>Start Date:</b> {{project.first_funding_year}}   <b>Status:</b> {{project.status}}   <b>Location:</b> {{project.location_name}}
+										<b>Contractor:</b> {{project.contractor}}
+										</p>
+									</div>
+									<div class="params-wrap"><h3>Summary</h3></div>
+									<p>{{project.summary}}</p>
+									{% if project.has_images %}	
+									{% with project.images.all|random as item %}							
+									<div class="params-wrap"><h3>Images</h3></div>
+									<p class="tcenter"><img src="{{item.image.url}}" alt="About Ajibika"/></p>
+									{% endwith %}
+									{% endif %}
+									{% if project.has_videos %}
+									<div class="params-wrap"><h3>Videos</h3></div>
+									<iframe class="video-wra" width="560" height="315" src="//www.youtube.com/embed/wzYNANXqXwY" frameborder="0" allowfullscreen></iframe>
+									<p>{{project.summary}}</p>
+									{% endif %}
+									{% if project.has_documents %}
+									<div class="params-wrap"><h3>Documents</h3></div>
+										{% for document in project.projectdocument_set.all %}
+						
+						<div class="bg-white-aji projects-wra">
+							<div class="project-wrap">
+								<div class="row">
+									<div class="col-md-8">
+											<div class="row">
+												<div class="col-md-10">
+													
+												<div class="">
+														<h4><a href="{{document.file.url}}">{{document.title}}</a></h4>
+													</div>
+											</div>
+											<div class="col-md-2">
+												<div class="download-button">
+													<p class="tright nomargin">
+														<a class="btn btn-ajibika" href="{{document.file.url}}">
+															<i class="fa fa-cloud-download"></i>  Download
+														</a>
+													</p>
+												</div>
+											</div>
+											</div>
+									</div>
+									
+								</div>
+							</div>
+						</div>
+					{% endfor %}
+									
+									{% endif %}
+									{% if project.remarks %}
+									<div class="params-wrap"><h3>Remarks</h3></div>
+									<p>{{project.remarks}}</p>
+									{% endif %}
+									<br />
+									{% include 'disqus_comments.html' %}
+
+								</div>
+							</div>
+							
+							
+							
+							
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		
+	</div>
+{% endblock %}

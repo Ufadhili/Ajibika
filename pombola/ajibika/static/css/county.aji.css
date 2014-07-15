@@ -615,3 +615,11 @@ img{
 .home-cont.news-container{
 	padding:30px;
 }
+.news-page a h4{
+	color:#333;
+} 
+.tab-pane{
+	background:#fff;
+	padding:15px; 
+	border-radius:3px;
+}

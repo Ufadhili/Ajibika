@@ -26,12 +26,19 @@
 								<div class="row">
 									<div class="col-md-2">
 										<a href-"">
+										{% if project.has_images %}	
+										{% with project.images.all|random as item %}	
+											<img src="{{item.image.url}}" />
+										{% endwith %}
+										{% else %}
 											<img src="{{STATIC_URL}}img/county/projects/projects.jpg" />
+										{% endif %}
+										
 										</a>
 									</div>
 									<div class="col-md-10">
 										<div class="project-title">
-											<h2><a href="">{{project.project_name}}</a></h2>
+											<h2><a href="/{{project.get_absolute_url}}">{{project.project_name}}</a></h2>
 										</div>
 										<div class="project-attribes">
 											<p><b>Year funded:</b> {{project.first_funding_year}}   &nbsp;&nbsp;    <b>Status:</b> {{project.status}}  &nbsp;&nbsp;    <b> Location:  </b>{{project.location_name}}</p>
@@ -41,7 +48,7 @@
 										</div>
 										<div class="project-controls">
 											<p>
-												<a href="{{project.get_absolute_url}}">
+												<a href="/{{project.get_absolute_url}}">
 													Read more ...
 												</a>
 											</p>

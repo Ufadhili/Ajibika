@@ -96,7 +96,7 @@ class CountyMembersOfParliament(DetailView):
     
     def get_context_data(self, **kwargs):
         context = super(CountyMembersOfParliament, self).get_context_data(**kwargs)
-        context['persons'] = models.Place.objects.get(slug=self.kwargs['slug']).county_members_of_parliament()
+        context['persons'] = self.object.county_members_of_parliament()
         context['category'] = 'Members of Parliament'
         context['counties'] = models.Place.objects.filter(kind__slug='county')
         context['governor'] = self.object.current_county_governor()
@@ -173,6 +173,22 @@ class CountyProjects(DetailView):
         context['speaker'] = self.object.current_county_assembly_speaker()
         return context
 
+class ProjectDetail(DetailView):
+    model = models.Place
+    context_object_name = 'county'
+
+    def get_context_data(self, **kwargs):
+        context = super(ProjectDetail, self).get_context_data(**kwargs)
+        context['project'] = self.object.project_set.get(slug=self.kwargs['project_slug'])  
+        context['related_people'] = self.object.related_people()
+        context['governor'] = self.object.current_county_governor()
+        context['deputy_governor'] = self.object.current_county_deputy_governor()
+        context['senator'] = self.object.current_county_senator()
+        context['counties'] = models.Place.objects.filter(kind__slug='county')
+        context['womens_rep'] = self.object.current_county_womens_rep()
+        context['speaker'] = self.object.current_county_assembly_speaker()      
+        return context
+
 class CountyPlan(DetailView):
     model = models.Place
     context_object_name = 'county'
@@ -232,6 +248,7 @@ class CountyGallery(DetailView):
     def get_context_data(self, **kwargs):
         context = super(CountyGallery, self).get_context_data(**kwargs)
         context['images'] = self.object.images.all()
+        context['videos'] = self.object.video_set.all()
         context['related_people'] = self.object.related_people()
         context['governor'] = self.object.current_county_governor()
         context['deputy_governor'] = self.object.current_county_deputy_governor()
@@ -277,8 +294,8 @@ class PersonDetail(DetailView):
 
     def get_context_data(self, **kwargs):
         context  = super(PersonDetail, self).get_context_data(**kwargs)
-        context['county'] = self.object.constituencies()[0]
-        county = self.object.constituencies()[0]
+        context['county'] = self.object.county()
+        county = self.object.county()
         context['coalitions'] = self.object.coalitions()
         context['position'] = self.object.politician_positions()[0]
         context['about'] = models.Place.objects.get(slug=county.slug)

@@ -11,7 +11,7 @@ body {
   background-color:#e5e5e5;
 }
 
-.home-cover{
+.landing-page{
 	background:url(../img/slider/home.jpg) center center;
 }
 
@@ -412,10 +412,27 @@ a:focus, a:hover{
 .ufadh-logo-wrap{
 	padding:40px 0;
 }
+.ufadh-logo-wrap.undef-ogo{
+	padding:20px 0;
+}
 .ufadh-descript{
 	padding:20px 0;
 }
 .ufadh-descript p{
 	color:#666;
 	font-size:13px;
+}
+.ufadh-logo-wrap img{
+	max-width:100%;
+	
+}
+.undef-logo{
+	background:#fff;
+	border-radius:3px;
+	padding:20px;
+}
+.undef-ogo{
+}
+.divider-out{
+	height:150px;
 }

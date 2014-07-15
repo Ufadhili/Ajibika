@@ -398,6 +398,13 @@ class Person(ModelBase, HasImageMixin, ScorecardMixin, IdentifierMixin):
         """Return list of constituencies that this person is currently an politician for"""
         return Place.objects.filter(position__in=self.politician_positions()).distinct()
 
+    def county(self):
+        positions = self.position_set.all()
+        counties = Place.objects.filter(position__in=positions).distinct()
+        return counties[0]
+        # return the county where this person belongs
+
+
     def constituency_offices(self):
         """
         Return list of constituency offices that this person is currently associated with.
@@ -800,9 +807,10 @@ class Place(ModelBase, ScorecardMixin):
         # member-parliament
     def county_members_of_parliament(self):
         try:
-            mp_title = PositionTitle.objects.get(slug='member-parliament')
-            mps = Position.objects.filter(place__in=self.self_and_parents(), title__slug=mp_title)
-            return Person.objects.filter(position__in=mps)
+            # mp_title = PositionTitle.objects.get(slug='member-parliament')
+            organisation = Organisation.objects.get(slug='parliament')
+            mps = Position.objects.filter(place__in=self.self_and_parents(), organisation=organisation)
+            return Person.objects.filter(position__in=mps).distinct()
         except Exception, e:
             return None
 

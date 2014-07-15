@@ -25,38 +25,19 @@ class Project(models.Model):
             )
     created = models.DateTimeField(auto_now_add=True, default=datetime.datetime.now)
     updated = models.DateTimeField(auto_now=True, default=datetime.datetime.now)
-
-    # cdf_index = models.IntegerField(unique=True)
-
-    # constituency = models.ForeignKey(Place)
     county = models.ForeignKey(Place)
-
     project_name = models.CharField(max_length=400)
     slug = models.SlugField(max_length=400, unique=True, help_text="created from project name")
     location_name = models.CharField(max_length=400,blank=True, null=True)
-
-    sector = models.CharField(max_length=400, blank=True, null=True)
-    # mtfe_sector = models.CharField(max_length=400)
-    # econ1 = models.CharField(max_length=400)
-    # econ2 = models.CharField(max_length=400)
-
-    # activity_to_be_done = models.CharField(max_length=400)
-    # expected_output = models.CharField(max_length=400)
+    sector = models.CharField(max_length=400, blank=True, null=True)   
     summary = models.TextField(blank=True, null=True)
     status = models.CharField(max_length=3, choices=PROJECT_STATUS_CHOICES,default=ONGOING)    
-    images = generic.GenericRelation(Image)
-    
-
-    # videos = 
-
+    images = generic.GenericRelation(Image)    
     estimated_cost = models.FloatField(blank=True, null=True)
     total_cost = models.FloatField(blank=True, null=True)
-
     first_funding_year = models.IntegerField(blank=True, null=True)
     contractor = models.CharField(max_length=400, blank=True, null=True)
     remarks = models.TextField(blank=True, null=True)
-
-    # location = models.PointField(srid=4326)
 
     class Meta():
         # NOTE - the templates rely on this default ordering. Really we should
@@ -67,8 +48,23 @@ class Project(models.Model):
         # correct manager for the projects is likely to cause confusion.
         ordering = ['-total_cost'] # <--- DO NOT CHANGE
 
+    def get_absolute_url(self):
+        slug = self.slug
+        county = self.county.slug
+        return "place/%s/projects/%s/" % (county, slug)
+
+    def has_images(self):
+        return self.images.all().exists()
+
+    def has_documents(self):
+        return self.projectdocument_set.all().exists()
+
+    def has_videos(self):
+        return self.projectvideo_set.all().exists()
+
 
 class ProjectDocument(models.Model):
+    title = models.CharField(max_length=400)
     file = models.FileField(upload_to='file_archive')
     project = models.ForeignKey('Project')
 

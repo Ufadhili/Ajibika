@@ -27,13 +27,14 @@
 							{% for item in news %}
 								<div class="home-cont news-container">
 									<div class="news-title">
-										<h1 class="nomargin">{{item.title}}</h1>
+										<h3 class="nomargin">{{item.title}}</h3>
 									</div>
 									<div class="params-wrap">
 										<p><b>Posted on: </b> {{ item.publication_date }} </p>
 									</div>
-									<p>{{item.message}}</p>		
-									<p><a href="{{item.detail_url}}">Read more...</a></p>							
+									<p>{{item.message}} 
+									<br />
+									<a href="{{item.detail_url}}"> <b>Read more...</b></a></p>							
 									
 								</div>
 								{% endfor %}
