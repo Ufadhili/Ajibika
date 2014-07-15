@@ -835,7 +835,7 @@ class Place(ModelBase, ScorecardMixin):
         try:            
             organisation = Organisation.objects.get(slug='county-assembly')
             executives = Position.objects.filter(place__in=self.self_and_parents(), organisation=organisation)
-            return Person.objects.filter(position__in=executives)
+            return Person.objects.filter(position__in=executives).distinct()
         except Exception, e:
             return None
 
