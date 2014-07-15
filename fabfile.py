@@ -103,6 +103,10 @@ def restart_elasticsearch():
 def get_the_code():
 	run("git clone https://github.com/mysociety/pombola.git")
 
+def hard_reset_remote():
+	run("git fetch --all")
+	run ("git reset --hard origin/develop")
+
 def configure_nginx():
 	#Do this for new servers only	
 	run("sudo /etc/init.d/nginx start")	
@@ -227,6 +231,12 @@ def fetch_remote():
 		# result = run("sudo git fetch && git merge origin/develop")
 		result = run("sudo git pull origin develop")
 		if result.failed and not confirm("Unable to fetch remote git branch"):
+			abort("Aborting at user request")
+
+def hard_reset_remote():
+	with cd("%sufadhili/" % (WEB_ROOT)):
+		result = run("sudo git fetch --all && sudo git reset --hard origin/develop")
+		if result.failed and not confirm("Unable to hard reset remote git branch"):
 			abort("Aborting at user request")
 
 def collect_static():
