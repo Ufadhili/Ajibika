@@ -13,6 +13,7 @@ server {
     error_page 503 /down.html;
 
     location /static {
+        autoindex on;
         alias /var/www/ufadhili/collected_static;
     }
 
