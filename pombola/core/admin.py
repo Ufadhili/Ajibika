@@ -233,9 +233,9 @@ class PositionTitleAdmin(admin.ModelAdmin):
 
 
 # Add these to the admin
-# admin.site.register(models.Contact, ContactAdmin)
+admin.site.register(models.Contact, ContactAdmin)
 admin.site.register(models.ContactKind, ContactKindAdmin)
-# admin.site.register(models.Identifier, IdentifierAdmin)
+admin.site.register(models.Identifier, IdentifierAdmin)
 admin.site.register(models.InformationSource, InformationSourceAdmin)
 admin.site.register(models.Organisation, OrganisationAdmin)
 admin.site.register(models.OrganisationKind, OrganisationKindAdmin)
