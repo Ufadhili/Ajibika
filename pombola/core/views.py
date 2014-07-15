@@ -297,7 +297,7 @@ class PersonDetail(DetailView):
         context['county'] = self.object.county()
         county = self.object.county()
         context['coalitions'] = self.object.coalitions()
-        context['position'] = self.object.politician_positions()[0]
+        # context['position'] = self.object.politician_positions()
         context['about'] = models.Place.objects.get(slug=county.slug)
         context['counties'] = models.Place.objects.filter(kind__slug='county')
         context['governor'] = county.current_county_governor()

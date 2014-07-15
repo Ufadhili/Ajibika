@@ -87,7 +87,7 @@ class PositionAdmin(AjaxSelectAdmin):
         'show_person',
         'show_organisation',
         'show_place',
-        'show_title',
+        # 'show_title',
         'start_date',
         'end_date',
         ]
