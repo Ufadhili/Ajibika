@@ -354,10 +354,7 @@ class Person(ModelBase, HasImageMixin, ScorecardMixin, IdentifierMixin):
         return self.aspirant_positions().exists()
 
     def politician_positions(self):
-        try:
-            return self.position_set.all().current_politician_positions()[0]
-        except Exception, e:
-            return None
+        return self.position_set.all().current_politician_positions()
 
     def politician_positions_ever(self):
         return self.politician_positions()
@@ -844,11 +841,8 @@ class Place(ModelBase, ScorecardMixin):
 
     def all_related_former_politicians(self):
         """Return a query set of all the former politicians for this place, and all parent places."""
-        try:            
-            positions = self.all_related_positions().former_politician_positions()
-            return Person.objects.filter(position__in=positions).distinct()
-        except Exception, e:
-            return None
+        positions = self.all_related_positions().former_politician_positions()
+        return Person.objects.filter(position__in=positions).distinct()
 
     def child_places_by_kind(self):
         """Return all concurrent child places, grouped by their PlaceKind
