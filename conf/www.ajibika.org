@@ -16,6 +16,11 @@ server {
         autoindex on;
         alias /var/www/ufadhili/collected_static;
     }
+    location /media_root {
+        autoindex on;
+        alias /var/www/ufadhili/media_root;
+    }
+
 
     location / {
         proxy_pass_header Server;

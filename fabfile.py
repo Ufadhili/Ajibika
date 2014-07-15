@@ -112,7 +112,8 @@ def configure_nginx():
 	run("sudo /etc/init.d/nginx start")	
 	print green("Copying nginx.config virtual host file for ajibika.org to the sites-available directory")
 	with settings(warn_only=True):
-		if not file_exists("/etc/nginx/sites-available/www.ajibika.org"):
+		if file_exists("/etc/nginx/sites-available/www.ajibika.org"):
+			run("sudo rm /etc/nginx/sites-enabled/www.ajibika.org")
 			result = put("conf/www.ajibika.org", "/etc/nginx/sites-available/", use_sudo=True)
 			if result.failed and not confirm("Unable to copy www.ajibika.org to sites-enabled dir. Continue anyway?"):
 				abort("Aborting at user request.")
