@@ -329,8 +329,8 @@ class PlaceDetailView(DetailView):
         context['senator'] = self.object.current_county_senator()
         context['counties'] = models.Place.objects.filter(kind__slug='county')
         context['featured'] = self.object.featured_in_the_county()
-        context['images'] = self.object.images.all()[1:]
-        context['active_image'] = self.object.images.all()[0]
+        context['images'] = self.object.images.all()
+        # context['active_image'] = self.object.images.all()[0]
         context['womens_rep'] = self.object.current_county_womens_rep()
         context['news'] = NewsEntry.objects.filter(county=self.object)
         context['videos'] = CountyVideo.objects.filter(county=self.object)
