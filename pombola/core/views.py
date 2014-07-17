@@ -72,6 +72,8 @@ class CountyExecutive(DetailView):
         context['senator'] = self.object.current_county_senator()
         context['speaker'] = self.object.current_county_assembly_speaker()
         context['womens_rep'] = self.object.current_county_womens_rep()
+        context['county_clerk'] = self.object.current_county_clerk()
+        context['deputy_speaker'] = self.object.current_deputy_county_assembly_speaker()
         return context
 
 class CountyAssembly(DetailView):
@@ -88,6 +90,8 @@ class CountyAssembly(DetailView):
         context['senator'] = self.object.current_county_senator()
         context['speaker'] = self.object.current_county_assembly_speaker()
         context['womens_rep'] = self.object.current_county_womens_rep()
+        context['county_clerk'] = self.object.current_county_clerk()
+        context['deputy_speaker'] = self.object.current_deputy_county_assembly_speaker()
         return context
 
 class CountyMembersOfParliament(DetailView):
@@ -104,6 +108,8 @@ class CountyMembersOfParliament(DetailView):
         context['senator'] = self.object.current_county_senator()
         context['speaker'] = self.object.current_county_assembly_speaker()
         context['womens_rep'] = self.object.current_county_womens_rep()
+        context['county_clerk'] = self.object.current_county_clerk()
+        context['deputy_speaker'] = self.object.current_deputy_county_assembly_speaker()
         return context
 
 # county_members_of_parliament
@@ -123,6 +129,8 @@ class CountyOtherOfficials(DetailView):
         context['senator'] = self.object.current_county_senator()
         context['speaker'] = self.object.current_county_assembly_speaker()
         context['womens_rep'] = self.object.current_county_womens_rep()
+        context['county_clerk'] = self.object.current_county_clerk()
+        context['deputy_speaker'] = self.object.current_deputy_county_assembly_speaker()
         return context
 
 class AboutCounty(DetailView):
@@ -138,6 +146,8 @@ class AboutCounty(DetailView):
         context['senator'] = self.object.current_county_senator()
         context['speaker'] = self.object.current_county_assembly_speaker()
         context['womens_rep'] = self.object.current_county_womens_rep()
+        context['county_clerk'] = self.object.current_county_clerk()
+        context['deputy_speaker'] = self.object.current_deputy_county_assembly_speaker()
         return context
 
 class CountyBills(DetailView):
@@ -171,6 +181,8 @@ class CountyProjects(DetailView):
         context['projects'] = Project.objects.filter(county=self.object)
         context['womens_rep'] = self.object.current_county_womens_rep()
         context['speaker'] = self.object.current_county_assembly_speaker()
+        context['county_clerk'] = self.object.current_county_clerk()
+        context['deputy_speaker'] = self.object.current_deputy_county_assembly_speaker()
         return context
 
 class ProjectDetail(DetailView):
@@ -186,7 +198,9 @@ class ProjectDetail(DetailView):
         context['senator'] = self.object.current_county_senator()
         context['counties'] = models.Place.objects.filter(kind__slug='county')
         context['womens_rep'] = self.object.current_county_womens_rep()
-        context['speaker'] = self.object.current_county_assembly_speaker()      
+        context['speaker'] = self.object.current_county_assembly_speaker()   
+        context['county_clerk'] = self.object.current_county_clerk()
+        context['deputy_speaker'] = self.object.current_deputy_county_assembly_speaker()   
         return context
 
 class CountyPlan(DetailView):
@@ -212,6 +226,8 @@ class CountyBudget(DetailView):
         context['womens_rep'] = self.object.current_county_womens_rep()        
         context['budgets'] = self.object.document_set.filter(document_type='CBT')
         context['speaker'] = self.object.current_county_assembly_speaker()
+        context['county_clerk'] = self.object.current_county_clerk()
+        context['deputy_speaker'] = self.object.current_deputy_county_assembly_speaker()
 
         return context
 
@@ -229,6 +245,8 @@ class CountyTranscripts(DetailView):
         context['womens_rep'] = self.object.current_county_womens_rep()        
         context['transcripts'] = self.object.document_set.filter(document_type='CTT')
         context['speaker'] = self.object.current_county_assembly_speaker()
+        context['county_clerk'] = self.object.current_county_clerk()
+        context['deputy_speaker'] = self.object.current_deputy_county_assembly_speaker()
         
         return context
         
@@ -246,6 +264,8 @@ class CountyOtherDocs(DetailView):
         context['other_docs'] = self.object.document_set.filter(document_type='COR')
         context['speaker'] = self.object.current_county_assembly_speaker()
         context['womens_rep'] = self.object.current_county_womens_rep()
+        context['county_clerk'] = self.object.current_county_clerk()
+        context['deputy_speaker'] = self.object.current_deputy_county_assembly_speaker()
 
         return context
 
@@ -281,6 +301,9 @@ class CountyNews(DetailView):
         context['counties'] = models.Place.objects.filter(kind__slug='county')
         context['womens_rep'] = self.object.current_county_womens_rep()
         context['news'] = NewsEntry.objects.filter(county=self.object)
+        context['county_clerk'] = self.object.current_county_clerk()
+        context['deputy_speaker'] = self.object.current_deputy_county_assembly_speaker()
+
         return context
 
 class PersonDetail(DetailView):
@@ -314,6 +337,8 @@ class PersonDetail(DetailView):
         context['bills'] = county.document_set.filter(document_type='CBT')
         context['speaker'] = county.current_county_assembly_speaker()
         context['womens_rep'] = county.current_county_womens_rep()
+        context['county_clerk'] = county.current_county_clerk()
+        context['deputy_speaker'] = county.current_deputy_county_assembly_speaker()
         return context
 
 class PersonDetailSub(DetailView):
@@ -342,6 +367,8 @@ class PlaceDetailView(DetailView):
         context['womens_rep'] = self.object.current_county_womens_rep()
         context['news'] = NewsEntry.objects.filter(county=self.object)
         context['videos'] = CountyVideo.objects.filter(county=self.object)
+        context['county_clerk'] = self.object.current_county_clerk()
+        context['deputy_speaker'] = self.object.current_deputy_county_assembly_speaker()
         return context
 
 class PlaceDetailSub(DetailView):

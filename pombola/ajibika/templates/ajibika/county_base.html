@@ -101,6 +101,10 @@
 	              <a href="#" class="dropdown-toggle" data-toggle="dropdown">County Assembly <span class="caret"></span></a>
 	              <ul class="dropdown-menu" role="menu">
 	                <li><a href="{{speaker.get_absolute_url}}">County Speaker</a></li>
+	                <li><a href="{{deputy_speaker.get_absolute_url}}">Deputy County Speaker</a></li>
+	                <li><a href="{{county_clerk.get_absolute_url}}">County Clerk</a></li>
+
+	                
 	                <li><a href="{{county.get_absolute_url}}county-assembly">Members of County Assembly</a></li>
 	                
 	              </ul>
@@ -412,13 +416,13 @@
 										<p class="nomargin"><a href="{{county.get_absolute_url}}transcripts"> Transcripts</a></p>
 									</li>
 									<li>
-										<p class="nomargin"><a href="{{county.get_absolute_url}}plan"> Integrated Plan</a></p>
+										<p class="nomargin"><a href="{{county.get_absolute_url}}plan"> County Plans</a></p>
 									</li>
 									<li>
-										<p class="nomargin"><a href="{{county.get_absolute_url}}budget"> Budget 2015/2016</a></p>
+										<p class="nomargin"><a href="{{county.get_absolute_url}}budget"> Budget</a></p>
 									</li>
 									<li>
-										<p class="nomargin"><a href="{{county.get_absolute_url}}other"> Other Documents</a></p>
+										<p class="nomargin"><a href="{{county.get_absolute_url}}otherdocs"> Other Documents</a></p>
 									</li>
 									<li>
 										<p class="nomargin"><a href="{{county.get_absolute_url}}about"> About this county</a></p>

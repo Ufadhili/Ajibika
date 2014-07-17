@@ -800,6 +800,26 @@ class Place(ModelBase, ScorecardMixin):
         except Exception, e:
             return None
 
+
+    def current_county_clerk(self):
+        try:
+            position_title = PositionTitle.objects.get(slug='county-clerk')
+            clerk = Position.objects.filter(place__in=self.self_and_parents(), title_id=position_title.id)
+            return Person.objects.get(position=clerk)
+        except Exception, e:
+            return None
+
+
+    def current_deputy_county_assembly_speaker(self):
+        try:
+            position_title = PositionTitle.objects.get(slug='deputy-speaker-county-assembly')
+            position = Position.objects.filter(place__in=self.self_and_parents(), title_id=position_title.id)
+            return Person.objects.get(position=position)
+        except Exception, e:
+            return None
+
+
+
         
 
         # speaker-county-assembly

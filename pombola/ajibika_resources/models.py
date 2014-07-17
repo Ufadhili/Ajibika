@@ -26,6 +26,18 @@ class Image(models.Model):
 	file = models.ImageField(upload_to='file_archive')
 	summary = models.TextField(blank=True)
 
+class Partner(models.Model):
+	partner_name = models.CharField(max_length=400)
+	slug = models.SlugField(unique=True)
+	logo = models.ImageField(upload_to='file_archive')
+	summary = models.TextField(blank=True)
+	website = models.URLField(blank=True)
+
+class AboutAjibika(models.Model):
+	about_us = models.TextField(blank=True, help_text="What is Ajibika Platform")
+	terms_and_condition = models.TextField(blank=True, help_text="Website's Terms and Conditions")
+
+
 
 class Document(models.Model):
 	document_type = models.ForeignKey(DocumentKind)

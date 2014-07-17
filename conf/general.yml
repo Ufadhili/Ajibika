@@ -53,7 +53,7 @@ SELENIUM_PATH: ''
 
 # Comments are handled by Disqus - http://disqus.com/
 # The 'shortname' is the code that identifies the correct account to link to on # their site.
-DISQUS_SHORTNAME: 'ajibikaorg'
+DISQUS_SHORTNAME: 'ajibika'
 
 # Set this to true if you'd like to use identifiers instead of the page urls.
 # Should almost certainly be true unless you are supporting a site that started
