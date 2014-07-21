@@ -28,7 +28,7 @@ body {
   bottom: 0;
   width: 100%;
   /* Set the fixed height of the footer here */
-  height: 60px;
+  height: auto;
 }
 
 
@@ -622,4 +622,11 @@ img{
 	background:#fff;
 	padding:15px; 
 	border-radius:3px;
+}
+.ufa-wrap{
+	padding:30px 0 10px 0;
+}
+.foot{
+	padding-bottom:15px;
+	border-bottom:1px solid #ff6666;
 }

@@ -37,6 +37,10 @@ class AboutAjibika(models.Model):
 	about_us = models.TextField(blank=True, help_text="What is Ajibika Platform")
 	terms_and_condition = models.TextField(blank=True, help_text="Website's Terms and Conditions")
 
+	class Meta:
+		verbose_name = "About Ajibika"
+		verbose_name_plural = "About Ajibika"
+
 
 
 class Document(models.Model):
@@ -50,6 +54,4 @@ class Document(models.Model):
 	def __unicode__(self):
 		return self.title
 
-class Meta:
-       app_label = 'Devolution Resources'
-
+	

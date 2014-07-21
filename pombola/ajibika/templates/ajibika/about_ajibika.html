@@ -1,35 +1,42 @@
 
 {% extends 'ajibika/base.html'%}
+{% block body %}
+ <body>
+
+{% endblock %}
 {% block content %}
-	<div class="landing-inside-about">
-		<div class="container">
-			<div class="row">
-				<div class="col-md-12">
-					<div class="pitch-line">
-						<h3 class="tcenter">
-							'Ajibika’ is derived from the Kiswahili word ‘Wajibika’ which means, to be responsible or taking responsibility for one’s actions. Responsibility begins with you and me; ni mimi na wewe!
-						</h3>
-					</div>
-				</div>
-			</div>
-			<div class="com-home">
-				<div class="row">
-					<div class="col-md-6">
-						<div class="home-cont">
-							<p> With the recent devolution of the government, Ufadhili trust has taken a keen interest in the governance of the counties where they are running projects. In particular, Machakos, Siaya and Kwale. Ufadhili Trust wants to encourage citizen participation in these counties by creating platforms for the members of this communities to engage. Ajibika is a system designed to hold the county officials on these 3 counties accountable. </p>
-              <p>The system is a customization of the Pombola software, which is Mzalendo’s codebase. This essentially is to hold the public officials accountable and to increase public participation in the issues that affect them most. The idea is to vet public officials, budgets, county plans and the projects in the county, demystify bills and legislation and to encourage public discussion on the same. </p>
-						</div>
-					</div>
-					
-					<div class="col-md-6">
-						<div class="page-featured-pic">
-							<img src="{{STATIC_URL}}img/landing/about.jpg" alt="About Ajibika"/>
-						</div>
-					</div>
-					
-					
-				</div>
-			</div>
-		</div>
-	</div>
+    <div class="landing-inside">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-12">
+          <div class="pitch-line">
+            <h1 class="tcenter">
+         
+            </h1>
+          </div>
+        </div>
+      </div>
+      <div class="com-home">
+        <div class="row">
+          <div class="col-md-6">
+            <div class="home-cont">
+            <p>
+             {{about.0.about_us}}
+             </p>
+              <iframe width="100%" height="315" src="//www.youtube.com/embed/in-f4eMfAFQ" frameborder="0" allowfullscreen></iframe>
+            </div>
+          </div>
+          
+          <div class="col-md-6">
+            <div class="page-featured-pic">
+              <img src="{{STATIC_URL}}img/landing/about.jpg" alt="About Ajibika"/>
+            </div>
+          </div>
+          
+          
+        </div>
+        <div class="divider-out"></div>
+      </div>
+    </div>
+  </div>
   {% endblock %}

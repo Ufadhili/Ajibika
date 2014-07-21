@@ -1,5 +1,6 @@
 from django.contrib import admin
 import models
+from pombola.images.admin import ImageAdminInline
 
 
 
@@ -20,6 +21,8 @@ admin.site.register(models.Document, DocumentAdmin)
 
 class ImageAdmin(admin.ModelAdmin):
 	list_display = ['title', 'created']
+	prepopulated_fields = {'slug': ['title']}
+	inlines = [ImageAdminInline]
 
 admin.site.register(models.Image, ImageAdmin)
 
@@ -34,6 +37,6 @@ class PartnerAdmin(admin.ModelAdmin):
 admin.site.register(models.Partner, PartnerAdmin)
 
 class AboutAjibikaAdmin(admin.ModelAdmin):
-	list_display = ['about_us']
+	list_display = ['about_us', 'terms_and_condition']
 
 admin.site.register(models.AboutAjibika, AboutAjibikaAdmin)

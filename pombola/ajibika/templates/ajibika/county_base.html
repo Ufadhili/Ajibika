@@ -155,9 +155,14 @@
 				      </ol>
 				      <div class="carousel-inner">
 
-				      {% if images %}
 
-				      	{% for file in images %}
+							 {% if images %}
+				        <div class="item active">
+				          <img src="{{images.0.image.url}}" alt="First slide">
+				          <div class="container">				           
+				          </div>
+				        </div>
+				      	{% for file in images|slice:"1:"%}
 				      	 <div class="item">
 				          <img src="{{file.image.url}}" alt="First slide">
 				          <div class="container">				          
@@ -165,6 +170,8 @@
 				        </div>
 				      	{% endfor %}
 				      	{% else %} 
+
+
 
 				        <div class="item active">
 				          <img src="{{STATIC_URL}}img/slider/peoples-park.jpg" alt="First slide">
@@ -177,6 +184,8 @@
 				          <div class="container">
 				          
 				          </div>
+				        </div>
+
 				        </div>
 				        {% endif %}
 
@@ -360,10 +369,9 @@
 		</div>
 		
 	</div>
-	<script>
-   
-    </script>
+	
   {% endblock %}
+
     	<div class="cont-footer-wrap">
     		<div class="container">
 	    		<div class="row">
@@ -392,7 +400,6 @@
 									
 									
 									
-									
 								</ul>
 							</div>
 						</div>
@@ -405,7 +412,7 @@
 								</div>
 							</div>
 							<div class="cont-body">
-								<ul class="nopadding nomargin listnone">									
+								<ul class="nopadding nomargin listnone">
 									<li>
 										<p class="nomargin"><a href="{{county.get_absolute_url}}bills"> Bills</a></p>
 									</li>
@@ -426,7 +433,10 @@
 									</li>
 									<li>
 										<p class="nomargin"><a href="{{county.get_absolute_url}}about"> About this county</a></p>
-									</li>									
+									</li>				
+									
+									
+									
 									
 									
 								</ul>
@@ -456,9 +466,8 @@
 										<div class="col-sm-1"><i class="fa fa-tasks"></i></div><div class="col-sm-11"> CONNECT AND SHARE </div>
 									</div>
 								</div>
-								<div class="cont-body">									
-									
-									<div id="fb-root"></div>
+								<div class="cont-body">
+									<!-- <div id="fb-root"></div>
 									<script>(function(d, s, id) {
 									  var js, fjs = d.getElementsByTagName(s)[0];
 									  if (d.getElementById(id)) return;
@@ -467,13 +476,17 @@
 									  fjs.parentNode.insertBefore(js, fjs);
 									}(document, 'script', 'facebook-jssdk'));</script>
 									
+									<div class="fb-like-box" data-href="https://www.facebook.com/FacebookDevelopers" data-colorscheme="light" data-show-faces="true" data-header="true" data-stream="false" data-show-border="true"></div>
+								</div> -->
+								<script>(function(d, s, id) {
+									  var js, fjs = d.getElementsByTagName(s)[0];
+									  if (d.getElementById(id)) return;
+									  js = d.createElement(s); js.id = id;
+									  js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&appId=292843857462631&version=v2.0";
+									  fjs.parentNode.insertBefore(js, fjs);
+									}(document, 'script', 'facebook-jssdk'));</script>
+									
 									<div class="fb-like-box" data-href="https://www.facebook.com/ajibika" data-colorscheme="light" data-show-faces="true" data-header="true" data-stream="false" data-show-border="true"></div>
-
-
-
-
-
-								</div>
 							</div>
 						</div>
 						
@@ -481,21 +494,56 @@
 	    	</div>
     	</div>
     	<div class="footer-wrap footer">
-    	<div class="container">
-    		<div class="row">
-    			<div class="col-md-6">
-    				<p class="nomargin nopadding">
-    					&copy; Ajibika 2014. All rights reserved. <a href=""></a>
-    				</p>
-    			</div>
-    			<div class="col-md-6">
-    				<p class="nomargin nopadding tright">
-    					<a href="">About Ajibika</a> |  <a href="">Terms</a> | <a href="">Legal</a>
-    				</p>
-    			</div>
-    		</div>
-    	</div>
-    </div>
+	    	<div class="foot">
+	    		<div class="container">
+		    		<div class="row">
+		    			<div class="col-md-6">
+		    				<p class="nomargin nopadding">
+		    					&copy; Ajibika 2014. All rights reserved. 
+		    				</p>
+		    			</div>
+		    			<div class="col-md-6">
+		    				<p class="nomargin nopadding tright">
+		    					<a href="/about">About Ajibika</a> |  <a href="/terms">Terms and Conditions</a> 
+		    				</p>
+		    			</div>
+		    		</div>
+		    	</div>
+	    	</div>
+	    	<div class="ufa-wrap">
+	    		<div class="container">
+	    			<div class="col-xs-4">
+	    				<div class="ufadh-logo-wrap undef-ogo">
+	    					<p class="nomargin">
+		    					<a href="http://www.un.org/democracyfund/" target="_blank">
+		    						<span class="undef-ogo"><img src="{{STATIC_URL}}img/undef.png" alt="Ufadhili Logo" /></span>
+		    					</a>
+		    				</p>
+	    				</div>
+	    			</div>
+	    			<div class="col-xs-4">
+	    				<div class="ufadh-descript">
+	    					<p class="nomargin tcenter">
+		    					Ajibika is an Initiative of <a href="http://www.ufadhilitrust.org/">Ufadhili Trust</a> , with the generous support from the United Nations Democracy Fund (UNDEF).
+		    				</p>
+	    				</div>
+	    			</div>
+	    			<div class="col-xs-4">
+	    				<div class="ufadh-logo-wrap">
+	    					<p class="nomargin tcenter">
+		    					<a href="http://www.ufadhilitrust.org/" target="_blank">
+		    						<img src="{{STATIC_URL}}img/ufadhili.png" alt="Ufadhili Logo" />
+		    					</a>
+		    				</p>
+	    				</div>
+	    			</div>
+	    			
+	    		</div>
+	    	</div>
+    	
+    	
+	    </div>
+
 
 
     <!-- Bootstrap core JavaScript
@@ -507,36 +555,13 @@
 	<script src="{{STATIC_URL}}js/bootstrap-image-gallery.min.js"></script>
 	<script src="{{STATIC_URL}}js/bootstrap-image-gallery.min.js"></script>
 	<script src="{{STATIC_URL}}js/image-resize.js"></script>
-	<script type="text/javascript">
-	$(function(){
-		 $('.carousel').carousel({
+	<script src="{{STATIC_URL}}js/main.js"></script>
+	
+<script type="text/JavaScript">
+    $('.carousel').carousel({
 		        interval: 5000 //changes the speed
 			    });
-
-		 //Ugly hack for youtube embeds.
-
-
-		 var regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/;
-		 var url = $("#video-frame").attr("value");
-		 var match = url.match(regExp);
-		 if (match && match[2].length == 11) {
-		 	var myId = match[2];
-		 	var src = "//www.youtube.com/embed/" + myId + "";
-		 	var code = 
-		 	"<iframe id='featured-vid' width='100%' height='305' src='"+src+"'frameborder='0' allowfullscreen></iframe>";
-			 	$("#video-frame").replaceWith(code);		 	
-				 } 
-
-		 // If we didn't find videos for this county default to this.
-
-		 else {		 	
-		 	var code = "<iframe id='featured-vid' width='100%' height='305' src='//www.youtube.com/embed/Z4IeRbDqMnE'frameborder='0' allowfullscreen></iframe>";
-		 	$("#video-frame").replaceWith(code)
-		 }
-	// }
-	})
-	</script>
-
+    </script>
 
   </body>
 </html>
