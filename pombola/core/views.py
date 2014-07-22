@@ -212,6 +212,24 @@ class ProjectDetail(DetailView):
         context['deputy_speaker'] = self.object.current_deputy_county_assembly_speaker()   
         return context
 
+class NewsEntryDetail(DetailView):
+    model = models.Place
+    context_object_name = 'county'
+
+    def get_context_data(self, **kwargs):
+        context = super(NewsEntryDetail, self).get_context_data(**kwargs)
+        context['news_entry'] = self.object.newsentry_set.get(slug=self.kwargs['news_entry_slug'])  
+        context['related_people'] = self.object.related_people()
+        context['governor'] = self.object.current_county_governor()
+        context['deputy_governor'] = self.object.current_county_deputy_governor()
+        context['senator'] = self.object.current_county_senator()
+        context['counties'] = models.Place.objects.filter(kind__slug='county')
+        context['womens_rep'] = self.object.current_county_womens_rep()
+        context['speaker'] = self.object.current_county_assembly_speaker()   
+        context['county_clerk'] = self.object.current_county_clerk()
+        context['deputy_speaker'] = self.object.current_deputy_county_assembly_speaker()   
+        return context
+
 class CountyPlan(DetailView):
     model = models.Place
     context_object_name = 'county'
@@ -374,7 +392,8 @@ class PlaceDetailView(DetailView):
         context['images'] = self.object.images.all()
         # context['active_image'] = self.object.images.all()[0]
         context['womens_rep'] = self.object.current_county_womens_rep()
-        context['news'] = NewsEntry.objects.filter(county=self.object)
+        # context['news'] = NewsEntry.objects.filter(county=self.object)
+        context['news'] = self.object.newsentry_set.all()
         context['videos'] = CountyVideo.objects.filter(county=self.object)
         context['county_clerk'] = self.object.current_county_clerk()
         context['deputy_speaker'] = self.object.current_deputy_county_assembly_speaker()

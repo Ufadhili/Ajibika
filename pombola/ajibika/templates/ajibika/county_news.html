@@ -27,14 +27,14 @@
 							{% for item in news %}
 								<div class="home-cont news-container">
 									<div class="news-title">
-										<h3 class="nomargin">{{item.title}}</h3>
+										<a href="{{county.get_absolute_url}}news/{{item.slug}}"><h3 class="nomargin">{{item.title}}</h3></a>
 									</div>
 									<div class="params-wrap">
 										<p><b>Posted on: </b> {{ item.publication_date }} </p>
 									</div>
 									<p>{{item.message}} 
 									<br />
-									<a href="{{item.detail_url}}"> <b>Read more...</b></a></p>							
+									<a href="{{county.get_absolute_url}}news/{{item.slug}}"> <b>Read more...</b></a></p>							
 									
 								</div>
 								{% endfor %}

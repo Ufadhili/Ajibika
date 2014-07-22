@@ -1,5 +1,6 @@
 from django.db import models
 import datetime
+import urlparse
 
 from pombola.core.models import Place
 
@@ -17,4 +18,11 @@ class Video(models.Model):
 
 	def __unicode__(self):
 		return self.title
+
+	def youtube_embed_link(self):
+		url_data = urlparse.urlparse(self.youtube_link)
+		path = url_data.path
+		url = "//www.youtube.com/embed%s" % (path)
+		return url
+
 

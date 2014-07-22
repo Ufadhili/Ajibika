@@ -1,0 +1,67 @@
+{% extends 'ajibika/county_base.html' %}
+
+ {% block content %}
+  {% include "disqus_javascript.html" %}
+
+
+	<div class="county-header-wrap">
+		<div class="container">
+			<div class="row">
+				<div class="col-md-9">
+					<div class="call-to-action">
+						<h1 class="nomargin">News and Updates</h1>
+					</div>
+						
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class=""
+	<div class="county-body">
+		<div class="county-resources">
+			<div class="landing-inside">
+				<div class="container">
+					<div class="com-home">
+						<div class="row">
+							<div class="col-md-12">
+								<div class="home-cont news-container">
+									<div class="news-title">
+										<h1 class="nomargin">{{news_entry.title}}</h1>
+									</div>
+									<div class="params-wrap">
+										<p><b>Posted on: </b>{{news_entry.publication_date}} </p>
+									</div>
+									{% if news_entry.images.all %}
+									{% with news_entry.images.all|first as image %}
+									<p class="tcenter"><img src="{{image.image.url}}" alt="Ajibika"/></p>
+									{% endwith %}
+									{% endif %}
+									{% if news_entry.newsvideo_set.all %}
+									{% with news_entry.newsvideo_set.all|first as video %}
+									<p>
+						            		<iframe width="100%" height="360" 
+						            		src="{{video.video.youtube_embed_link}}" frameborder="0" allowfullscreen></iframe>
+						            	</p>	
+									{% endwith %}
+									{% endif %}
+									<p>{{news_entry.message}}</p>
+									
+									<hr />
+									<p> More details... <a href="{{news_entry.detail_url}}"> {{news_entry.detail_url}}</a></p>
+
+									{% include 'disqus_comments.html' %}
+
+								</div>
+							</div>
+							
+							
+							
+							
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		
+	</div>
+{% endblock %}

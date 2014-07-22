@@ -353,11 +353,12 @@
 							<div class="cont-body videos-wrap">
 							{% if videos %} 
 							{% with videos|random as featured_video%}
-								<div id="video-frame" value="{{featured_video.youtube_link}}" ></div>
+								<iframe id='featured-vid' width='100%' height='305' src='{{featured_video.youtube_embed_link}}'frameborder='0' allowfullscreen></iframe>
+		 	
 							{% endwith %}
 								{% else %}
 							
-							<div id="video-frame" value="" ></div>
+							<iframe id='featured-vid' width='100%' height='305' src='//www.youtube.com/embed/Z4IeRbDqMnE'frameborder='0' allowfullscreen></iframe>
 							{% endif %}
 							</div>
 
