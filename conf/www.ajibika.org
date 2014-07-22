@@ -7,16 +7,17 @@ server {
 
     access_log /var/www/logs/access.log;
     error_log /var/www/logs/error.log;
+    server_name ajibika.org;
 
     listen 80;
     root /var/www/ufadhili/pombola/web;
     error_page 503 /down.html;
 
-    location /static/ {
+    location /static {
         autoindex on;
         alias /var/www/ufadhili/collected_static;
     }
-    location /media_root/ {
+    location /media_root {
         autoindex on;
         alias /var/www/ufadhili/media_root;
     }
