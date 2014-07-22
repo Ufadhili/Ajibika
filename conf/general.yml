@@ -14,7 +14,7 @@ POMBOLA_DB_USER: 'pombola'
 POMBOLA_DB_NAME: 'pombola'
 POMBOLA_DB_PASS: 'pombola'
 
-STAGING: '0'
+STAGING: '1'
 TIME_ZONE: 'Africa/Nairobi'
 DJANGO_SECRET_KEY: 'abcabc'
 
