@@ -1,5 +1,6 @@
 from django.db import models
 import datetime
+import urlparse
 
 # Create your models here.
 
@@ -17,6 +18,12 @@ class Video(models.Model):
 	youtube_link = models.URLField(max_length=400)
 	created = models.DateTimeField(auto_now_add=True, default=datetime.datetime.now)
 	updated = models.DateTimeField(auto_now=True, default=datetime.datetime.now)
+
+	def youtube_embed_link(self):
+		url_data = urlparse.urlparse(self.youtube_link)
+		path = url_data.path
+		url = "//www.youtube.com/embed%s" % (path)
+		return url
 
 
 class Image(models.Model):

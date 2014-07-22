@@ -39,7 +39,7 @@
 									{% if news_entry.newsvideo_set.all %}
 									{% with news_entry.newsvideo_set.all|first as video %}
 									<p>
-						            		<iframe width="100%" height="360" 
+						            		<iframe width="50%" height="360" 
 						            		src="{{video.video.youtube_embed_link}}" frameborder="0" allowfullscreen></iframe>
 						            	</p>	
 									{% endwith %}

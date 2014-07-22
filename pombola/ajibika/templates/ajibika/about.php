@@ -75,15 +75,44 @@
 					<div class="col-md-6">
 						<div class="home-cont">
 							<p>Vestibulum id ligula porta felis euismod semper. Integer posuere erat a ante venenatis dapibus posuere velit aliquet. Sed posuere consectetur est at lobortis. Etiam porta sem malesuada magna mollis euismod. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Vestibulum id ligula porta felis euismod semper. Etiam porta sem malesuada magna mollis euismod.</p>
-							<p>Vestibulum id ligula porta felis euismod semper. Integer posuere erat a ante venenatis dapibus posuere velit aliquet. Sed posuere consectetur est at lobortis. Etiam porta sem malesuada magna mollis euismod. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Vestibulum id ligula porta felis euismod semper. Etiam porta sem malesuada magna mollis euismod.</p>
-							<p>Vestibulum id ligula porta felis euismod semper. Integer posuere erat a ante venenatis dapibus posuere velit aliquet. Sed posuere consectetur est at lobortis. Etiam porta sem malesuada magna mollis euismod. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Vestibulum id ligula porta felis euismod semper. Etiam porta sem malesuada magna mollis euismod.</p>
 							<iframe width="100%" height="315" src="//www.youtube.com/embed/EgbEUrfdedQ" frameborder="0" allowfullscreen></iframe>
 						</div>
 					</div>
 					
 					<div class="col-md-6">
 						<div class="page-featured-pic">
-							<img src="/assets/img/landing/about.jpg" alt="About Ajibika"/>
+							<div class="slide-wrap">
+					<div id="myCarousel" class="carousel slide" data-ride="carousel">
+				      <!-- Indicators -->
+				      <ol class="carousel-indicators">
+				        <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+				        <li data-target="#myCarousel" data-slide-to="1"></li>
+				        <li data-target="#myCarousel" data-slide-to="2"></li>
+				      </ol>
+				      <div class="carousel-inner">
+				        <div class="item active">
+				          <img src="/assets/img/landing/about.jpg" alt="First slide">
+				          <div class="container">
+				            <div class="carousel-caption">
+				              <h1>One more for good measure.</h1>
+				              <p><a class="btn btn-lg btn-primary" href="#" role="button">Read more</a></p>
+				            </div>
+				          </div>
+				        </div>
+				        <div class="item">
+				          <img src="/assets/img/landing/about.jpg" alt="First slide">
+				          <div class="container">
+				            <div class="carousel-caption">
+				              <h1>One more for good measure.</h1>
+				              <p><a class="btn btn-lg btn-primary" href="#" role="button">Read more</a></p>
+				            </div>
+				          </div>
+				        </div>
+				      </div>
+				      <a class="left carousel-control" href="#myCarousel" data-slide="prev"><span class="glyphicon glyphicon-chevron-left"></span></a>
+				      <a class="right carousel-control" href="#myCarousel" data-slide="next"><span class="glyphicon glyphicon-chevron-right"></span></a>
+				    </div><!-- /.carousel -->
+				</div>
 						</div>
 					</div>
 					

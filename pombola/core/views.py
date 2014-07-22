@@ -18,7 +18,11 @@ from django.contrib.contenttypes.models import ContentType
 from pombola.core import models
 from pombola.info.models import InfoPage
 from pombola.documents.models import Document
-from pombola.ajibika_resources.models import Document as AjibikaDoc, AboutAjibika
+from pombola.ajibika_resources.models import (
+    Document as AjibikaDoc, 
+    AboutAjibika, 
+    Image as AjibikaImage,
+    Video as AjibikaVideo)
 from pombola.projects.models import Project
 from pombola.news.models import NewsEntry
 from pombola.videos.models import Video as CountyVideo
@@ -40,7 +44,9 @@ class AboutAjibikaView(TemplateView):
     def get_context_data(self, **kwargs):
         context = super(AboutAjibikaView, self).get_context_data(**kwargs)
         context['counties'] = models.Place.objects.filter(kind__slug='county')
-        context['about'] = AboutAjibika.objects.all()       
+        context['about'] = AboutAjibika.objects.all()  
+        context['images']  = AjibikaImage.objects.all()  
+        context['videos']   = AjibikaVideo.objects.all()
         return context
 
 class AjibikaResourcesView(TemplateView):
