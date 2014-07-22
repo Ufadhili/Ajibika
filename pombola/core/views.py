@@ -179,6 +179,7 @@ class CountyBills(DetailView):
         context['bills'] = self.object.document_set.filter(document_type='CBL')
         context['speaker'] = self.object.current_county_assembly_speaker()
         context['womens_rep'] = self.object.current_county_womens_rep()
+        context['deputy_speaker'] = self.object.current_deputy_county_assembly_speaker()
 
         return context
 
@@ -317,6 +318,8 @@ class CountyGallery(DetailView):
         context['counties'] = models.Place.objects.filter(kind__slug='county')
         context['womens_rep'] = self.object.current_county_womens_rep()
         context['speaker'] = self.object.current_county_assembly_speaker()
+        context['deputy_speaker'] = self.object.current_deputy_county_assembly_speaker()
+
 
         return context
 
@@ -336,6 +339,7 @@ class CountyNews(DetailView):
         context['news'] = NewsEntry.objects.filter(county=self.object)
         context['county_clerk'] = self.object.current_county_clerk()
         context['deputy_speaker'] = self.object.current_deputy_county_assembly_speaker()
+        context['speaker'] = county.current_county_assembly_speaker()
 
         return context
 
@@ -396,9 +400,8 @@ class PlaceDetailView(DetailView):
         context['counties'] = models.Place.objects.filter(kind__slug='county')
         context['featured'] = self.object.featured_in_the_county()
         context['images'] = self.object.images.all()
-        # context['active_image'] = self.object.images.all()[0]
         context['womens_rep'] = self.object.current_county_womens_rep()
-        # context['news'] = NewsEntry.objects.filter(county=self.object)
+        context['speaker'] = county.current_county_assembly_speaker()
         context['news'] = self.object.newsentry_set.all()
         context['videos'] = CountyVideo.objects.filter(county=self.object)
         context['county_clerk'] = self.object.current_county_clerk()
