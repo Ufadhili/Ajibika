@@ -9,6 +9,7 @@ from tastypie.cache import SimpleCache
 from tastypie.resources import ModelResource, ALL, ALL_WITH_RELATIONS
 from django.conf.urls import patterns, url, include
 from django.core import serializers
+from pombola.ajibika_resources.models import *
 
 
 class PersonResource(ModelResource):
@@ -72,6 +73,11 @@ class CountyResource(ModelResource):
 		bundle.data["county_news_uri"] = "%snews/" %(bundle.data["resource_uri"])
 		bundle.data["county_positions_uri"] = "%spositions/" %(bundle.data["resource_uri"])
 		bundle.data["county_organisations_uri"] = "%sorganisations/" %(bundle.data["resource_uri"])
+		bundle.data["county_documents_uri"] = "%sdocuments/" %(bundle.data["resource_uri"])
+		bundle.data["county_bills_uri"] = "%sbills/" %(bundle.data["resource_uri"])
+		bundle.data["county_transcripts_uri"] = "%stranscripts/" %(bundle.data["resource_uri"])
+		bundle.data["county_budgets_uri"] = "%sbudgets/" %(bundle.data["resource_uri"])
+		bundle.data["county_otherdocs_uri"] = "%sotherdocs/" %(bundle.data["resource_uri"])
 		return bundle
 
 	def prepend_urls(self):
@@ -94,6 +100,9 @@ class CountyResource(ModelResource):
     	url(r"^(?P<resource_name>%s)/(?P<pk>\w[\w/-]*)/transcripts%s$" %
                 (self._meta.resource_name, trailing_slash()),
                 self.wrap_view('county_transcripts'), name="api_county_transcripts"),
+    	url(r"^(?P<resource_name>%s)/(?P<pk>\w[\w/-]*)/documents%s$" %
+                (self._meta.resource_name, trailing_slash()),
+                self.wrap_view('county_documents'), name="api_county_documents"),
     	]
 
 	def people(self, request, **kwargs):
@@ -113,6 +122,85 @@ class CountyResource(ModelResource):
 		# people = [st.__dict__ for st in county.all_related_positions()]
 
 		return self.create_response(request, people)
+
+	def county_projects(self, request, **kwargs):
+		self.method_check(request, allowed=['get'])
+		basic_bundle = self.build_bundle(request=request)
+		county = self.cached_obj_get(
+			bundle=basic_bundle,
+			**self.remove_api_resource_names(kwargs))
+		# projects = [st.__dict__ for st in county.project_set.all()]
+		projects = county.project_set.all()
+		project_data = []
+		for project in projects:
+			data = {}
+			data['project_name'] = project.project_name
+			data['contractor'] = project.contractor
+			data['first_funding_year'] = project.first_funding_year
+			data['status'] = project.project_status()
+			data['location_name'] = project.location_name			
+			data['absolute_url'] = project.get_absolute_url()
+			data['summary'] = project.summary
+
+			if project.has_images():
+				images = project.images.all()
+				if images:
+					image = images[0].image.url
+					data['image'] = image
+				else:
+					data['image'] = None
+			else:
+				data['image'] = None
+
+			# data['images'] = [st.__dict__ for st in project.images.all()]
+			project_data.append(data)
+
+			"""
+			contractor: "miguna",
+			county_id: 1,
+			created: "2014-07-07T12:05:52.705928",
+			estimated_cost: 2000000,
+			first_funding_year: 2013,
+			id: 3,
+			location_name: "omwani",
+			project_name: "te st s f s s d",
+			remarks: "",
+			sector: "",
+			slug: "te-st-s-f-s-s-d",
+			status: "POG",
+			summary: "",
+			total_cost: 20000000,
+			updated: "2014-07-10T16:23:40.574496"
+			"""
+
+		return self.create_response(request, project_data)
+
+	def county_news(self, request, **kwargs):		
+		self.method_check(request, allowed=['get'])
+		basic_bundle = self.build_bundle(request=request)
+		county = self.cached_obj_get(
+			bundle=basic_bundle,
+			**self.remove_api_resource_names(kwargs))
+		news = [st.__dict__ for st in county.newsentry_set.all()]
+		return self.create_response(request, news)
+
+	def county_documents(self, request, **kwargs):		
+		self.method_check(request, allowed=['get'])
+		basic_bundle = self.build_bundle(request=request)
+		county = self.cached_obj_get(
+			bundle=basic_bundle,
+			**self.remove_api_resource_names(kwargs))
+		docs = [st.__dict__ for st in county.document_set.all()]
+		return self.create_response(request, docs)
+
+	"""
+	county resources:
+	news = county.newsentry_set.all()
+	projects = county.project_set.all()
+	documents = county.document_set.all() bills, transcripts,......
+
+	"""
+
 
 	def positions_in_a_county(self, request, **kwargs):
 		""" Proxy for all the positions in a county """
@@ -171,19 +259,20 @@ def build_place_people_dict(queryset):
 			bio = [st.__dict__ for st in Person.objects.filter(id=person["person_id"])][0]
 			for field in bio_fields_to_hide:
 				bio.pop(field)
+			person["personal_details"] = bio
+			person["name"] = bio["legal_name"]    
+			try:
+				org = [st.__dict__ for st in Organisation.objects.filter(id=person["organisation_id"])][0]
+				person["organisation"] = org["name"]
+			except:
+				person["organisation"] = None
+			
+			try:
+				title = [st.__dict__ for st in PositionTitle.objects.filter(id=person["title_id"])][0]
+				person["title"] = title["name"]
+			except:
+				person["title"] = None			
 
-			person["personal_details"] = bio    
-			org = [st.__dict__ for st in Organisation.objects.filter(id=person["organisation_id"])][0]
-			# org.pop("_state")
-			# person["organisation_details"] = org
-			person["organisation"] = org["name"]
-			# person["organisation_id"] =
-			title = [st.__dict__ for st in PositionTitle.objects.filter(id=person["title_id"])][0]
-			# title.pop("_state")
-			# person["position_details"] = title
-			person["name"] = bio["legal_name"]
-			person["title"] = title["name"]
-			# person["position_id"] = title["id"]
 			for x in fields_to_hide:
 				person.pop(x)
 	return people
