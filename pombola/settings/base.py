@@ -94,7 +94,7 @@ MEDIA_URL = '/media_root/'
 
 # Absolute path to the directory static files should be collected to.
 # Don't put anything in this directory yourself; store your static files
-# in apps' "static/" subdirectories and in STATICFILES_DIRS.
+# in apps' "static/" subdirectories and ein STATICFILES_DIRS.
 # Example: "/home/media/media.lawrence.com/static/"
 STATIC_ROOT = os.path.normpath( os.path.join( root_dir, "collected_static/") )
 
@@ -122,6 +122,16 @@ STATICFILES_FINDERS = (
     'django.contrib.staticfiles.finders.AppDirectoriesFinder',
     # 'django.contrib.staticfiles.finders.DefaultStorageFinder',
 )
+
+
+AWS_SECRET_ACCESS_KEY = config.get('AWS_SECRET_ACCESS_KEY')
+AWS_ACCESS_KEY_ID = config.get('AWS_ACCESS_KEY_ID')
+AWS_STORAGE_BUCKET_NAME = config.get('AWS_STORAGE_BUCKET_NAME')
+STATICFILES_STORAGE = 'storages.backends.s3boto.S3BotoStorage'
+S3_URL = 'http://%s.s3.amazonaws.com/' % AWS_STORAGE_BUCKET_NAME
+STATIC_URL = S3_URL
+DEFAULT_FILE_STORAGE = 'pombola.ajibika.s3utils.MediaRootS3BotoStorage'
+STATICFILES_STORAGE = 'pombola.ajibika.s3utils.StaticRootS3BotoStorage'
 
 # Make this unique, and don't share it with anybody.
 SECRET_KEY = config.get('DJANGO_SECRET_KEY')
@@ -378,14 +388,10 @@ INSTALLED_APPS = (
     'ajax_select',
     'autocomplete_light',
     'markitup',
-
     'mapit',
-
     'pombola.images',
     'sorl.thumbnail',
-
     'haystack',
-
     'pombola.info',
     'pombola.tasks',
     'pombola.core',
@@ -400,9 +406,8 @@ INSTALLED_APPS = (
     'pombola.videos',
     'pombola.news',
     'pombola.ajibika_resources',
-
-
     'django_nose',
+    'storages',
 )
 if config.get('DEBUG_TOOLBAR', True):
      INSTALLED_APPS += ('debug_toolbar',)

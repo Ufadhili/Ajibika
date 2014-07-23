@@ -83,3 +83,10 @@ POPIT_API_URL: 'http://popit.example.com/api/v0.1/'
 DEBUG_TOOLBAR: False
 
 TWITTER_USERNAME: 'ajibika'
+
+AWS_STORAGE_BUCKET_NAME: 'ajibika-test'
+
+
+AWS_SECRET_ACCESS_KEY: '78gJvDG2KpoTWsaLJStOkdbUzhpyeIfNEbkp/CRG'
+AWS_ACCESS_KEY_ID: 'AKIAIL2P3RUVDG2FBOLA'
+
