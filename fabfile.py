@@ -14,6 +14,34 @@ WEB_ROOT = '/var/www/ufadhili/'
 def host_type():
     run('uname -s')
 
+
+def install_pip_package(): 
+	"""
+	install package locally
+	log into remote
+	activate virtualenv
+	install package
+
+	"""
+	with settings(warn_only=True):		
+		package = prompt("enter the package to install")
+		print green("Attempting to install %s locally" %(package))
+		local_install = local("sudo pip install %s" %(package))
+		if local_install.failed and not confirm("Failed to install %s. Continue anyway?" %(package)):
+			abort("Aborting at user request")
+			
+	with cd("%sufadhili/" % (WEB_ROOT)):
+		activate_virtualenv()
+		print green("Attempting to install %s remotely" %(package))
+		remote_install = run("sudo pip install %s" %(package))
+		if local_install.failed and not confirm("Failed to install %s. Continue anyway?" %(package)):
+			abort("Aborting at user request")
+
+
+
+
+
+
 def commit():	
 	with settings(warn_only=True):		
 		# add any new untracked files
