@@ -5,10 +5,15 @@ from django.views.generic import TemplateView, ListView, RedirectView
 from pombola.core import models
 from pombola.core.views import (HomeView, PlaceDetailView,
     OrganisationList, OrganisationKindList, PlaceKindList, PersonDetail,
-    PersonDetailSub, PlaceDetailSub, OrganisationDetailSub,
-    OrganisationDetailView)
+    PersonDetailSub, PlaceDetailSub, OrganisationDetailSub, ProfileDetails,
+    OrganisationDetailView, CountyExecutive, CountyAssembly, AboutCounty, 
+    CountyBills, CountyProjects, CountyPlan, CountyBudget, CountyTranscripts, 
+    CountyOtherDocs, CountyGallery, CountyMembersOfParliament, CountyOtherOfficials,
+    CountyNews, ProjectDetail, NewsEntryDetail)
 
 person_patterns = patterns('pombola.core.views',
+    url(r'^$', ProfileDetails.as_view(template_name = 'ajibika/profile2.html'),
+        name='profile'), 
     url(r'^all/',
         ListView.as_view(model=models.Person),
         name='person_list'),
@@ -28,6 +33,7 @@ person_patterns = patterns('pombola.core.views',
         name='featured_person'),
 
     url(r'^(?P<slug>[-\w]+)/$', PersonDetail.as_view(), name='person'),
+
 
   )
 
@@ -50,6 +56,53 @@ place_patterns = patterns('pombola.core.views',
     url( r'^all/', PlaceKindList.as_view(), name='place_kind_all' ),
     url( r'^is/(?P<slug>[-\w]+)/$', PlaceKindList.as_view(), name='place_kind'     ),
     url( r'^is/(?P<slug>[-\w]+)/(?P<session_slug>[-\w]+)/?', PlaceKindList.as_view(), name='place_kind'     ),
+    url(  r'^(?P<slug>[-\w]+)/about/$', 
+        AboutCounty.as_view(template_name='ajibika/about.html'), 
+        name='about_county', 
+        ),
+     url(  r'^(?P<slug>[-\w]+)/bills/$', 
+        CountyBills.as_view(template_name='ajibika/bills.html'), 
+        name='county_bilss', 
+        ),
+     url(  r'^(?P<slug>[-\w]+)/projects/$', 
+        CountyProjects.as_view(template_name='ajibika/county_projects.html'), 
+        name='county_projects', 
+        ),
+      url(  r'^(?P<slug>[-\w]+)/projects/(?P<project_slug>[-\w]+)/?', 
+        ProjectDetail.as_view(template_name='ajibika/project_detail.html'), 
+        name='project_detail', 
+        ),
+
+     url(  r'^(?P<slug>[-\w]+)/news/(?P<news_entry_slug>[-\w]+)/?', 
+        NewsEntryDetail.as_view(template_name='ajibika/county_news_entry.html'), 
+        name='project_detail', 
+        ),
+
+
+     url(  r'^(?P<slug>[-\w]+)/plan/$', 
+        CountyPlan.as_view(template_name='ajibika/plan.html'), 
+        name='county_plan', 
+        ),
+      url(  r'^(?P<slug>[-\w]+)/budget/$', 
+        CountyBudget.as_view(template_name='ajibika/budget.html'), 
+        name='county_budget', 
+        ),
+       url(  r'^(?P<slug>[-\w]+)/transcripts/$', 
+        CountyTranscripts.as_view(template_name='ajibika/county_transcripts.html'), 
+        name='county_transcripts', 
+        ),
+       url(  r'^(?P<slug>[-\w]+)/otherdocs/$', 
+        CountyOtherDocs.as_view(template_name='ajibika/otherdocs.html'), 
+        name='county_otherdocs', 
+        ),
+       url(  r'^(?P<slug>[-\w]+)/gallery/$', 
+        CountyGallery.as_view(template_name='ajibika/county_gallery2.html'), 
+        name='county_gallery', 
+        ),
+       url(  r'^(?P<slug>[-\w]+)/news/$', 
+        CountyNews.as_view(template_name='ajibika/county_news.html'), 
+        name='county_news', 
+        ),
 
     url(r'^(?P<slug>[-\w]+)/$',
         PlaceDetailView.as_view(),
@@ -63,7 +116,24 @@ place_patterns = patterns('pombola.core.views',
         r'^(?P<slug>[-\w]+)/candidates/$',
         RedirectView.as_view(url='/place/%(slug)s/aspirants', permanent=True),
     ),
-)
+    url(
+        r'^(?P<slug>[-\w]+)/(?P<category>county-executive)/$', 
+        CountyExecutive.as_view(template_name='ajibika/profiles.html'), 
+        name='county_executive'),
+   url(
+        r'^(?P<slug>[-\w]+)/(?P<category>county-assembly)/$', 
+        CountyAssembly.as_view(template_name='ajibika/profiles.html'), 
+        name='county_assembly'),
+     url(
+        r'^(?P<slug>[-\w]+)/(?P<category>other-officials)/$', 
+        CountyOtherOfficials.as_view(template_name='ajibika/profiles.html'), 
+        name='county_other_officials'),
+    url(
+        r'^(?P<slug>[-\w]+)/(?P<category>members-of-parliament)/$', 
+        CountyMembersOfParliament.as_view(template_name='ajibika/profiles.html'), 
+        name='county_members_of_parliament'),
+    # other-officials
+    )
 
 # ugly, must be a better way
 for sub_page in ['aspirants', 'election', 'scorecard', 'comments', 'people', 'places', 'organisations', 'data', 'projects']:

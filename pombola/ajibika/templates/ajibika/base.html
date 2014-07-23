@@ -15,8 +15,8 @@
 
     <!-- Custom styles for this template -->
     <link href="{{ STATIC_URL }}css/template.css" rel="stylesheet">
-     {% block css %}
-     {% endblock %}
+           <link href="{{ STATIC_URL }}css/custom.aji.css" rel="stylesheet">
+
 
 
 
@@ -35,9 +35,11 @@
       <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
   </head>
+  {% block body %}
 
- <body>
+ <body class="landing-page">
 
+{% endblock %}
     <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
       <div class="container">
         <div class="navbar-header">
@@ -47,11 +49,13 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand" href="#"><img src="{{STATIC_URL}}img/logo.png" alt="Ajibika"/></a>
+          <a class="navbar-brand" href="/"><img src="{{STATIC_URL}}img/logo.png" alt="Ajibika"/></a>
         </div>
         <div class="collapse navbar-collapse">
           <ul class="nav navbar-nav">
-            <li class="active"><a href="#">About Ajibika</a></li>
+            <li class="active"><a href="/about">About Ajibika</a></li>
+            <li class="active"><a href="/resources">Devolution Resources</a></li>
+
             <li class="dropdown">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown">Select County <span class="caret"></span></a>
               <ul class="dropdown-menu" role="menu">
@@ -67,25 +71,64 @@
     </div>
     {% block content %}
     {% endblock %}
-    <div class="footer-wrap">
+
+
+
+<div class="footer footer-wrap">
+      <div class="copy-wrap">
         <div class="container">
-            <div class="row">
-                <div class="col-md-6">
-                    <p class="nomargin nopadding">
-                        &copy; Ajibika 2014. All rights reserved. <a href=""></a>
-                    </p>
-                </div>
-                <div class="col-md-6">
-                    <p class="nomargin nopadding tright">
-                        <a href="">About Ajibika</a> |  <a href="">Terms</a> | <a href="">Legal</a>
-                    </p>
-                </div>
+          <div class="row">
+            <div class="col-md-6">
+              <p class="nomargin nopadding">
+                &copy; Ajibika 2014. All rights reserved. <a href=""></a>
+              </p>
             </div>
+            <div class="col-md-6">
+              <p class="nomargin nopadding tright">
+                <a href="https://www.facebook.com/ajibika"><i class="fa fa-facebook-square"></i></a> 
+                <a href="https://twitter.com/Ajibika"> <i class="fa fa-twitter"></i></a> 
+                <a href="https://www.youtube.com/channel/UCM7jCT5yoDs4oDS8HXhL5KA"><i class="fa fa-youtube"></i>
+                </a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="/about">About Ajibika</a> | 
+                 <a href="/terms">Terms and Conditions</a> 
+              </p>
+            </div>
+          </div>
         </div>
+      </div>
+      <div class="ufa-wrap">
+        <div class="container">
+          <div class="col-xs-4">
+            <div class="ufadh-logo-wrap undef-ogo">
+              <p class="nomargin">
+                <a href="http://www.un.org/democracyfund/" target="_blank">
+                  <span class="undef-ogo"><img src="{{ STATIC_URL }}img/undef.png" alt="Ufadhili Logo" /></span>
+                </a>
+              </p>
+            </div>
+          </div>
+          <div class="col-xs-4">
+            <div class="ufadh-descript">
+              <p class="nomargin tcenter">
+                Ajibika is an Initiative of <a href="http://www.ufadhilitrust.org/">Ufadhili Trust</a> , with the generous support from the United Nations Democracy Fund <a href="http://www.un.org/democracyfund/">(UNDEF)</a>.
+              </p>
+            </div>
+          </div>
+          <div class="col-xs-4">
+            <div class="ufadh-logo-wrap">
+              <p class="nomargin">
+                <a href="http://www.ufadhilitrust.org/" target="_blank">
+                  <img src="{{ STATIC_URL }}img/ufadhili_logo.png" alt="Ufadhili Logo" />
+                </a>
+              </p>
+            </div>
+          </div>
+          
+        </div>
+      </div>
+      
+   
     </div>
-     <!-- Bootstrap core JavaScript
-    ================================================== -->
-    <!-- Placed at the end of the document so the pages load faster -->
+
     <script src="{{ STATIC_URL }}js/jquery-1.11.1.min.js"></script>
     <script src="{{ STATIC_URL }}js/bootstrap.min.js"></script>
     <script type="text/javascript">

@@ -87,7 +87,7 @@ class PositionAdmin(AjaxSelectAdmin):
         'show_person',
         'show_organisation',
         'show_place',
-        'show_title',
+        # 'show_title',
         'start_date',
         'end_date',
         ]
@@ -159,10 +159,10 @@ class ScorecardInlineAdmin(GenericTabularInline):
 class PersonAdmin(admin.ModelAdmin):
     prepopulated_fields = {"slug": ["legal_name"]}
     inlines = [
-        AlternativePersonNameInlineAdmin,
+        # AlternativePersonNameInlineAdmin,
         PositionInlineAdmin,
         ContactInlineAdmin,
-        InformationSourceInlineAdmin,
+        # InformationSourceInlineAdmin,
         ImageAdminInline,
         # ScorecardInlineAdmin,
         # IdentifierInlineAdmin,
@@ -177,10 +177,12 @@ class PlaceAdmin(admin.ModelAdmin):
     list_display = ('slug', 'name', 'kind', 'show_organisation')
     list_filter = ('kind',)
     search_fields = ('name', 'organisation__name')
+    fields = ['name', 'slug', 'kind', 'summary', 'organisation', 'parliamentary_session']
     inlines = (
-        InformationSourceInlineAdmin,
-        ScorecardInlineAdmin,
-        IdentifierInlineAdmin,
+        # InformationSourceInlineAdmin,
+        # ScorecardInlineAdmin,
+        # IdentifierInlineAdmin,
+        ImageAdminInline,
         )
 
     def show_organisation(self, obj):

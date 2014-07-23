@@ -73,7 +73,7 @@ TIME_ZONE = config.get('TIME_ZONE')
 # http://www.i18nguy.com/unicode/language-identifiers.html
 LANGUAGE_CODE = 'en-GB'
 
-SITE_ID = 3
+SITE_ID = 2
 
 # If you set this to False, Django will make some optimizations so as not
 # to load the internationalization machinery.
@@ -112,6 +112,7 @@ STATICFILES_DIRS = (
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.
     os.path.join( base_dir, "web/static/" ),
+    "/usr/local/lib/python2.7/dist-packages/django/contrib/admin/static/admin/",
 )
 
 # List of finder classes that know how to find static files in
@@ -394,6 +395,12 @@ INSTALLED_APPS = (
     'pombola.file_archive',
     'pombola.map',
     'pombola.ajibika',
+    'pombola.bills',
+    'pombola.documents',
+    'pombola.videos',
+    'pombola.news',
+    'pombola.ajibika_resources',
+
 
     'django_nose',
 )

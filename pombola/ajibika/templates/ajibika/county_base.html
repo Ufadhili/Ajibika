@@ -1,5 +1,551 @@
- {% extends 'ajibika/base.html' %}
- {% block css %}
-  <link href="{{ STATIC_URL }}css/county.aji.css" rel="stylesheet">
- {% endblock %}
- 
+
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="shortcut icon" href="/favicon.ico?v2" />
+
+    <title>{{county.name}} :: Ajibika  </title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="{{ STATIC_URL }}css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="{{ STATIC_URL }}css/template.css" rel="stylesheet">
+    <link href="{{ STATIC_URL }}css/county.aji.css" rel="stylesheet">
+
+	<link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700' rel='stylesheet' type='text/css'>
+	<link rel="stylesheet" href="{{ STATIC_URL }}fonts/font-awesome/css/font-awesome.min.css">
+	
+	
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <script src="{{ STATIC_URL }}js/ie10-viewport-bug-workaround.js"></script>
+    
+    
+
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+   </head>
+
+  <body class="">
+
+    <div class="navbar navbar-inverse navbp" role="navigation">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="/"><img src="{{ STATIC_URL }}img/logo.png" alt="Ajibika"/></a>
+        </div>
+        <div class="collapse navbar-collapse">
+          <ul class="nav navbar-nav">
+            <li class="active"><a href="/about">About Ajibika</a></li>
+            <li class="active"><a href="/resources">Devolution Resources</a></li>
+            <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown">Change <span class="county-active">{{county.name}}</span><span class="caret"></span></a>
+               <ul class="dropdown-menu" role="menu">
+                {% for county in counties %}
+                    <li><a href="{{county.get_absolute_url}}">{{county.name}}</a></li>
+                {% endfor %}
+                
+              </ul>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div> 
+    
+    <div class="county-menu-wrap">
+    	<div class="navbar navbar-default navbar-static-top" role="navigation">
+	      <div class="container">
+	        <div class="navbar-header">
+	          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+	            <span class="sr-only">Toggle navigation</span>
+	            <span class="icon-bar"></span>
+	            <span class="icon-bar"></span>
+	            <span class="icon-bar"></span>
+	          </button>
+	        </div>
+	        
+	        <div class="navbar-collapse collapse">
+	          <ul class="nav navbar-nav">
+	            
+	            
+	          </ul>
+	          <ul class="nav navbar-nav navbar-right">
+	            <li class="active"><a href="{{county.get_absolute_url}}">Home</a></li>
+	            <li><a href="{{county.get_absolute_url}}about">About {{county.name}}</a></li>
+	            <li class="dropdown">
+	              <a href="#" class="dropdown-toggle" data-toggle="dropdown">County Executive <span class="caret"></span></a>
+	              <ul class="dropdown-menu" role="menu">
+	                <li><a href="{{governor.get_absolute_url}}">Governor</a></li>
+	                <li><a href="{{deputy_governor.get_absolute_url}}">Deputy Governor</a></li>
+	                <li><a href="{{county.get_absolute_url}}county-executive">County Executive</a></li>
+	                <li><a href="{{county.get_absolute_url}}other-officials">Other Officials</a></li>
+	              </ul>
+	            </li>
+	            
+	            <li><a href="{{senator.get_absolute_url}}">Senator </a></li>
+	            <li class="dropdown">
+	              <a href="#" class="dropdown-toggle" data-toggle="dropdown">County Assembly <span class="caret"></span></a>
+	              <ul class="dropdown-menu" role="menu">
+	                <li><a href="{{speaker.get_absolute_url}}">County Speaker</a></li>
+	                <li><a href="{{deputy_speaker.get_absolute_url}}">Deputy County Speaker</a></li>
+	                <li><a href="{{county_clerk.get_absolute_url}}">County Clerk</a></li>
+
+	                
+	                <li><a href="{{county.get_absolute_url}}county-assembly">Members of County Assembly</a></li>
+	                
+	              </ul>
+	            </li>
+	            <li class="dropdown">
+	              <a href="#" class="dropdown-toggle" data-toggle="dropdown">National Assembly <span class="caret"></span></a>
+	              <ul class="dropdown-menu" role="menu">
+	              <li><a href="{{womens_rep.get_absolute_url}}">Women's Representative </a></li>
+	                <li><a href="{{county.get_absolute_url}}members-of-parliament">Members of Parliament</a></li>	                
+	              </ul>
+	            </li>
+	            <li><a href="{{county.get_absolute_url}}projects">Projects</a></li>
+	            <li class="dropdown">
+	              <a href="#" class="dropdown-toggle" data-toggle="dropdown">Resources <span class="caret"></span></a>
+	              <ul class="dropdown-menu" role="menu">
+	                <li><a href="{{county.get_absolute_url}}plan">Plan</a></li>
+	                <li><a href="{{county.get_absolute_url}}budget">Budget</a></li>
+	                <li class="divider"></li>
+	                <li><a href="{{county.get_absolute_url}}bills">Bills</a></li>
+	                <li><a href="{{county.get_absolute_url}}transcripts">Transcripts</a></li>
+	                <li class="divider"></li>
+	                <li><a href="{{county.get_absolute_url}}gallery">Gallery</a></li>
+	                <li><a href="{{county.get_absolute_url}}otherdocs">Other Docs</a></li>
+	              </ul>
+	            </li>
+	            
+	            <li><a href="{{county.get_absolute_url}}news">News</a></li>
+	          </ul>
+	        </div>
+	      </div>
+	    </div>
+    </div> 
+
+{% block content %}
+    
+
+
+	<div class="container">
+		<div class="row">
+			<div class="col-md-8">
+				<div class="slide-wrap">
+					<div id="myCarousel" class="carousel slide" data-ride="carousel">
+				      <!-- Indicators -->
+				      <ol class="carousel-indicators">
+				        <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+				        <li data-target="#myCarousel" data-slide-to="1"></li>
+				        <li data-target="#myCarousel" data-slide-to="2"></li>
+				      </ol>
+				      <div class="carousel-inner">
+
+
+							 {% if images %}
+				        <div class="item active">
+				          <img src="{{images.0.image.url}}" alt="First slide">
+				          <div class="container">				           
+				          </div>
+				        </div>
+				      	{% for file in images|slice:"1:"%}
+				      	 <div class="item">
+				          <img src="{{file.image.url}}" alt="First slide">
+				          <div class="container">				          
+				          </div>
+				        </div>
+				      	{% endfor %}				      	
+				        {% endif %}
+
+
+				      </div>
+				      <a class="left carousel-control" href="#myCarousel" data-slide="prev"><span class="glyphicon glyphicon-chevron-left"></span></a>
+				      <a class="right carousel-control" href="#myCarousel" data-slide="next"><span class="glyphicon glyphicon-chevron-right"></span></a>
+				    </div><!-- /.carousel -->
+				</div>
+			</div>
+			<div class="col-md-4">
+				<div class="bg-white-aji feat-profile-wra">
+					<div class="cont-title">
+						<div class="row">
+							<div class="col-sm-11"><i class="fa fa-user"></i> FEATURED OFFICIAL </div>
+						</div>
+					</div>
+					{% if featured %}
+					<div class="cont-body profile">
+						<div class="row">
+							<div class="col-xs-4">
+								<div class="feat-profile-wrap">
+									<p class="tcenter nomargin">
+											 {% if featured.primary_image %}
+									          <img src="{{ featured.primary_image.url }}" alt="{{ featured.primary_image.name }}"/>
+									          {% else %}
+									          <img src="{{STATIC_URL}}img/profiles/place-holder.jpg" />
+									          {% endif %}  
+									</p>
+								</div>
+							</div>
+							<div class="col-xs-8">
+								<h3 class="normagin"><a href="{{featured.get_absolute_url}}">{{featured.name}}</a></h3>
+								<p>{{featured.summary|truncatechars:90}}<br/> 
+									<small><a class="nowrap" href="{{featured.get_absolute_url}}">read more &rarr;</a></small></p>
+								
+							</div>
+						</div>
+					</div>
+					{% else %}
+					<p>No officials found for this county.</p>
+					{% endif %}
+
+					
+				</div>
+				<div class="quicklinks-wrap">
+					<div class="quick-one">
+						<a href="{{county.get_absolute_url}}projects">
+							<div class="row">
+								<div class="col-xs-10">
+									<h2>Projects</h2>
+									<p>View projects in {{county.name}} county.</p>
+								</div>
+								<div class="col-xs-2 darker-one">
+									<p class="normagin"><i class="fa fa-arrow-circle-o-right"></i></p>
+								</div>
+							</div>
+						</a>
+					</div>
+					
+					<div class="quick-two">
+						<a href="{{county.get_absolute_url}}bills">
+							 <div class="row">
+								<div class="col-xs-10">
+									<h2>Bills</h2>
+									<p>View bills for {{county.name}} county.</p>
+								</div>
+								<div class="col-xs-2 darker-two">
+									<p class="normagin"><i class="fa fa-arrow-circle-o-right"></i></p>
+								</div>
+							</div>
+						</a>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="county-body">
+	{% if news %}
+		<div class="county-news">
+			<div class="container">
+				<div class="row">
+					<div class="col-md-10">
+						<p class="nomargin">
+						{% with news|random as item %}
+							News:   <a href="{{county.get_absolute_url}}news/{{item.slug}}">{{item.title}} <i class="fa fa-arrow-circle-right color-aji"></i></a>
+						
+						{% endwith %}
+						</p>
+					</div>
+					<div class="col-md-2">
+						<p class="nomargin tright">
+							<a href="{{county.get_absolute_url}}news">Read More<i class="fa fa-chevron-right"></i></a>
+						</p>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		{% endif %}
+		<div class="county-resources">
+			<div class="container">
+				<div class="row">
+					<div class="col-md-7">
+						<div class="bg-white-aji">
+							<div class="cont-title">
+								<div class="row">
+									<div class="col-sm-1"><i class="fa fa-tasks"></i></div><div class="col-sm-11"> TOP NEWS </div>
+								</div>
+							</div>
+							<div class="cont-body">
+
+								{%if news %}
+							
+								<ul class="nopadding nomargin listnone">
+								{% with news|slice:"5" as items %}	
+								{% for item in items %}								
+									<li>
+										<a href="">
+											<div class="row">
+												<div class="col-md-1"><span class="large-date">
+												{{item.publication_date|date:"d"}}</span> <br/> 
+												<span class="small-month">{{item.publication_date|date:"F"}}</span> </div>
+												<div class="col-md-11"> 
+													<div class="news-page">
+														<div class="newstitle">
+															<h4 class="nomargin">
+															<a href="{{county.get_absolute_url}}news/{{item.slug}}">{{item.title}}</a></h4>
+														</div>
+													<div class="news-excerpt">
+														<p class="nomargin">{{item.message | truncatechars:140}} <a href="">read more...</a></p>
+													</div>
+													</div>
+												</div>
+											</div>
+										</a>
+										
+									</li>
+							
+							{% endfor %}
+
+							{% endwith %}
+							
+									{% else %}
+							<p>No news found for this county </p>
+									
+									
+									
+									
+									
+								</ul>
+								{% endif %}
+							</div>
+						</div>
+					</div>
+					<div class="col-md-5">
+						<div class="bg-white-aji">
+							<div class="cont-title">
+								<div class="row">
+									<div class="col-sm-1">
+									<i class="fa fa-tasks"></i></div><div class="col-sm-11"> FEATURED VIDEO </div>
+								</div>
+							</div>
+							
+							<div class="cont-body videos-wrap">
+							{% if videos %} 
+							{% with videos|random as featured_video%}
+								<iframe id='featured-vid' width='100%' height='305' src='{{featured_video.youtube_embed_link}}'frameborder='0' allowfullscreen></iframe>
+		 	
+							{% endwith %}
+								{% else %}
+							
+							<iframe id='featured-vid' width='100%' height='305' src='//www.youtube.com/embed/Z4IeRbDqMnE'frameborder='0' allowfullscreen></iframe>
+							{% endif %}
+							</div>
+
+							
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		
+	</div>
+	
+  {% endblock %}
+
+    	<div class="cont-footer-wrap">
+    		<div class="container">
+	    		<div class="row">
+	    			<div class="col-md-2">
+						<div class="bg-whie-aji">
+							<div class="cont-title">
+								<div class="row">
+									<div class="col-sm-11"> ABOUT AJIBIKA </div>
+								</div>
+							</div>
+							<div class="cont-body">
+								<ul class="nopadding nomargin listnone">
+									<li>
+										<p class="nomargin"><a href="/"> Home</a></p>
+									</li>
+									<li>
+										<p class="nomargin"><a href="/about"> About Ajibika Platform</a></p>
+									</li>
+									<li>
+										<p class="nomargin"><a href=""> Partners</a></p>
+									</li>									
+									<li>
+										<p class="nomargin"><a href="{{county.get_absolute_url}}about"> About this county</a></p>
+									</li>	
+									
+									
+									
+									
+								</ul>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-2">
+						<div class="bg-whie-aji">
+							<div class="cont-title">
+								<div class="row">
+									<div class="col-xs-11"> QUICK LINKS </div>
+								</div>
+							</div>
+							<div class="cont-body">
+								<ul class="nopadding nomargin listnone">
+									<li>
+										<p class="nomargin"><a href="{{county.get_absolute_url}}bills"> Bills</a></p>
+									</li>
+									<li>
+										<p class="nomargin"><a href="{{county.get_absolute_url}}projects"> Projects</a></p>
+									</li>
+									<li>
+										<p class="nomargin"><a href="{{county.get_absolute_url}}transcripts"> Transcripts</a></p>
+									</li>
+									<li>
+										<p class="nomargin"><a href="{{county.get_absolute_url}}plan"> County Plans</a></p>
+									</li>
+									<li>
+										<p class="nomargin"><a href="{{county.get_absolute_url}}budget"> Budget</a></p>
+									</li>
+									<li>
+										<p class="nomargin"><a href="{{county.get_absolute_url}}otherdocs"> Other Documents</a></p>
+									</li>
+									<li>
+										<p class="nomargin"><a href="{{county.get_absolute_url}}about"> About this county</a></p>
+									</li>				
+									
+									
+									
+									
+									
+								</ul>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-4">
+							<div class="bg-white-aji">
+								<div class="cont-title">
+									<div class="row">
+										<div class="col-sm-1"><i class="fa fa-tasks"></i></div><div class="col-sm-11"> CONNECT AND SHARE </div>
+									</div>
+								</div>
+								<div class="cont-body">
+								<a class="twitter-timeline" href="https://twitter.com/Ajibika" data-widget-id="480982572613107712">Tweets by @Ajibika</a>
+						<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+								</div>
+							</div>
+						</div>
+						
+	    			
+	    			
+	    			<div class="col-md-4">
+							<div class="bg-white-aji">
+								<div class="cont-title">
+									<div class="row">
+										<div class="col-sm-1"><i class="fa fa-tasks"></i></div><div class="col-sm-11"> CONNECT AND SHARE </div>
+									</div>
+								</div>
+								<div class="cont-body">
+									<!-- <div id="fb-root"></div>
+									<script>(function(d, s, id) {
+									  var js, fjs = d.getElementsByTagName(s)[0];
+									  if (d.getElementById(id)) return;
+									  js = d.createElement(s); js.id = id;
+									  js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&appId=292843857462631&version=v2.0";
+									  fjs.parentNode.insertBefore(js, fjs);
+									}(document, 'script', 'facebook-jssdk'));</script>
+									
+									<div class="fb-like-box" data-href="https://www.facebook.com/FacebookDevelopers" data-colorscheme="light" data-show-faces="true" data-header="true" data-stream="false" data-show-border="true"></div>
+								</div> -->
+								<script>(function(d, s, id) {
+									  var js, fjs = d.getElementsByTagName(s)[0];
+									  if (d.getElementById(id)) return;
+									  js = d.createElement(s); js.id = id;
+									  js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&appId=292843857462631&version=v2.0";
+									  fjs.parentNode.insertBefore(js, fjs);
+									}(document, 'script', 'facebook-jssdk'));</script>
+									
+									<div class="fb-like-box" data-href="https://www.facebook.com/ajibika" data-colorscheme="light" data-show-faces="true" data-header="true" data-stream="false" data-show-border="true"></div>
+							</div>
+						</div>
+						
+	    		</div>
+	    	</div>
+    	</div>
+    	<div class="footer-wrap footer">
+	    	<div class="foot">
+	    		<div class="container">
+		    		<div class="row">
+		    			<div class="col-md-6">
+		    				<p class="nomargin nopadding">
+		    					&copy; Ajibika 2014. All rights reserved. 
+		    				</p>
+		    			</div>
+		    			<div class="col-md-6">
+		    				<p class="nomargin nopadding tright">
+		    					<a href="/about">About Ajibika</a> |  <a href="/terms">Terms and Conditions</a> 
+		    				</p>
+		    			</div>
+		    		</div>
+		    	</div>
+	    	</div>
+	    	<div class="ufa-wrap">
+	    		<div class="container">
+	    			<div class="col-xs-4">
+	    				<div class="ufadh-logo-wrap undef-ogo">
+	    					<p class="nomargin">
+		    					<a href="http://www.un.org/democracyfund/" target="_blank">
+		    						<span class="undef-ogo"><img src="{{STATIC_URL}}img/undef.png" alt="Ufadhili Logo" /></span>
+		    					</a>
+		    				</p>
+	    				</div>
+	    			</div>
+	    			<div class="col-xs-4">
+	    				<div class="ufadh-descript">
+	    					<p class="nomargin tcenter">
+		    					Ajibika is an Initiative of <a href="http://www.ufadhilitrust.org/">Ufadhili Trust</a> , with the generous support from the 
+		    					<a href="http://www.un.org/democracyfund/">United Nations Democracy Fund (UNDEF).</a>
+		    				</p>
+	    				</div>
+	    			</div>
+	    			<div class="col-xs-4">
+	    				<div class="ufadh-logo-wrap">
+	    					<p class="nomargin tcenter">
+		    					<a href="http://www.ufadhilitrust.org/" target="_blank">
+		    						<img src="{{STATIC_URL}}img/ufadhili.png" alt="Ufadhili Logo" />
+		    					</a>
+		    				</p>
+	    				</div>
+	    			</div>
+	    			
+	    		</div>
+	    	</div>
+    	
+    	
+	    </div>
+
+
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="{{STATIC_URL}}js/jquery-1.11.1.min.js"></script>
+    <script src="{{STATIC_URL}}js/bootstrap.min.js"></script>
+	<script src="http://blueimp.github.io/Gallery/js/jquery.blueimp-gallery.min.js"></script>
+	<script src="{{STATIC_URL}}js/bootstrap-image-gallery.min.js"></script>
+	<script src="{{STATIC_URL}}js/bootstrap-image-gallery.min.js"></script>
+	<script src="{{STATIC_URL}}js/image-resize.js"></script>
+	<script src="{{STATIC_URL}}js/main.js"></script>
+	
+<script type="text/JavaScript">
+    $('.carousel').carousel({
+		        interval: 5000 //changes the speed
+			    });
+    </script>
+
+  </body>
+</html>

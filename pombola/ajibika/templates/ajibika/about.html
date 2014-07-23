@@ -1,0 +1,38 @@
+{% extends 'ajibika/county_base.html' %}
+
+ {% block content %}
+	<div class="county-header-wrap">
+		<div class="container">
+			<div class="row">
+				<div class="col-md-9">
+					<div class="call-to-action">
+						<h1 class="nomargin">About {{county.name}} County</h1>
+					</div>
+						
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="county-body">
+		<div class="county-resources">
+			<div class="container">
+				<div class="row">
+					<div class="col-md-12">
+						<div class="bg-white-aji">
+							<p>
+								{{county.summary}}
+							</p>
+							
+						</div>
+					</div>
+					
+					
+						
+
+					
+				</div>
+			</div>
+		</div>
+		
+	</div>
+  {% endblock %}

@@ -24,6 +24,6 @@ class InfoPageAdmin(admin.ModelAdmin):
     prepopulated_fields = {'slug': ['title']}
 
 
-admin.site.register( models.Category, LabelAdmin )
-admin.site.register( models.Tag,      LabelAdmin )
-admin.site.register( models.InfoPage, InfoPageAdmin )
+# admin.site.register( models.Category, LabelAdmin )
+# admin.site.register( models.Tag,      LabelAdmin )
+# admin.site.register( models.InfoPage, InfoPageAdmin )

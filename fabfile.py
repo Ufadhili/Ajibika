@@ -14,10 +14,38 @@ WEB_ROOT = '/var/www/ufadhili/'
 def host_type():
     run('uname -s')
 
+
+def install_pip_package(): 
+	"""
+	install package locally
+	log into remote
+	activate virtualenv
+	install package
+
+	"""
+	with settings(warn_only=True):		
+		package = prompt("enter the package to install")
+		print green("Attempting to install %s locally" %(package))
+		local_install = local("sudo pip install %s" %(package))
+		if local_install.failed and not confirm("Failed to install %s. Continue anyway?" %(package)):
+			abort("Aborting at user request")
+			
+	with cd("%sufadhili/" % (WEB_ROOT)):
+		activate_virtualenv()
+		print green("Attempting to install %s remotely" %(package))
+		remote_install = run("sudo pip install %s" %(package))
+		if local_install.failed and not confirm("Failed to install %s. Continue anyway?" %(package)):
+			abort("Aborting at user request")
+
+
+
+
+
+
 def commit():	
 	with settings(warn_only=True):		
 		# add any new untracked files
-		add_files = local("git add .")
+		add_files = local("git add -A")
 		if add_files.failed and not confirm("Command git add has failed. Continue anyway?"):
 			abort("Aborting by user request")
 		#Promt for a commit message	
@@ -103,12 +131,17 @@ def restart_elasticsearch():
 def get_the_code():
 	run("git clone https://github.com/mysociety/pombola.git")
 
+def hard_reset_remote():
+	run("git fetch --all")
+	run ("git reset --hard origin/develop")
+
 def configure_nginx():
 	#Do this for new servers only	
 	run("sudo /etc/init.d/nginx start")	
 	print green("Copying nginx.config virtual host file for ajibika.org to the sites-available directory")
 	with settings(warn_only=True):
-		if not file_exists("/etc/nginx/sites-available/www.ajibika.org"):
+		if file_exists("/etc/nginx/sites-available/www.ajibika.org"):
+			run("sudo rm /etc/nginx/sites-enabled/www.ajibika.org")
 			result = put("conf/www.ajibika.org", "/etc/nginx/sites-available/", use_sudo=True)
 			if result.failed and not confirm("Unable to copy www.ajibika.org to sites-enabled dir. Continue anyway?"):
 				abort("Aborting at user request.")
@@ -164,7 +197,15 @@ def remote_logs():
 	# run("sudo cat /var/www/logs/nginx/access.log")
 	# run("sudo cat  /var/www/logs/nginx/error.log")
 
+def sys_info():
+	run("sudo du -h")
+	run ("sudo df -h")
+
 def update_server():
+	"""
+	If it ain't broken.......... Actually, due to the large number of pombola depencies, 
+	I would refrain from doing this unless it's extemely necessary 
+	"""
 	run("sudo aptitude update")
 	run("sudo aptitude -y safe-upgrade")
 
@@ -219,6 +260,12 @@ def fetch_remote():
 		# result = run("sudo git fetch && git merge origin/develop")
 		result = run("sudo git pull origin develop")
 		if result.failed and not confirm("Unable to fetch remote git branch"):
+			abort("Aborting at user request")
+
+def hard_reset_remote():
+	with cd("%sufadhili/" % (WEB_ROOT)):
+		result = run("sudo git fetch --all && sudo git reset --hard origin/develop")
+		if result.failed and not confirm("Unable to hard reset remote git branch"):
 			abort("Aborting at user request")
 
 def collect_static():

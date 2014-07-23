@@ -30,6 +30,6 @@ class EntryAdmin(admin.ModelAdmin):
 
 
 # Add these to the admin
-admin.site.register( models.Category, CategoryAdmin)
-admin.site.register( models.Release, ReleaseAdmin)
-admin.site.register( models.Entry, EntryAdmin)
+# admin.site.register( models.Category, CategoryAdmin)
+# admin.site.register( models.Release, ReleaseAdmin)
+# admin.site.register( models.Entry, EntryAdmin)

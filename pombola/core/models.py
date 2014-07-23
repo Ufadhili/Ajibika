@@ -398,6 +398,13 @@ class Person(ModelBase, HasImageMixin, ScorecardMixin, IdentifierMixin):
         """Return list of constituencies that this person is currently an politician for"""
         return Place.objects.filter(position__in=self.politician_positions()).distinct()
 
+    def county(self):
+        positions = self.position_set.all()
+        counties = Place.objects.filter(position__in=positions).distinct()
+        return counties[0]
+        # return the county where this person belongs
+
+
     def constituency_offices(self):
         """
         Return list of constituency offices that this person is currently associated with.
@@ -654,6 +661,7 @@ class Place(ModelBase, ScorecardMixin):
 
     objects = PlaceManager()
     is_overall_scorecard_score_applicable = False
+    images = generic.GenericRelation(Image)
 
     @property
     def position_with_organisation_set(self):
@@ -742,6 +750,114 @@ class Place(ModelBase, ScorecardMixin):
         """Return a query set of all the current politicians for this place, and all parent places."""
         positions = self.all_related_positions().current_politician_positions()
         return Person.objects.filter(position__in=positions).distinct()
+
+    def current_county_governor(self):
+        try:
+            governor_position = PositionTitle.objects.get(slug='governor')
+            governor = Position.objects.filter(place__in=self.self_and_parents(), title_id=governor_position.id)
+            return Person.objects.get(position=governor)
+        except Exception, e:
+            return None
+        
+
+    def current_county_senator(self):
+        try:            
+            senator_position = PositionTitle.objects.get(slug='senator')
+            senator = Position.objects.filter(place__in=self.self_and_parents(), title_id=senator_position.id)
+            return Person.objects.get(position=senator)
+        except Exception, e:
+            return None
+
+    def featured_in_the_county(self):
+        try:
+            people = Position.objects.filter(place__in=self.self_and_parents())
+            featured = people.order_by('?')[0]
+            return Person.objects.get(position=featured)
+        except Exception, e:
+            return None
+
+    def current_county_deputy_governor(self):
+        try:
+            dp_governor_position = PositionTitle.objects.get(slug='deputy-governor')
+            dp_governor = Position.objects.filter(place__in=self.self_and_parents(), title_id=dp_governor_position.id)
+            return Person.objects.get(position=dp_governor)
+        except Exception, e:
+            return None
+        
+    def current_county_assembly_speaker(self):
+        try:
+            speaker_position = PositionTitle.objects.get(slug='speaker-county-assembly')
+            speaker = Position.objects.filter(place__in=self.self_and_parents(), title_id=speaker_position.id)
+            return Person.objects.get(position=speaker)
+        except Exception, e:
+            return None
+
+    def current_county_womens_rep(self):
+        try:
+            position_title = PositionTitle.objects.get(slug='womens-representative')
+            womens_rep = Position.objects.filter(place__in=self.self_and_parents(), title_id=position_title.id)
+            return Person.objects.get(position=womens_rep)
+        except Exception, e:
+            return None
+
+
+    def current_county_clerk(self):
+        try:
+            position_title = PositionTitle.objects.get(slug='county-clerk')
+            clerk = Position.objects.filter(place__in=self.self_and_parents(), title_id=position_title.id)
+            return Person.objects.get(position=clerk)
+        except Exception, e:
+            return None
+
+
+    def current_deputy_county_assembly_speaker(self):
+        try:
+            position_title = PositionTitle.objects.get(slug='deputy-speaker-county-assembly')
+            position = Position.objects.filter(place__in=self.self_and_parents(), title_id=position_title.id)
+            return Person.objects.get(position=position)
+        except Exception, e:
+            return None
+
+
+
+        
+
+        # speaker-county-assembly
+        # womens-representative
+        # member-parliament
+    def county_members_of_parliament(self):
+        try:
+            # mp_title = PositionTitle.objects.get(slug='member-parliament')
+            organisation = Organisation.objects.get(slug='parliament')
+            mps = Position.objects.filter(place__in=self.self_and_parents(), organisation=organisation)
+            return Person.objects.filter(position__in=mps).distinct()
+        except Exception, e:
+            return None
+
+    def county_executive(self):
+        try:            
+            organisation = Organisation.objects.get(slug='county-executive')
+            executives = Position.objects.filter(place__in=self.self_and_parents(), organisation=organisation)
+            return Person.objects.filter(position__in=executives).distinct()
+        except Exception, e:
+            return None
+
+    def county_other_officials(self):
+        slugs = ['senate', 'county-assembly', 'parliament', 'county-executive']
+        try:
+            other_orgs = Organisation.objects.exclude(slug__in=slugs)
+            executives = Position.objects.filter(place__in=self.self_and_parents(), organisation=other_orgs)
+            return Person.objects.filter(position__in=executives).distinct()
+        except Exception, e:
+            return None
+
+    def county_assembly(self):
+        try:            
+            organisation = Organisation.objects.get(slug='county-assembly')
+            executives = Position.objects.filter(place__in=self.self_and_parents(), organisation=organisation)
+            return Person.objects.filter(position__in=executives).distinct()
+        except Exception, e:
+            return None
 
     def all_related_former_politicians(self):
         """Return a query set of all the former politicians for this place, and all parent places."""

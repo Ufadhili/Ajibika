@@ -67,5 +67,5 @@ class EntryAdmin(admin.ModelAdmin):
     
 
 
-admin.site.register( models.Category, CategoryAdmin )
-admin.site.register( models.Entry,    EntryAdmin    )
+# admin.site.register( models.Category, CategoryAdmin )
+# admin.site.register( models.Entry,    EntryAdmin    )

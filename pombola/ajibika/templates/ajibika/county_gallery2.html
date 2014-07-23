@@ -1,0 +1,115 @@
+	
+{% extends 'ajibika/county_base.html' %}
+
+ {% block content %}
+	<div class="county-header-wrap">
+		<div class="container">
+			<div class="row">
+				<div class="col-md-9">
+					<div class="call-to-action">
+						<h1 class="nomargin">Gallery</h1>
+					</div>
+						
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="county-body inside-page">
+		<div class="county-resouces">
+			<div class="container">
+				<div class="row">
+					<div class="col-md-12">
+					<div class="container">
+						<ul class="nav nav-tabs">
+						  <li class="active"><a href="#tab_a" data-toggle="tab">Photo Gallery</a></li>
+						  <li><a href="#tab_b" data-toggle="tab">Video Gallery </a></li>
+						</ul>
+						<div class="tab-content">
+						        <div class="tab-pane active" id="tab_a">
+						            <!-- <h4>Photo Gallery</h4> -->
+						            
+									        {% if images %}
+										<div id="links">
+										{% for object in images %}
+										    <a href="" title="{{county.name}}" data-gallery>
+										        <img width="200px" style="margin-bottom: 10px;" src="{{object.image.url}}" alt="{{county.name}}">
+										    </a>
+										 {% endfor %}
+										 {% else %}
+										 <div id="links">
+										 No images yet.
+
+										 {% endif %}
+					    
+										</div>
+										</div>
+
+						        <div class="tab-pane" id="tab_b">
+						            <h4>Video Gallery</h4>
+						            <div class="row">
+						            {% if videos %}
+						            {% for video in videos %}
+						            	<div class="col-md-4">
+						            		<iframe width="100%" height="360" src="{{video.youtube_embed_link}}" frameborder="0" allowfullscreen></iframe>
+						            	</div>	
+						            {% endfor %}
+						            {% else %}
+						            No Videos yet.
+						            {% endif %}					            
+						            	
+						            </div>
+						        </div>
+						</div><!-- tab content -->
+						</div><!-- end of container -->
+
+
+
+					
+					
+
+					<br/><br/>
+					
+						<!-- The Bootstrap Image Gallery lightbox, should be a child element of the document body -->
+						<div id="blueimp-gallery" class="blueimp-gallery">
+						    <!-- The container for the modal slides -->
+						    <div class="slides"></div>
+						    <!-- Controls for the borderless lightbox -->
+						    <h3 class="title"></h3>
+						    <a class="prev">‹</a>
+						    <a class="next">›</a>
+						    <a class="close">×</a>
+						    <a class="play-pause"></a>
+						    <ol class="indicator"></ol>
+						    <!-- The modal dialog, which will be used to wrap the lightbox content -->
+						    <div class="modal fade">
+						        <div class="modal-dialog">
+						            <div class="modal-content">
+						                <div class="modal-header">
+						                    <button type="button" class="close" aria-hidden="true">&times;</button>
+						                    <h4 class="modal-title"></h4>
+						                </div>
+						                <div class="modal-body next"></div>
+						                <div class="modal-footer">
+						                    <button type="button" class="btn btn-default pull-left prev">
+						                        <i class="glyphicon glyphicon-chevron-left"></i>
+						                        Previous
+						                    </button>
+						                    <button type="button" class="btn btn-primary next">
+						                        Next
+						                        <i class="glyphicon glyphicon-chevron-right"></i>
+						                    </button>
+						                </div>
+						            </div>
+						        </div>
+						    </div>
+						</div>
+						
+						
+					</div>
+						
+				</div>
+			</div>
+		</div>
+		
+	</div>
+ {% endblock %}

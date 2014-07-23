@@ -17,6 +17,15 @@ from django.contrib.contenttypes.models import ContentType
 
 from pombola.core import models
 from pombola.info.models import InfoPage
+from pombola.documents.models import Document
+from pombola.ajibika_resources.models import (
+    Document as AjibikaDoc, 
+    AboutAjibika, 
+    Image as AjibikaImage,
+    Video as AjibikaVideo)
+from pombola.projects.models import Project
+from pombola.news.models import NewsEntry
+from pombola.videos.models import Video as CountyVideo
 
 
 class HomeView(TemplateView):
@@ -24,30 +33,321 @@ class HomeView(TemplateView):
     template_name = 'ajibika/index.html'
 
     def get_context_data(self, **kwargs):
-
         context = super(HomeView, self).get_context_data(**kwargs)
-
-        # before, after = (self.request.GET.get(k) for k in ('before', 'after'))
-        # current_slug = before or after
-
-        # context['featured_person'] = \
-        #     models.Person.objects.get_next_featured(current_slug,
-        #                                             want_previous=before)
-
-        # For the election homepage produce a list of all the featured people.
-        # Shuffle it each time to avoid any bias.
-        # context['featured_persons'] = list(models.Person.objects.get_featured())
         context['counties'] = models.Place.objects.filter(kind__slug='county')
-        # random.shuffle(context['featured_persons'])
-
         return context
 
+class AboutAjibikaView(TemplateView):
+
+    template_name = 'ajibika/about_ajibika.html'
+
+    def get_context_data(self, **kwargs):
+        context = super(AboutAjibikaView, self).get_context_data(**kwargs)
+        context['counties'] = models.Place.objects.filter(kind__slug='county')
+        context['about'] = AboutAjibika.objects.all()  
+        context['images']  = AjibikaImage.objects.all()  
+        context['videos']   = AjibikaVideo.objects.all()
+        return context
+
+class AjibikaResourcesView(TemplateView):
+    template_name = 'ajibika/ajibika_resources.html'
+    def get_context_data(self, **kwargs):
+        context = super(AjibikaResourcesView, self).get_context_data(**kwargs)
+        context['counties'] = models.Place.objects.filter(kind__slug='county') 
+        context['resources'] = AjibikaDoc.objects.all()      
+        return context
+
+class AjibikaTos(TemplateView):
+    template_name = 'ajibika/ajibika_tos.html'
+    def get_context_data(self, **kwargs):
+        context = super(AjibikaTos, self).get_context_data(**kwargs)
+        context['counties'] = models.Place.objects.filter(kind__slug='county') 
+        context['about'] = AboutAjibika.objects.all()
+        return context
 
 class OrganisationList(ListView):
     model = models.Organisation
 
+class ProfileDetails(DetailView):
+    model = models.Person
+    # template_name = 'ajibika/profile2.html'
+
+class CountyExecutive(DetailView):
+    model = models.Place
+    context_object_name = "county"
+    
+    def get_context_data(self, **kwargs):
+        # Call the base implementation first to get a context
+        context = super(CountyExecutive, self).get_context_data(**kwargs)
+        context['persons'] = models.Place.objects.get(slug=self.kwargs['slug']).county_executive()
+        context['category'] = 'County Executive'
+        context['counties'] = models.Place.objects.filter(kind__slug='county')
+        context['governor'] = self.object.current_county_governor()
+        context['deputy_governor'] = self.object.current_county_deputy_governor()
+        context['senator'] = self.object.current_county_senator()
+        context['speaker'] = self.object.current_county_assembly_speaker()
+        context['womens_rep'] = self.object.current_county_womens_rep()
+        context['county_clerk'] = self.object.current_county_clerk()
+        context['deputy_speaker'] = self.object.current_deputy_county_assembly_speaker()
+        return context
+
+class CountyAssembly(DetailView):
+    model = models.Place
+    context_object_name = "county"
+    
+    def get_context_data(self, **kwargs):
+        context = super(CountyAssembly, self).get_context_data(**kwargs)
+        context['persons'] = models.Place.objects.get(slug=self.kwargs['slug']).county_assembly()
+        context['category'] = 'County Assembly'
+        context['counties'] = models.Place.objects.filter(kind__slug='county')
+        context['governor'] = self.object.current_county_governor()
+        context['deputy_governor'] = self.object.current_county_deputy_governor()
+        context['senator'] = self.object.current_county_senator()
+        context['speaker'] = self.object.current_county_assembly_speaker()
+        context['womens_rep'] = self.object.current_county_womens_rep()
+        context['county_clerk'] = self.object.current_county_clerk()
+        context['deputy_speaker'] = self.object.current_deputy_county_assembly_speaker()
+        return context
+
+class CountyMembersOfParliament(DetailView):
+    model = models.Place
+    context_object_name = "county"
+    
+    def get_context_data(self, **kwargs):
+        context = super(CountyMembersOfParliament, self).get_context_data(**kwargs)
+        context['persons'] = self.object.county_members_of_parliament()
+        context['category'] = 'Members of Parliament'
+        context['counties'] = models.Place.objects.filter(kind__slug='county')
+        context['governor'] = self.object.current_county_governor()
+        context['deputy_governor'] = self.object.current_county_deputy_governor()
+        context['senator'] = self.object.current_county_senator()
+        context['speaker'] = self.object.current_county_assembly_speaker()
+        context['womens_rep'] = self.object.current_county_womens_rep()
+        context['county_clerk'] = self.object.current_county_clerk()
+        context['deputy_speaker'] = self.object.current_deputy_county_assembly_speaker()
+        return context
+
+# county_members_of_parliament
+
+
+class CountyOtherOfficials(DetailView):
+    model = models.Place
+    context_object_name = "county"
+    
+    def get_context_data(self, **kwargs):
+        context = super(CountyOtherOfficials, self).get_context_data(**kwargs)
+        context['persons'] = models.Place.objects.get(slug=self.kwargs['slug']).county_other_officials()
+        context['category'] = 'Other Officials'
+        context['counties'] = models.Place.objects.filter(kind__slug='county')
+        context['governor'] = self.object.current_county_governor()
+        context['deputy_governor'] = self.object.current_county_deputy_governor()
+        context['senator'] = self.object.current_county_senator()
+        context['speaker'] = self.object.current_county_assembly_speaker()
+        context['womens_rep'] = self.object.current_county_womens_rep()
+        context['county_clerk'] = self.object.current_county_clerk()
+        context['deputy_speaker'] = self.object.current_deputy_county_assembly_speaker()
+        return context
+
+class AboutCounty(DetailView):
+    model = models.Place
+    context_object_name = 'county'
+
+    def get_context_data(self, **kwargs):
+        context = super(AboutCounty, self).get_context_data(**kwargs)
+        context['about'] = models.Place.objects.get(slug=self.kwargs['slug'])
+        context['counties'] = models.Place.objects.filter(kind__slug='county')
+        context['governor'] = self.object.current_county_governor()
+        context['deputy_governor'] = self.object.current_county_deputy_governor()
+        context['senator'] = self.object.current_county_senator()
+        context['speaker'] = self.object.current_county_assembly_speaker()
+        context['womens_rep'] = self.object.current_county_womens_rep()
+        context['county_clerk'] = self.object.current_county_clerk()
+        context['deputy_speaker'] = self.object.current_deputy_county_assembly_speaker()
+        return context
+
+class CountyBills(DetailView):
+    model = models.Place
+    context_object_name = 'county'
+
+    def get_context_data(self, **kwargs):
+        context = super(CountyBills, self).get_context_data(**kwargs)
+        context['about'] = models.Place.objects.get(slug=self.kwargs['slug'])
+        context['counties'] = models.Place.objects.filter(kind__slug='county')
+        context['governor'] = self.object.current_county_governor()
+        context['deputy_governor'] = self.object.current_county_deputy_governor()
+        context['senator'] = self.object.current_county_senator()
+        context['bills'] = self.object.document_set.filter(document_type='CBL')
+        context['speaker'] = self.object.current_county_assembly_speaker()
+        context['womens_rep'] = self.object.current_county_womens_rep()
+        context['deputy_speaker'] = self.object.current_deputy_county_assembly_speaker()
+
+        return context
+
+class CountyProjects(DetailView):
+    model = models.Place
+    context_object_name = 'county'
+
+    def get_context_data(self, **kwargs):
+        context = super(CountyProjects, self).get_context_data(**kwargs)
+        context['related_people'] = self.object.related_people()
+        context['governor'] = self.object.current_county_governor()
+        context['deputy_governor'] = self.object.current_county_deputy_governor()
+        context['senator'] = self.object.current_county_senator()
+        context['counties'] = models.Place.objects.filter(kind__slug='county')
+        context['projects'] = Project.objects.filter(county=self.object)
+        context['womens_rep'] = self.object.current_county_womens_rep()
+        context['speaker'] = self.object.current_county_assembly_speaker()
+        context['county_clerk'] = self.object.current_county_clerk()
+        context['deputy_speaker'] = self.object.current_deputy_county_assembly_speaker()
+        return context
+
+class ProjectDetail(DetailView):
+    model = models.Place
+    context_object_name = 'county'
+
+    def get_context_data(self, **kwargs):
+        context = super(ProjectDetail, self).get_context_data(**kwargs)
+        context['project'] = self.object.project_set.get(slug=self.kwargs['project_slug'])  
+        context['related_people'] = self.object.related_people()
+        context['governor'] = self.object.current_county_governor()
+        context['deputy_governor'] = self.object.current_county_deputy_governor()
+        context['senator'] = self.object.current_county_senator()
+        context['counties'] = models.Place.objects.filter(kind__slug='county')
+        context['womens_rep'] = self.object.current_county_womens_rep()
+        context['speaker'] = self.object.current_county_assembly_speaker()   
+        context['county_clerk'] = self.object.current_county_clerk()
+        context['deputy_speaker'] = self.object.current_deputy_county_assembly_speaker()   
+        return context
+
+class NewsEntryDetail(DetailView):
+    model = models.Place
+    context_object_name = 'county'
+
+    def get_context_data(self, **kwargs):
+        context = super(NewsEntryDetail, self).get_context_data(**kwargs)
+        context['news_entry'] = self.object.newsentry_set.get(slug=self.kwargs['news_entry_slug'])  
+        context['related_people'] = self.object.related_people()
+        context['governor'] = self.object.current_county_governor()
+        context['deputy_governor'] = self.object.current_county_deputy_governor()
+        context['senator'] = self.object.current_county_senator()
+        context['counties'] = models.Place.objects.filter(kind__slug='county')
+        context['womens_rep'] = self.object.current_county_womens_rep()
+        context['speaker'] = self.object.current_county_assembly_speaker()   
+        context['county_clerk'] = self.object.current_county_clerk()
+        context['deputy_speaker'] = self.object.current_deputy_county_assembly_speaker()   
+        return context
+
+class CountyPlan(DetailView):
+    model = models.Place
+    context_object_name = 'county'
+
+    def get_context_data(self, **kwargs):
+        context = super(CountyPlan, self).get_context_data(**kwargs)        
+        context['plans'] = self.object.document_set.filter(document_type='CPN')
+        return context
+
+class CountyBudget(DetailView):
+    model = models.Place
+    context_object_name = 'county'
+
+    def get_context_data(self, **kwargs):
+        context = super(CountyBudget, self).get_context_data(**kwargs)
+        context['related_people'] = self.object.related_people()
+        context['governor'] = self.object.current_county_governor()
+        context['deputy_governor'] = self.object.current_county_deputy_governor()
+        context['senator'] = self.object.current_county_senator()
+        context['counties'] = models.Place.objects.filter(kind__slug='county')
+        context['womens_rep'] = self.object.current_county_womens_rep()        
+        context['budgets'] = self.object.document_set.filter(document_type='CBT')
+        context['speaker'] = self.object.current_county_assembly_speaker()
+        context['county_clerk'] = self.object.current_county_clerk()
+        context['deputy_speaker'] = self.object.current_deputy_county_assembly_speaker()
+
+        return context
+
+class CountyTranscripts(DetailView):
+    model = models.Place
+    context_object_name = 'county'
+
+    def get_context_data(self, **kwargs):
+        context = super(CountyTranscripts, self).get_context_data(**kwargs)
+        context['related_people'] = self.object.related_people()
+        context['governor'] = self.object.current_county_governor()
+        context['deputy_governor'] = self.object.current_county_deputy_governor()
+        context['senator'] = self.object.current_county_senator()
+        context['counties'] = models.Place.objects.filter(kind__slug='county')
+        context['womens_rep'] = self.object.current_county_womens_rep()        
+        context['transcripts'] = self.object.document_set.filter(document_type='CTT')
+        context['speaker'] = self.object.current_county_assembly_speaker()
+        context['county_clerk'] = self.object.current_county_clerk()
+        context['deputy_speaker'] = self.object.current_deputy_county_assembly_speaker()
+        
+        return context
+        
+class CountyOtherDocs(DetailView):
+    model = models.Place
+    context_object_name = 'county'
+
+    def get_context_data(self, **kwargs):
+        context = super(CountyOtherDocs, self).get_context_data(**kwargs)
+        context['related_people'] = self.object.related_people()
+        context['governor'] = self.object.current_county_governor()
+        context['deputy_governor'] = self.object.current_county_deputy_governor()
+        context['senator'] = self.object.current_county_senator()
+        context['counties'] = models.Place.objects.filter(kind__slug='county')
+        context['other_docs'] = self.object.document_set.filter(document_type='COR')
+        context['speaker'] = self.object.current_county_assembly_speaker()
+        context['womens_rep'] = self.object.current_county_womens_rep()
+        context['county_clerk'] = self.object.current_county_clerk()
+        context['deputy_speaker'] = self.object.current_deputy_county_assembly_speaker()
+
+        return context
+
+class CountyGallery(DetailView):
+    model = models.Place
+    context_object_name = 'county'
+
+    def get_context_data(self, **kwargs):
+        context = super(CountyGallery, self).get_context_data(**kwargs)
+        context['images'] = self.object.images.all()
+        context['videos'] = self.object.video_set.all()
+        context['related_people'] = self.object.related_people()
+        context['governor'] = self.object.current_county_governor()
+        context['deputy_governor'] = self.object.current_county_deputy_governor()
+        context['senator'] = self.object.current_county_senator()
+        context['counties'] = models.Place.objects.filter(kind__slug='county')
+        context['womens_rep'] = self.object.current_county_womens_rep()
+        context['speaker'] = self.object.current_county_assembly_speaker()
+        context['deputy_speaker'] = self.object.current_deputy_county_assembly_speaker()
+
+
+        return context
+
+class CountyNews(DetailView):
+    model = models.Place
+    context_object_name = 'county'
+
+    def get_context_data(self, **kwargs):
+        context = super(CountyNews, self).get_context_data(**kwargs)
+        context['images'] = self.object.images.all()
+        context['related_people'] = self.object.related_people()
+        context['governor'] = self.object.current_county_governor()
+        context['deputy_governor'] = self.object.current_county_deputy_governor()
+        context['senator'] = self.object.current_county_senator()
+        context['counties'] = models.Place.objects.filter(kind__slug='county')
+        context['womens_rep'] = self.object.current_county_womens_rep()
+        context['news'] = NewsEntry.objects.filter(county=self.object)
+        context['county_clerk'] = self.object.current_county_clerk()
+        context['deputy_speaker'] = self.object.current_deputy_county_assembly_speaker()
+        context['speaker'] = self.object.current_county_assembly_speaker()
+
+        return context
+
 class PersonDetail(DetailView):
     model = models.Person
+    template_name = 'ajibika/person_detail.html'
+
+
 
     def get(self, request, *args, **kwargs):
         # Check if this is old slug for redirection:
@@ -60,20 +360,52 @@ class PersonDetail(DetailView):
         except models.SlugRedirect.DoesNotExist:
             return super(PersonDetail, self).get(request, *args, **kwargs)
 
+    def get_context_data(self, **kwargs):
+        context  = super(PersonDetail, self).get_context_data(**kwargs)
+        context['county'] = self.object.county()
+        county = self.object.county()
+        context['coalitions'] = self.object.coalitions()
+        # context['position'] = self.object.politician_positions()
+        context['about'] = models.Place.objects.get(slug=county.slug)
+        context['counties'] = models.Place.objects.filter(kind__slug='county')
+        context['governor'] = county.current_county_governor()
+        context['deputy_governor'] = county.current_county_deputy_governor()
+        context['senator'] = county.current_county_senator()
+        context['bills'] = county.document_set.filter(document_type='CBT')
+        context['speaker'] = county.current_county_assembly_speaker()
+        context['womens_rep'] = county.current_county_womens_rep()
+        context['county_clerk'] = county.current_county_clerk()
+        context['deputy_speaker'] = county.current_deputy_county_assembly_speaker()
+        return context
+
 class PersonDetailSub(DetailView):
     model = models.Person
+
 
     def get_template_names(self):
         return [ "core/person_%s.html" % self.kwargs['sub_page'] ]
 
 class PlaceDetailView(DetailView):
     model = models.Place
+    context_object_name = "county"
+    template_name = 'ajibika/county_base.html'
 
     def get_context_data(self, **kwargs):
         # Call the base implementation first to get a context
         context = super(PlaceDetailView, self).get_context_data(**kwargs)
-        context['place_type_count'] = models.Place.objects.filter(kind=self.object.kind).count()
         context['related_people'] = self.object.related_people()
+        context['governor'] = self.object.current_county_governor()
+        context['deputy_governor'] = self.object.current_county_deputy_governor()
+        context['senator'] = self.object.current_county_senator()
+        context['counties'] = models.Place.objects.filter(kind__slug='county')
+        context['featured'] = self.object.featured_in_the_county()
+        context['images'] = self.object.images.all()
+        context['womens_rep'] = self.object.current_county_womens_rep()
+        context['speaker'] = self.object.current_county_assembly_speaker()
+        context['news'] = self.object.newsentry_set.all()
+        context['videos'] = CountyVideo.objects.filter(county=self.object)
+        context['county_clerk'] = self.object.current_county_clerk()
+        context['deputy_speaker'] = self.object.current_deputy_county_assembly_speaker()
         return context
 
 class PlaceDetailSub(DetailView):

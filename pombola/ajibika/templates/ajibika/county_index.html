@@ -1,0 +1,92 @@
+<?php include_once 'header.php'; ?>
+	<div class="county-slider-wrap">
+		<div class="container">
+			<div class="row">
+				<div class="col-md-9">
+					<div class="call-to-action">
+						<p>To see the difference between static and fixed top navbars, just scroll.</p>
+					</div>
+					<div class="btn-call-to-action">
+						<p class="nomargin">
+							<a href="" class="btn btn-ajibika">Read more &rarr;</a>
+						</p>
+					</div>	
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="county-body">
+		<div class="county-news">
+			<div class="container">
+				<div class="row">
+					<div class="col-md-10">
+						<p class="nomargin">
+							<i class="fa fa-arrow-circle-right color-aji"></i>  <a href="">To see the difference between static and fixed top navbars, just scroll.</a>
+						</p>
+					</div>
+					<div class="col-md-2">
+						<p class="nomargin tright">
+							<a href="">Read more <i class="fa fa-chevron-right"></i></a>
+						</p>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="county-resources">
+			<div class="container">
+				<div class="row">
+					<div class="col-md-4">
+						<div class="bg-white-aji">
+							<div class="cont-title">
+								<div class="row">
+									<div class="col-sm-1"><i class="fa fa-tasks"></i></div><div class="col-sm-11"> TOP NEWS </div>
+								</div>
+							</div>
+							{%if news %}
+							{% for item in news %}
+							<div class="cont-body">
+								<ul class="nopadding nomargin listnone">
+									<li>
+										<a href="">
+											<div class="row">
+												<div class="col-md-3"><span class="large-date">O4</span> <br/> <span class="small-month">{{item.publication_date}}</span> </div>
+												<div class="col-md-9"> <p class="nomargin">{{item.title}}</p></div>
+											</div>
+										</a>
+										
+									</li>								
+									
+								</ul>
+							</div>
+							{% endfor %}
+							{% endif %}
+						</div>
+					</div>
+					<div class="col-md-4">
+						<div class="bg-white-aji">
+							<div class="cont-title">
+								<div class="row">
+									<div class="col-sm-1"><i class="fa fa-tasks"></i></div><div class="col-sm-11"> QUICK LINKS </div>
+								</div>
+							</div>
+						</div>
+					</div>
+					
+						
+
+					<div class="col-md-4">
+						<div class="bg-white-aji">
+							<div class="cont-title">
+								<div class="row">
+									<div class="col-sm-1"><i class="fa fa-tasks"></i></div><div class="col-sm-11"> Featured Official </div>
+								</div>
+							</div>
+							
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		
+	</div>
+   <?php include_once 'footer.php'; ?>
