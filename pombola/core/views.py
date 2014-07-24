@@ -171,6 +171,7 @@ class AboutCounty(DetailView):
         context['womens_rep'] = self.object.current_county_womens_rep()
         context['county_clerk'] = self.object.current_county_clerk()
         context['deputy_speaker'] = self.object.current_deputy_county_assembly_speaker()
+        context['map'] = self.object.place_map
         return context
 
 class CountyBills(DetailView):

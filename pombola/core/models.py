@@ -671,6 +671,8 @@ class Place(ModelBase, ScorecardMixin):
     objects = PlaceManager()
     is_overall_scorecard_score_applicable = False
     images = generic.GenericRelation(Image)
+    place_map = models.ImageField(upload_to='file_archive', help_text="add an image map if you have it")
+
 
     @property
     def position_with_organisation_set(self):
