@@ -62,6 +62,17 @@ class Project(models.Model):
     def has_videos(self):
         return self.projectvideo_set.all().exists()
 
+    def project_status(self):
+        PROJECT_STATUS_CHOICES = { 
+                    'POG':'Ongoing',
+                    'PPD':'Proposed',
+                    'PCD':'Completed',
+                    'PSD':'Stalled',                    
+            }
+        return PROJECT_STATUS_CHOICES[self.status]
+
+
+
 
 class ProjectDocument(models.Model):
     title = models.CharField(max_length=400)

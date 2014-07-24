@@ -22,8 +22,12 @@ class NewsEntry(models.Model):
 	def __unicode__(self):
 		return self.title
 
+	def get_absolute_url(self):
+		return "%snews/%s/" % (self.county.get_absolute_url(), self.slug)
+
 	class Meta:
 		verbose_name_plural = "News Entries"
+
 
 class NewsVideo(models.Model):	
     video = models.ForeignKey(Video)

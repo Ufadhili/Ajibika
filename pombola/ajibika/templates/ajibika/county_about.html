@@ -1,0 +1,55 @@
+{% extends 'ajibika/county_base.html' %}
+
+ {% block content %}
+	<div class="county-header-wrap">
+		<div class="container">
+			<div class="row">
+				<div class="col-md-9">
+					<div class="call-to-action">
+						<h1 class="nomargin">About {{county.name}} County</h1>
+					</div>
+						
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="county-body">
+		<div class="county-resources">
+			<div class="landing-inside">
+				<div class="container">
+					<div class="com-home">
+						<div class="row">
+							<div class="col-md-6">
+								<div class="home-cont">
+									<p>{{county.summary}}</p>
+									<p class="tcenter">
+										<!-- <img src="{{STATIC_URL}}img/maps/about.jpg" alt=""/> -->
+									</p>
+								</div>
+							</div>
+							
+							<div class="col-md-6">
+								<div class="page-featured-pic">
+								{%if county.place_map.url %}
+									<img src="{{county.place_map.url}}" alt="{{county.name}} map"/>				
+								{%  elif county.images.all %}
+								{% with county.images.all|random as im %}
+								<img src="{{im.image.url}}" alt="{{county.name}} map"/>
+								{% endwith %}
+								{% else %}
+								<img src="{{STATIC_URL}}img/slider/home5.jpg" alt=""/> 
+								{% endif %}
+
+								
+								</div>
+							</div>
+							
+						</div>
+						
+					</div>
+				</div>
+			</div>
+		</div>
+		
+	</div>
+  {% endblock %}

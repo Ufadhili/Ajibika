@@ -177,7 +177,7 @@ class PlaceAdmin(admin.ModelAdmin):
     list_display = ('slug', 'name', 'kind', 'show_organisation')
     list_filter = ('kind',)
     search_fields = ('name', 'organisation__name')
-    fields = ['name', 'slug', 'kind', 'summary', 'organisation', 'parliamentary_session']
+    fields = ['name', 'slug', 'kind', 'summary', 'organisation', 'parliamentary_session', 'place_map']
     inlines = (
         # InformationSourceInlineAdmin,
         # ScorecardInlineAdmin,

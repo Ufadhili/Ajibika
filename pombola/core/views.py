@@ -65,6 +65,14 @@ class AjibikaTos(TemplateView):
         context['about'] = AboutAjibika.objects.all()
         return context
 
+class AjibikaPartners(TemplateView):
+    template_name = 'ajibika/ajibika_partners.html'
+    def get_context_data(self, **kwargs):
+        context = super(AjibikaPartners, self).get_context_data(**kwargs)
+        context['counties'] = models.Place.objects.filter(kind__slug='county') 
+        context['about'] = AboutAjibika.objects.all()
+        return context
+
 class OrganisationList(ListView):
     model = models.Organisation
 
@@ -163,6 +171,7 @@ class AboutCounty(DetailView):
         context['womens_rep'] = self.object.current_county_womens_rep()
         context['county_clerk'] = self.object.current_county_clerk()
         context['deputy_speaker'] = self.object.current_deputy_county_assembly_speaker()
+        context['map'] = self.object.place_map
         return context
 
 class CountyBills(DetailView):

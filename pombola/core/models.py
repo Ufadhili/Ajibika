@@ -425,6 +425,15 @@ class Person(ModelBase, HasImageMixin, ScorecardMixin, IdentifierMixin):
     def get_absolute_url(self):
         return ('person', [self.slug])
 
+    def get_api_image(self):
+        try:
+            image = self.images.all()[0]
+            return image.image.url
+        except:
+            return ""
+
+        
+
     def generate_tasks(self):
         """Generate tasks for missing contact details etc"""
         task_slugs = []
@@ -662,6 +671,8 @@ class Place(ModelBase, ScorecardMixin):
     objects = PlaceManager()
     is_overall_scorecard_score_applicable = False
     images = generic.GenericRelation(Image)
+    place_map = models.ImageField(upload_to='file_archive', blank=True, null=True, help_text="add an image map if you have it")
+
 
     @property
     def position_with_organisation_set(self):
