@@ -8,14 +8,18 @@ from .core.views import AboutAjibikaView, AjibikaResourcesView, AjibikaTos
 
 #----------------------code for Ajibika API-------------------------------
 from tastypie.api import Api
-from .ajibika.api.resources import PlaceResource, PersonResource, PositionResource, CountyResource, PlaceKindResource
+from .ajibika.api.resources import (
+    PlaceResource, 
+    PersonResource, 
+    PositionResource, 
+    CountyResource, AjibikaResource)
 
 api = Api(api_name='v1')
 api.register(PlaceResource())
 api.register(PersonResource())
 api.register(PositionResource())
 api.register(CountyResource())
-api.register(PlaceKindResource())
+api.register(AjibikaResource())
 #------------------------------------------------------
 
 urlpatterns = []
