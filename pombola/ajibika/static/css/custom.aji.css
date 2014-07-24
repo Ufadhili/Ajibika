@@ -211,7 +211,7 @@ body {
 }
 
 .inside-page{
-	padding: 50px 0 0 0;
+	padding: 50px 0 130px 0;
 }
 .project-title h2{
 	margin:0;
@@ -410,7 +410,7 @@ a:focus, a:hover{
 	border-bottom:#ccc solid 1px;
 }
 .ufadh-logo-wrap{
-	padding:40px 0;
+	padding:13px 0;
 }
 .ufadh-logo-wrap.undef-ogo{
 	padding: 20px 0 0;
@@ -435,4 +435,8 @@ a:focus, a:hover{
 }
 .divider-out{
 	height:150px;
+}
+.soc-icons img{
+	margin-right:5px;
+	width:30px;
 }

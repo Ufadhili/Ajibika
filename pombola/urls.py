@@ -4,7 +4,7 @@ from django.conf import settings
 from django.conf.urls import patterns, include, url
 from django.conf.urls.static import static
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
-from .core.views import AboutAjibikaView, AjibikaResourcesView, AjibikaTos
+from .core.views import AboutAjibikaView, AjibikaResourcesView, AjibikaTos, AjibikaPartners
 
 #----------------------code for Ajibika API-------------------------------
 from tastypie.api import Api
@@ -58,10 +58,10 @@ urlpatterns += patterns('',
 )
 
 # Info pages
-urlpatterns += patterns('',
-    (r'^info/', include('pombola.info.urls.pages')),
-    (r'^blog/', include('pombola.info.urls.blog')),
-)
+# urlpatterns += patterns('',
+#     (r'^info/', include('pombola.info.urls.pages')),
+#     (r'^blog/', include('pombola.info.urls.blog')),
+# )
 
 # File archive
 urlpatterns += patterns('',
@@ -71,6 +71,7 @@ urlpatterns +=patterns('',
         (r'^about/', AboutAjibikaView.as_view()),
         (r'^resources/', AjibikaResourcesView.as_view()),
         (r'^terms/', AjibikaTos.as_view()),
+        (r'^partners/', AjibikaPartners.as_view()),
     )
 # SayIt - speeches
 #if settings.ENABLED_FEATURES['speeches']:
@@ -108,9 +109,9 @@ if settings.IN_TEST_MODE:
     )
 
 # search
-urlpatterns += patterns('',
-    (r'^search/', include('pombola.search.urls')),
-)
+# urlpatterns += patterns('',
+#     (r'^search/', include('pombola.search.urls')),
+# )
 
 #the Ajibika API endpoint
 urlpatterns += patterns('',
@@ -119,14 +120,14 @@ urlpatterns += patterns('',
 
 
 # feedback
-urlpatterns += patterns('',
-    (r'^feedback/', include('pombola.feedback.urls')),
-)
+# urlpatterns += patterns('',
+#     (r'^feedback/', include('pombola.feedback.urls')),
+# )
 
 # map
-urlpatterns += patterns('',
-    (r'^map/', include('pombola.map.urls')),
-)
+# urlpatterns += patterns('',
+#     (r'^map/', include('pombola.map.urls')),
+# )
 
 # votematch
 if settings.ENABLED_FEATURES['votematch']:

@@ -65,6 +65,14 @@ class AjibikaTos(TemplateView):
         context['about'] = AboutAjibika.objects.all()
         return context
 
+class AjibikaPartners(TemplateView):
+    template_name = 'ajibika/ajibika_partners.html'
+    def get_context_data(self, **kwargs):
+        context = super(AjibikaPartners, self).get_context_data(**kwargs)
+        context['counties'] = models.Place.objects.filter(kind__slug='county') 
+        context['about'] = AboutAjibika.objects.all()
+        return context
+
 class OrganisationList(ListView):
     model = models.Organisation
 
