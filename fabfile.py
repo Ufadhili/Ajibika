@@ -11,6 +11,8 @@ env.user = 'ubuntu'
 env.key_filename = '/home/james/Downloads/eumicro.pem'
 WEB_ROOT = '/var/www/ufadhili/'
 
+# copying files from server to s3: s3cmd put --recursive images s3://ajibika-test/aji-media/
+
 def host_type():
     run('uname -s')
 

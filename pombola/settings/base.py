@@ -123,15 +123,15 @@ STATICFILES_FINDERS = (
     # 'django.contrib.staticfiles.finders.DefaultStorageFinder',
 )
 
-
+# Store all files on amazon s3
 AWS_SECRET_ACCESS_KEY = config.get('AWS_SECRET_ACCESS_KEY')
 AWS_ACCESS_KEY_ID = config.get('AWS_ACCESS_KEY_ID')
 AWS_STORAGE_BUCKET_NAME = config.get('AWS_STORAGE_BUCKET_NAME')
 STATICFILES_STORAGE = 'storages.backends.s3boto.S3BotoStorage'
 S3_URL = 'http://%s.s3.amazonaws.com/' % AWS_STORAGE_BUCKET_NAME
-STATIC_URL = S3_URL
-DEFAULT_FILE_STORAGE = 'pombola.ajibika.s3utils.MediaRootS3BotoStorage'
-STATICFILES_STORAGE = 'pombola.ajibika.s3utils.StaticRootS3BotoStorage'
+STATIC_URL = '%saji-static/' % S3_URL
+DEFAULT_FILE_STORAGE = 'pombola.settings.ajibika_s3utils.MediaRootS3BotoStorage'
+STATICFILES_STORAGE = 'pombola.settings.ajibika_s3utils.StaticRootS3BotoStorage'
 
 # Make this unique, and don't share it with anybody.
 SECRET_KEY = config.get('DJANGO_SECRET_KEY')
