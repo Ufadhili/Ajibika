@@ -318,11 +318,11 @@ updated: "2014-05-26T12:28:50.032372"
 			bundle=basic_bundle,
 			**self.remove_api_resource_names(kwargs))
 		positions = [st.__dict__ for st in county.all_related_positions()]
-		# for org in positions:
-		# 	position =[st.__dict__ for st in PositionTitle.objects.filter(id=org["title_id"])]
-		# 	org['title'] = position[0]['name']
-		# 	for field in fields_to_hide:
-		# 		org.pop(field)
+		for org in positions:
+			position =[st.__dict__ for st in PositionTitle.objects.filter(id=org["title_id"])]
+			org['title'] = position[0]['name']
+			for field in fields_to_hide:
+				org.pop(field)
 
 		return self.create_response(request, positions)
 
