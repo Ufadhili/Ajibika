@@ -12,7 +12,7 @@ class Video(models.Model):
 	title = models.CharField(max_length=400)
 	slug = models.SlugField( unique=True )
 	summary = models.TextField(blank=True)	
-	youtube_link = models.URLField(max_length=400)
+	youtube_link = models.URLField(max_length=400, help_text="Please note the url must be in this format http://youtu.be/nkILmshcIeg. Otherwise it will not display for the users.")
 	created = models.DateTimeField(auto_now_add=True, default=datetime.datetime.now)
 	updated = models.DateTimeField(auto_now=True, default=datetime.datetime.now)
 

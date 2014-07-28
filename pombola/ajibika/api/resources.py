@@ -206,6 +206,7 @@ updated: "2014-05-26T12:28:50.032372"
 			data['summary'] = project.summary
 			data['estimated_cost'] = project.estimated_cost
 			data['sector'] = project.sector
+			data['id'] = project.id
 
 			if project.has_images():
 				images = project.images.all()
@@ -254,12 +255,16 @@ updated: "2014-05-26T12:28:50.032372"
 			images = entry.images.all()
 			if images:
 				entry_data['image'] = images[0].image.url
+			else:
+				entry_data['image'] = None
+				
 			entry_data['title'] = entry.title
 			entry_data['detail_url'] = entry.detail_url
 			entry_data['title'] = entry.title
+			entry_data["id"] = entry.id
 			entry_data['message'] = entry.message
 			entry_data['publication_date'] = entry.publication_date
-			entry_data['absolute_url'] = entry.get_absolute_url()
+			entry_data['absolute_url'] = entry.get_absolute_url()			
 			news_data.append(entry_data)
 		return self.create_response(request, news_data)
 	
@@ -313,11 +318,11 @@ updated: "2014-05-26T12:28:50.032372"
 			bundle=basic_bundle,
 			**self.remove_api_resource_names(kwargs))
 		positions = [st.__dict__ for st in county.all_related_positions()]
-		for org in positions:
-			position =[st.__dict__ for st in PositionTitle.objects.filter(id=org["title_id"])]
-			org['title'] = position[0]['name']
-			for field in fields_to_hide:
-				org.pop(field)
+		# for org in positions:
+		# 	position =[st.__dict__ for st in PositionTitle.objects.filter(id=org["title_id"])]
+		# 	org['title'] = position[0]['name']
+		# 	for field in fields_to_hide:
+		# 		org.pop(field)
 
 		return self.create_response(request, positions)
 
