@@ -39,7 +39,7 @@ FROM_EMAIL: 'you@example.com'
 # A list of hosts which this Django site can serve.
 # You'll need to put your hostname here
 # See https://docs.djangoproject.com/en/1.5/ref/settings/#std:setting-ALLOWED_HOSTS
-ALLOWED_HOSTS: ['.ajibika.org','.ajibika.or.ke', '.ajibika.com', '.ajibika.co.ke','localhost', '127.0.0.1', '54.247.108.178']
+ALLOWED_HOSTS: ['.ajibika.org','.ajibika.or.ke', '.ajibika.com', '.ajibika.co.ke','localhost', '127.0.0.1', '54.247.108.178', '54.77.10.238']
 
 # If the local version of pdftohtml is wrong (ie != 0.12.4) - blank means do it
 # locally
@@ -86,7 +86,11 @@ TWITTER_USERNAME: 'ajibika'
 
 AWS_STORAGE_BUCKET_NAME: 'ajibika-test'
 
+#Ihub credentials
+AWS_SECRET_ACCESS_KEY: 'o72MxaHCd/tGWgNLDfQOUiZJk0PgK7WNel+Hi4i1'
+AWS_ACCESS_KEY_ID: 'AKIAIJWFN3WDHG5JHGGA'
 
-AWS_SECRET_ACCESS_KEY: '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'
-AWS_ACCESS_KEY_ID: 'AKIAIL2P3RUVDG2FBOLA'
+
+
+
 

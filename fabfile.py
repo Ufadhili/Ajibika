@@ -11,6 +11,15 @@ env.user = 'ubuntu'
 env.key_filename = '/home/james/Downloads/eumicro.pem'
 WEB_ROOT = '/var/www/ufadhili/'
 
+
+# New ajibika serve on ihub
+
+env.hosts = ['54.77.10.238']
+env.user = 'ubuntu'
+env.key_filename = 'conf/ajibika.pem'
+WEB_ROOT = '/var/www/ufadhili/'
+
+
 # copying files from server to s3: s3cmd put --recursive images s3://ajibika-test/aji-media/
 
 def host_type():
@@ -201,7 +210,7 @@ def remote_logs():
 
 def sys_info():
 	run("sudo du -h")
-	run ("sudo df -h")
+	run("sudo df -h")
 
 def update_server():
 	"""
