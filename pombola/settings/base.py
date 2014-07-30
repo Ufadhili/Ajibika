@@ -127,11 +127,19 @@ STATICFILES_FINDERS = (
 AWS_SECRET_ACCESS_KEY = config.get('AWS_SECRET_ACCESS_KEY')
 AWS_ACCESS_KEY_ID = config.get('AWS_ACCESS_KEY_ID')
 AWS_STORAGE_BUCKET_NAME = config.get('AWS_STORAGE_BUCKET_NAME')
-STATICFILES_STORAGE = 'storages.backends.s3boto.S3BotoStorage'
-S3_URL = 'http://%s.s3-eu-west-1.amazonaws.com/' % AWS_STORAGE_BUCKET_NAME
-STATIC_URL = '%saji-static/' % S3_URL
-DEFAULT_FILE_STORAGE = 'pombola.settings.ajibika_s3utils.MediaRootS3BotoStorage'
-STATICFILES_STORAGE = 'pombola.settings.ajibika_s3utils.StaticRootS3BotoStorage'
+
+
+
+
+if STAGING:
+    STATIC_URL = '/static/'
+    MEDIA_URL = '/media_root/'
+else:
+    DEFAULT_FILE_STORAGE = 'pombola.settings.ajibika_s3utils.MediaRootS3BotoStorage'
+    STATICFILES_STORAGE = 'pombola.settings.ajibika_s3utils.StaticRootS3BotoStorage'    
+    STATICFILES_STORAGE = 'storages.backends.s3boto.S3BotoStorage'
+    S3_URL = 'http://%s.s3-eu-west-1.amazonaws.com/' % AWS_STORAGE_BUCKET_NAME    
+    STATIC_URL = '%saji-static/' % S3_URL
 
 # Make this unique, and don't share it with anybody.
 SECRET_KEY = config.get('DJANGO_SECRET_KEY')

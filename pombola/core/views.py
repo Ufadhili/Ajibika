@@ -253,6 +253,15 @@ class CountyPlan(DetailView):
     def get_context_data(self, **kwargs):
         context = super(CountyPlan, self).get_context_data(**kwargs)        
         context['plans'] = self.object.document_set.filter(document_type='CPN')
+        context['related_people'] = self.object.related_people()
+        context['governor'] = self.object.current_county_governor()
+        context['deputy_governor'] = self.object.current_county_deputy_governor()
+        context['senator'] = self.object.current_county_senator()
+        context['counties'] = models.Place.objects.filter(kind__slug='county')
+        context['womens_rep'] = self.object.current_county_womens_rep()        
+        context['speaker'] = self.object.current_county_assembly_speaker()
+        context['county_clerk'] = self.object.current_county_clerk()
+        context['deputy_speaker'] = self.object.current_deputy_county_assembly_speaker()
         return context
 
 class CountyBudget(DetailView):
