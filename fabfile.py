@@ -204,7 +204,7 @@ def restart_gunicorn():
 			abort("Aborting at user request.")
 
 def remote_logs():	
-	run("sudo cat /var/www/logs/gunicorn/access.log")
+	run("sudo tail -f /var/www/logs/gunicorn/access.log")
 	# run("sudo cat /var/www/logs/nginx/access.log")
 	# run("sudo cat  /var/www/logs/nginx/error.log")
 

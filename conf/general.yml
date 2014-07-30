@@ -84,7 +84,7 @@ DEBUG_TOOLBAR: False
 
 TWITTER_USERNAME: 'ajibika'
 
-AWS_STORAGE_BUCKET_NAME: 'ajibika-test'
+AWS_STORAGE_BUCKET_NAME: 'ajibika'
 
 #Ihub credentials
 AWS_SECRET_ACCESS_KEY: 'o72MxaHCd/tGWgNLDfQOUiZJk0PgK7WNel+Hi4i1'
