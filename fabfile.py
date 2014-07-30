@@ -16,7 +16,7 @@ WEB_ROOT = '/var/www/ufadhili/'
 
 env.hosts = ['54.77.10.238']
 env.user = 'ubuntu'
-env.key_filename = 'conf/ajibika.pem'
+env.key_filename = '~/Dropbox/ajibika.pem'
 WEB_ROOT = '/var/www/ufadhili/'
 
 
@@ -51,6 +51,23 @@ def install_pip_package():
 
 
 
+def config_aws_envs():
+	with settings(warn_only=True):
+		AWS_ACCESS_KEY_ID = prompt("Please the enter the AWS_ACCESS_KEY_ID")
+		local_env = local("export AWS_ACCESS_KEY_ID=%s" %(AWS_ACCESS_KEY_ID))
+		if local_env.failed and not confirm("Local Env export has failed. Continue anyway?"):
+			abort("Aborting by user request")
+		remote_env = run("export AWS_ACCESS_KEY_ID=%s" %(AWS_ACCESS_KEY_ID))
+		if remote_env.failed and not confirm("Remote Env export has failed. Continue anyway?"):
+			abort("Aborting by user request")
+
+		AWS_SECRET_ACCESS_KEY = prompt("Please the enter the AWS_SECRET_ACCESS_KEY")
+		local_env = local("export AWS_SECRET_ACCESS_KEY=%s" %(AWS_SECRET_ACCESS_KEY))
+		if local_env.failed and not confirm("Local Env export has failed. Continue anyway?"):
+			abort("Aborting by user request")
+		remote_env = run("export AWS_SECRET_ACCESS_KEY=%s" %(AWS_SECRET_ACCESS_KEY))
+		if remote_env.failed and not confirm("Remote Env export has failed. Continue anyway?"):
+			abort("Aborting by user request")
 
 
 def commit():	

@@ -9,13 +9,17 @@ from django.template.defaultfilters import slugify
 
 IN_TEST_MODE = False
 
+ENV = os.environ.copy()
+
 # Work out where we are to set up the paths correctly and load config
 base_dir = os.path.abspath( os.path.join( os.path.split(__file__)[0], '..', '..' ) )
 root_dir = os.path.abspath( os.path.join( base_dir, '..' ) )
 
 # load the mySociety config
 config_file = os.path.join( base_dir, 'conf', 'general.yml' )
+aws_config_file = os.path.join( root_dir, 'conf', 'aws.yml' )
 config = yaml.load( open(config_file, 'r') )
+aws_config = yaml.load( open(aws_config_file, 'r') )
 
 if int(config.get('STAGING')):
     STAGING = True
@@ -124,8 +128,8 @@ STATICFILES_FINDERS = (
 )
 
 # Store all files on amazon s3
-AWS_SECRET_ACCESS_KEY = config.get('AWS_SECRET_ACCESS_KEY')
-AWS_ACCESS_KEY_ID = config.get('AWS_ACCESS_KEY_ID')
+AWS_SECRET_ACCESS_KEY = aws_config.get('AWS_SECRET_ACCESS_KEY')
+AWS_ACCESS_KEY_ID = aws_config.get('AWS_ACCESS_KEY_ID')
 AWS_STORAGE_BUCKET_NAME = config.get('AWS_STORAGE_BUCKET_NAME')
 
 
