@@ -27,19 +27,19 @@ IEBC_API_SECRET: ''
 
 # Managers - might be worth having this set to a group email address
 MANAGERS_NAME: 'Pombola Managers'
-MANAGERS_EMAIL: 'managers@example.com'
+MANAGERS_EMAIL: 'smartemwa@gmail.com'
 
 # The email address to which errors should be sent:
 ERRORS_NAME: 'ajibika error'
 ERRORS_EMAIL: 'smartemwa@gmail.com'
 
 # Email address that will be used in the 'From' line
-FROM_EMAIL: 'you@example.com'
+FROM_EMAIL: 'info@ajibika.org'
 
 # A list of hosts which this Django site can serve.
 # You'll need to put your hostname here
 # See https://docs.djangoproject.com/en/1.5/ref/settings/#std:setting-ALLOWED_HOSTS
-ALLOWED_HOSTS: ['.ajibika.org','.ajibika.or.ke', '.ajibika.com', '.ajibika.co.ke', '54.77.10.238']
+ALLOWED_HOSTS: ['.ajibika.org','.ajibika.or.ke', '.ajibika.com', '.ajibika.co.ke', '54.77.10.238', '127.0.0.1']
 
 # If the local version of pdftohtml is wrong (ie != 0.12.4) - blank means do it
 # locally
@@ -86,9 +86,6 @@ TWITTER_USERNAME: 'ajibika'
 
 AWS_STORAGE_BUCKET_NAME: 'ajibika'
 
-
-AWS_SECRET_ACCESS_KEY: 'o72MxaHCd/tGWgNLDfQOUiZJk0PgK7WNel+Hi4i1'
-AWS_ACCESS_KEY_ID: 'AKIAIJWFN3WDHG5JHGGA'
 
 
 

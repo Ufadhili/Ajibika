@@ -77,7 +77,7 @@ TIME_ZONE = config.get('TIME_ZONE')
 # http://www.i18nguy.com/unicode/language-identifiers.html
 LANGUAGE_CODE = 'en-GB'
 
-SITE_ID = 2
+SITE_ID = 1
 
 # If you set this to False, Django will make some optimizations so as not
 # to load the internationalization machinery.
@@ -133,6 +133,17 @@ AWS_ACCESS_KEY_ID = aws_config.get('AWS_ACCESS_KEY_ID')
 AWS_STORAGE_BUCKET_NAME = config.get('AWS_STORAGE_BUCKET_NAME')
 
 
+# postgresql backup to s3
+DBBACKUP_STORAGE = 'dbbackup.storage.s3_storage'
+DBBACKUP_S3_BUCKET = config.get('AWS_STORAGE_BUCKET_NAME')
+DBBACKUP_S3_ACCESS_KEY = aws_config.get('AWS_ACCESS_KEY_ID')
+DBBACKUP_S3_SECRET_KEY = aws_config.get('AWS_SECRET_ACCESS_KEY')
+DBBACKUP_S3_DIRECTORY = 'postgresql-backups'
+DBBACKUP_S3_DOMAIN = 's3-eu-west-1.amazonaws.com'
+
+CRONJOBS = [
+    ('01 01 * * *', 'django.core.management.call_command', ['dbbackup']),
+]
 
 
 if STAGING:
@@ -142,7 +153,8 @@ else:
     DEFAULT_FILE_STORAGE = 'pombola.settings.ajibika_s3utils.MediaRootS3BotoStorage'
     STATICFILES_STORAGE = 'pombola.settings.ajibika_s3utils.StaticRootS3BotoStorage'    
     STATICFILES_STORAGE = 'storages.backends.s3boto.S3BotoStorage'
-    S3_URL = 'http://%s.s3-eu-west-1.amazonaws.com/' % AWS_STORAGE_BUCKET_NAME    
+    # S3_URL = 'http://%s.s3-eu-west-1.amazonaws.com/' % AWS_STORAGE_BUCKET_NAME   #static.ajibika.org 
+    S3_URL = 'http://static.ajibika.org/'
     STATIC_URL = '%saji-static/' % S3_URL
 
 # Make this unique, and don't share it with anybody.
@@ -390,11 +402,9 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'django.contrib.humanize',
     'django.contrib.gis',
-
     'pombola.admin_additions',
     'django.contrib.admin',
     'django.contrib.admindocs',
-
     'south',
     'pagination',
     'ajax_select',
@@ -420,6 +430,8 @@ INSTALLED_APPS = (
     'pombola.ajibika_resources',
     'django_nose',
     'storages',
+    'dbbackup',
+    'django_crontab',
 )
 if config.get('DEBUG_TOOLBAR', True):
      INSTALLED_APPS += ('debug_toolbar',)
