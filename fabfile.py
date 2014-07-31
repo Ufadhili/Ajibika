@@ -4,6 +4,7 @@ from fabric.operations import prompt, put
 from fabric.colors import red, green, blue, cyan, magenta
 from fabric.utils import puts
 from cuisine import package_install, file_exists
+import datetime
 
 
 env.hosts = ['54.247.108.178']
@@ -21,6 +22,28 @@ WEB_ROOT = '/var/www/ufadhili/'
 
 
 # copying files from server to s3: s3cmd put --recursive images s3://ajibika-test/aji-media/
+
+
+def backup_db():
+	"""
+	dump the pombola database
+	back it up in amazon s3
+	"""
+	now = datetime.datetime.now()	
+	sql_file =  "pombola.%d.%d.%d.%d.sql" % (now.year, now.month, now.day, now.hour)
+	with settings(warn_only=True):
+		dump = run( "pg_dump -w pombola > %s" %(sql_file) ) 
+		if dump.failed:
+			print red("Failed to dump the db as requested.")
+			abort("Aborting the task")
+		else:
+			print green("Db dumped. moving it to s3.")
+			upload = run("s3cmd put --recursive %s s3://ajibika/postgresql-backups/" %(sql_file))
+			if upload.failed:
+				print red("something happened while uploading the backup.")
+				abort("Aborting this task")
+
+
 
 def host_type():
     run('uname -s')
