@@ -32,7 +32,7 @@ def backup_db():
 	now = datetime.datetime.now()	
 	sql_file =  "pombola.%d.%d.%d.%d.sql" % (now.year, now.month, now.day, now.hour)
 	with settings(warn_only=True):
-		dump = run( "pg_dump -w pombola > %s" %(sql_file) ) 
+		dump = run( "pg_dump -U pombola pombola > %s" %(sql_file) ) 
 		if dump.failed:
 			print red("Failed to dump the db as requested.")
 			abort("Aborting the task")
@@ -71,9 +71,6 @@ def install_pip_package():
 		if local_install.failed and not confirm("Failed to install %s. Continue anyway?" %(package)):
 			abort("Aborting at user request")
 
-
-
-
 def config_aws_envs():
 	with settings(warn_only=True):
 		AWS_ACCESS_KEY_ID = prompt("Please the enter the AWS_ACCESS_KEY_ID")
@@ -84,6 +81,8 @@ def config_aws_envs():
 		if remote_env.failed and not confirm("Remote Env export has failed. Continue anyway?"):
 			abort("Aborting by user request")
 
+			#Do the same for the secret access key.
+
 		AWS_SECRET_ACCESS_KEY = prompt("Please the enter the AWS_SECRET_ACCESS_KEY")
 		local_env = local("export AWS_SECRET_ACCESS_KEY=%s" %(AWS_SECRET_ACCESS_KEY))
 		if local_env.failed and not confirm("Local Env export has failed. Continue anyway?"):
@@ -91,7 +90,6 @@ def config_aws_envs():
 		remote_env = run("export AWS_SECRET_ACCESS_KEY=%s" %(AWS_SECRET_ACCESS_KEY))
 		if remote_env.failed and not confirm("Remote Env export has failed. Continue anyway?"):
 			abort("Aborting by user request")
-
 
 def commit():	
 	with settings(warn_only=True):		
