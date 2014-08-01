@@ -15,7 +15,7 @@ class NewsEntry(models.Model):
 	title = models.CharField(max_length=400)
 	slug = models.SlugField(unique=True)
 	# message = models.TextField(blank=True, default='')
-	message = MarkupField(blank=True, default='')
+	message = MarkupField(blank=True, default='', help_text="Enter the news message/summary")
 	detail_url = models.URLField(max_length=400, blank=True, null=True)
 	publication_date = models.DateTimeField(auto_now_add=True, default=datetime.datetime.now)
 	updated = models.DateTimeField(auto_now=True, default=datetime.datetime.now)
