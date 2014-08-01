@@ -33,6 +33,7 @@ admin.site.register(models.DocumentKind, DocumentKindAdmin)
 
 class PartnerAdmin(admin.ModelAdmin):
 	list_display = ['partner_name', 'website']
+	prepopulated_fields = {'slug': ['partner_name']}
 
 admin.site.register(models.Partner, PartnerAdmin)
 

@@ -4,6 +4,7 @@ from pombola.core.models import Place
 from pombola.videos.models import Video
 from pombola.images.models import Image
 from django.contrib.contenttypes import generic
+from markitup.fields import MarkupField
 
 
 
@@ -13,7 +14,8 @@ class NewsEntry(models.Model):
 	county = models.ForeignKey(Place)
 	title = models.CharField(max_length=400)
 	slug = models.SlugField(unique=True)
-	message = models.TextField()
+	# message = models.TextField(blank=True, default='')
+	message = MarkupField(blank=True, default='')
 	detail_url = models.URLField(max_length=400, blank=True, null=True)
 	publication_date = models.DateTimeField(auto_now_add=True, default=datetime.datetime.now)
 	updated = models.DateTimeField(auto_now=True, default=datetime.datetime.now)
