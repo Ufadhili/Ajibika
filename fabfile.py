@@ -288,7 +288,7 @@ def deploy():
 	fetch_remote()
 	activate_virtualenv()	
 	sync_database()
-	migrate_database()
+	# migrate_database()
 	collect_static()
 	restart_gunicorn()
 	reload_nginx()
