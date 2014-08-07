@@ -36,7 +36,8 @@ class Document(models.Model):
 
 	@models.permalink
 	def get_absolute_url(self):
-		return ( 'file_archive', [ self.slug ] )
+		# return ( 'file_archive', [ self.slug ] )
+		return self.file.url
     
 
 

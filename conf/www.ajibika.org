@@ -8,6 +8,8 @@ server {
     access_log /var/www/logs/access.log;
     error_log /var/www/logs/error.log;
     server_name ajibika.org;
+    client_max_body_size 20M;
+
 
     listen 80;
     root /var/www/ufadhili/pombola/web;
