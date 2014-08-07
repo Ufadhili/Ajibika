@@ -51,9 +51,43 @@ class AjibikaResource(ModelResource):
 		detail_allowed_methods = ["get"]
 
 	def dehydrate(self, bundle):
-		bundle.data["documents"] = [st.__dict__ for st in AjibikaDocument.objects.all()]
-		bundle.data['images']  = [st.__dict__ for st in AjibikaImage.objects.all()]
-		bundle.data['videos']   = [st.__dict__ for st in AjibikaVideo.objects.all()]
+		#Ajibika documents
+		docs = AjibikaDocument.objects.all()		
+		docs_data = []		
+		for doc in docs:
+			data = {}
+			data['created'] = doc.created
+			data['document_type'] = doc.document_type
+			data['file'] = doc.file.url
+			data['id'] = doc.id
+			data['slug'] = doc.slug
+			data['summary'] = doc.summary
+			data['title'] = doc.title
+			docs_data.append(data)
+		bundle.data["documents"] = docs_data
+		#Ajibika images
+		images = AjibikaImage.objects.all()
+		images_data = []		
+		for image in images:
+			image_data = {}
+			image_data['id'] = image.id
+			image_data['slug'] = image.slug
+			image_data['file'] = image.file.url
+			image_data['summary'] = image.summary
+			image_data['title'] = image.title
+			images_data.append(image_data)
+		bundle.data['images']  = images_data
+		# Ajibika videos
+		videos = AjibikaVideo.objects.all()
+		videos_data = []
+		for video in videos:
+			video_data = {}
+			video_data['id'] = video.id
+			video_data['slug'] = video.slug
+			video_data['title'] = video.title
+			video_data['youtube_link'] = video.youtube_link
+			videos_data.append(video_data)
+		bundle.data['videos']   = videos_data
 		return bundle
 
 		
@@ -88,18 +122,13 @@ class CountyResource(ModelResource):
 		excludes = ["summary"]
 
 	
-	def dehydrate(self, bundle):		
-		# bundle.data["people"] = build_place_people_dict(bundle.obj.all_related_positions())
+	def dehydrate(self, bundle):				
 		bundle.data["county_people_uri"] = "%speople/" %(bundle.data["resource_uri"])
 		bundle.data["county_projects_uri"] = "%sprojects/" %(bundle.data["resource_uri"])
 		bundle.data["county_news_uri"] = "%snews/" %(bundle.data["resource_uri"])
 		bundle.data["county_positions_uri"] = "%spositions/" %(bundle.data["resource_uri"])
 		bundle.data["county_organisations_uri"] = "%sorganisations/" %(bundle.data["resource_uri"])
 		bundle.data["county_documents_uri"] = "%sdocuments/" %(bundle.data["resource_uri"])
-		# bundle.data["county_bills_uri"] = "%sbills/" %(bundle.data["resource_uri"])
-		# bundle.data["county_transcripts_uri"] = "%stranscripts/" %(bundle.data["resource_uri"])
-		# bundle.data["county_budgets_uri"] = "%sbudgets/" %(bundle.data["resource_uri"])
-		# bundle.data["county_otherdocs_uri"] = "%sotherdocs/" %(bundle.data["resource_uri"])
 		bundle.data["county_gallery_uri"] = "%sgallery/" %(bundle.data["resource_uri"])
 		return bundle
 
@@ -285,8 +314,36 @@ updated: "2014-05-26T12:28:50.032372"
 		county = self.cached_obj_get(
 			bundle=basic_bundle,
 			**self.remove_api_resource_names(kwargs))
-		docs = [st.__dict__ for st in county.document_set.filter(document_type=doc_type)]		
-		return self.create_response(request, docs)
+		docs = [st.__dict__ for st in county.document_set.filter(document_type=doc_type)]	
+		docs = county.document_set.filter(document_type=doc_type)
+		docs_data = []
+		for doc in docs:
+			data = {}
+			data['county_id'] = doc.county_id
+			data['created'] = doc.created
+			data['document_type'] = doc.document_type
+			data['file'] = doc.file.url
+			data['id'] = doc.id
+			data['slug'] = doc.slug
+			data['summary'] = doc.summary
+			data['title'] = doc.title
+			data['updated'] = doc.updated
+			docs_data.append(data)
+
+		"""
+		_county_cache: "Siaya (County 2013-)",
+		_state: "<django.db.models.base.ModelState object at 0x7fd543e78c10>",
+		county_id: 7,
+		created: "2014-08-06T12:33:35.495042",
+		document_type: "CPN",
+		file: "file_archive/Siaya_inequality.pdf",
+		id: 34,
+		slug: "siaya-inequality",
+		summary: "",
+		title: "Siaya Inequality",
+		updated: "2014-08-06T16:52:40.900265"
+		"""	
+		return self.create_response(request, docs_data)
 
 	def county_gallery(self, request, **kwargs):
 		basic_bundle = self.build_bundle(request=request)
