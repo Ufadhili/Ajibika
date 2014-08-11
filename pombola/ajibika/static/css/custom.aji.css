@@ -12,7 +12,10 @@ body {
 }
 
 .landing-page{
-	background:url(../img/slider/home.jpg) center center;
+/*	background:url(../img/slider/home.jpg) center center;
+*/
+	background:url(../img/collagev4.jpg) center center;
+
 }
 
 .footer {

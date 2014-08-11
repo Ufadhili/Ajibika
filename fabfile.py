@@ -32,7 +32,7 @@ def backup_db():
 	now = datetime.datetime.now()	
 	sql_file =  "pombola.%d.%d.%d.%d.sql" % (now.year, now.month, now.day, now.hour)
 	with settings(warn_only=True):
-		dump = run( "pg_dump -U pombola pombola > %s" %(sql_file) ) 
+		dump = run("pg_dump -U pombola pombola > %s" %(sql_file)) 
 		if dump.failed:
 			print red("Failed to dump the db as requested.")
 			abort("Aborting the task")
@@ -179,6 +179,10 @@ def restart_elasticsearch():
 
 def get_the_code():
 	run("git clone https://github.com/mysociety/pombola.git")
+
+def runserver():
+	local("gunicorn pombola.wsgi:application")
+
 
 def hard_reset_remote():
 	run("git fetch --all")
