@@ -141,9 +141,6 @@ DBBACKUP_S3_SECRET_KEY = aws_config.get('AWS_SECRET_ACCESS_KEY')
 DBBACKUP_S3_DIRECTORY = 'postgresql-backups'
 DBBACKUP_S3_DOMAIN = 's3-eu-west-1.amazonaws.com'
 
-CRONJOBS = [
-    ('01 01 * * *', 'django.core.management.call_command', ['dbbackup']),
-]
 
 
 if DEBUG:
