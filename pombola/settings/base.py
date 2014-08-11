@@ -100,11 +100,11 @@ MEDIA_URL = '/media_root/'
 # Don't put anything in this directory yourself; store your static files
 # in apps' "static/" subdirectories and ein STATICFILES_DIRS.
 # Example: "/home/media/media.lawrence.com/static/"
-STATIC_ROOT = os.path.normpath( os.path.join( root_dir, "collected_static/") )
+
 
 # URL prefix for static files.
 # Example: "http://media.lawrence.com/static/"
-STATIC_URL = '/static/'
+
 
 # integer which when updated causes the caches to fetch new content. See note in
 # 'base.html' for a better alternative in Django 1.4
@@ -147,13 +147,13 @@ CRONJOBS = [
 
 
 if DEBUG:
+    STATIC_ROOT = os.path.normpath( os.path.join( root_dir, "collected_static/") )
     STATIC_URL = '/static/'
     MEDIA_URL = '/media_root/'
 else:
     DEFAULT_FILE_STORAGE = 'pombola.settings.ajibika_s3utils.MediaRootS3BotoStorage'
     STATICFILES_STORAGE = 'pombola.settings.ajibika_s3utils.StaticRootS3BotoStorage'    
     STATICFILES_STORAGE = 'storages.backends.s3boto.S3BotoStorage'
-    # S3_URL = 'http://%s.s3-eu-west-1.amazonaws.com/' % AWS_STORAGE_BUCKET_NAME   #static.ajibika.org 
     S3_URL = 'http://static.ajibika.org/'
     STATIC_URL = '%saji-static/' % S3_URL
 
