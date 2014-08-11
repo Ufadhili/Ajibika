@@ -286,7 +286,7 @@ def deploy():
 
 	"""
 
-	backup_db()
+	# backup_db()
 	commit()
 	push()
 	checkout_dev_branch()
