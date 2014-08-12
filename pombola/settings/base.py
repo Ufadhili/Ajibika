@@ -149,8 +149,8 @@ if DEBUG:
     MEDIA_URL = '/media_root/'
 else:
     DEFAULT_FILE_STORAGE = 'pombola.settings.ajibika_s3utils.MediaRootS3BotoStorage'
-    STATICFILES_STORAGE = 'pombola.settings.ajibika_s3utils.StaticRootS3BotoStorage'    
-    # STATICFILES_STORAGE = 'storages.backends.s3boto.S3BotoStorage'
+    # STATICFILES_STORAGE = 'pombola.settings.ajibika_s3utils.StaticRootS3BotoStorage'    
+    STATICFILES_STORAGE = 'storages.backends.s3boto.S3BotoStorage'
     # S3_URL = 'http://static.ajibika.org/'
     # S3_URL = 'http://static.ajibika.org.s3-website-eu-west-1.amazonaws.com/'
     # S3_URL = 'http://ajibika.s3-eu-west-1.amazonaws.com/'
