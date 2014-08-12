@@ -90,7 +90,7 @@
 									        {% for c in contacts %}
 									        <p>
 									        <strong>{{ c.kind.name }}:</strong>
-									        {{ c.value|urlizetrunc:50 }}
+									        <span>{{ c.value|urlizetrunc:50 }}</span>
 									        </p>
 									        
 									        {% endfor %}
