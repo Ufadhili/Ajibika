@@ -394,6 +394,7 @@ class PersonDetail(DetailView):
         context['womens_rep'] = county.current_county_womens_rep()
         context['county_clerk'] = county.current_county_clerk()
         context['deputy_speaker'] = county.current_deputy_county_assembly_speaker()
+        context['contacts'] = self.object.contacts.all()
         return context
 
 class PersonDetailSub(DetailView):

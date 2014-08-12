@@ -1,5 +1,6 @@
 {% extends 'ajibika/county_base.html' %}
 {% load thumbnail %}
+{% load switch %}
 
  {% block content %}
  <!-- Disqus javascript -->
@@ -66,14 +67,36 @@
 											<b class="profile-cont-label">County</b>
 											<p><a href="{{county.get_absolute_url}}">{{county.name}}</a></p>
 										</div>
-										
+										{% if object.parties_and_coalitions %}
 										<div class="Profile-content-wrap">
 											<b class="profile-cont-label">Coalition</b>
 											{% for coalition in object.parties_and_coalitions %}
 											<p><a href="">{{coalition.name}}</a></p>
 											{% endfor %}
-											 
+										
 										</div>
+										{% endif %}
+										{% if object.date_of_birth %}
+										<div class="Profile-content-wrap">
+											<b class="profile-cont-label">Born</b>
+											<p>{{object.date_of_birth}}</p>
+										</div>
+										{% endif %}
+										<!-- contact details -->
+									{% if contacts %}
+									  <div class="Profile-content-wrap">
+									    <b>Contact Details</b>
+									    
+									        {% for c in contacts %}
+									        <p>
+									        <strong>{{ c.kind.name }}:</strong>
+									        {{ c.value|urlizetrunc:50 }}
+									        </p>
+									        
+									        {% endfor %}
+									  </div>
+									{% endif %}
+										<!-- end of contact details -->
 									</div>
 									
 								</div>

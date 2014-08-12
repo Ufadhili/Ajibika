@@ -856,8 +856,8 @@ class Place(ModelBase, ScorecardMixin):
     def county_other_officials(self):
         slugs = ['senate', 'county-assembly', 'parliament', 'county-executive']
         try:
-            other_orgs = Organisation.objects.exclude(slug__in=slugs)
-            executives = Position.objects.filter(place__in=self.self_and_parents(), organisation=other_orgs)
+            main_orgs = Organisation.objects.filter(slug__in=slugs)
+            executives = Position.objects.filter(place__in=self.self_and_parents()).exclude(organisation=main_orgs)
             return Person.objects.filter(position__in=executives).distinct()
         except Exception, e:
             return None
