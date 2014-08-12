@@ -156,7 +156,7 @@ else:
     # S3_URL = 'http://ajibika.s3-eu-west-1.amazonaws.com/'
     # STATIC_URL = '%saji-static/' % S3_URL
     # STATIC_URL = 'http://ajibika.s3-eu-west-1.amazonaws.com/aji-static/'
-    STATIC_URL = 'http://static.ajibika.org/aji-static/'
+    STATIC_URL = 'http://static.ajibika.org/'
 
 # Make this unique, and don't share it with anybody.
 SECRET_KEY = config.get('DJANGO_SECRET_KEY')
