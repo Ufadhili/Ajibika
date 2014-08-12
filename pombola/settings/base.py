@@ -153,7 +153,7 @@ else:
     # STATICFILES_STORAGE = 'storages.backends.s3boto.S3BotoStorage'
     S3_URL = 'http://static.ajibika.org/'
     # S3_URL = 'http://ajibika.s3-eu-west-1.amazonaws.com/'
-    STATIC_URL = '%saji-static/' % S3_URL
+    # STATIC_URL = '%saji-static/' % S3_URL
     STATIC_URL = S3_URL
 
 # Make this unique, and don't share it with anybody.
