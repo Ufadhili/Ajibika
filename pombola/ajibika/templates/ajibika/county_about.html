@@ -30,7 +30,7 @@
 							
 							<div class="col-md-6">
 								<div class="page-featured-pic">
-								{%if county.place_map.url %}
+								{%if county.place_map %}
 									<img src="{{county.place_map.url}}" alt="{{county.name}} map"/>				
 								{%  elif county.images.all %}
 								{% with county.images.all|random as im %}
