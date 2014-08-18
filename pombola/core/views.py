@@ -145,6 +145,7 @@ class CountyBills(DetailView):
 
     def get_context_data(self, **kwargs):
         context = super(CountyBills, self).get_context_data(**kwargs)
+        context['bills'] = self.object.document_set.filter(document_type='CBL')
         
         return context
 
