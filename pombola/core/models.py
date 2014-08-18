@@ -741,6 +741,9 @@ class Place(ModelBase, ScorecardMixin):
         else:
             return []
 
+    def all_counties(self):
+        return Place.objects.filter(kind__slug='county')
+
     def self_and_parents(self):
         """Return a query set that matches this place and all parents."""
         parents = self.parent_places()
