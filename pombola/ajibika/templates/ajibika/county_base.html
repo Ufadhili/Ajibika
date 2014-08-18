@@ -55,8 +55,8 @@
             <li class="dropdown">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown">Change <span class="county-active">{{county.name}}</span><span class="caret"></span></a>
                <ul class="dropdown-menu" role="menu">
-                {% for county in counties %}
-                    <li><a href="{{county.get_absolute_url}}">{{county.name}}</a></li>
+                {% for place in county.all_counties %}
+                    <li><a href="{{place.get_absolute_url}}">{{place.name}}</a></li>
                 {% endfor %}
                 
               </ul>
@@ -89,20 +89,23 @@
 	            <li class="dropdown">
 	              <a href="#" class="dropdown-toggle" data-toggle="dropdown">County Executive <span class="caret"></span></a>
 	              <ul class="dropdown-menu" role="menu">
-	                <li><a href="{{governor.get_absolute_url}}">Governor</a></li>
-	                <li><a href="{{deputy_governor.get_absolute_url}}">Deputy Governor</a></li>
+	                <!-- <li><a href="{{governor.get_absolute_url}}">Governor</a></li> -->
+	                <li><a href="{{county.current_county_governor.get_absolute_url}}">Governor</a></li>
+	                <!-- <li><a href="{{deputy_governor.get_absolute_url}}">Deputy Governor</a></li> -->
+	                <li><a href="{{county.current_county_deputy_governor.get_absolute_url}}">Deputy Governor</a></li>
+
 	                <li><a href="{{county.get_absolute_url}}county-executive">County Executive</a></li>
 	                <li><a href="{{county.get_absolute_url}}other-officials">Other Officials</a></li>
 	              </ul>
 	            </li>
 	            
-	            <li><a href="{{senator.get_absolute_url}}">Senator </a></li>
+	            <li><a href="{{county.current_county_senator.get_absolute_url}}">Senator </a></li>
 	            <li class="dropdown">
 	              <a href="#" class="dropdown-toggle" data-toggle="dropdown">County Assembly <span class="caret"></span></a>
 	              <ul class="dropdown-menu" role="menu">
-	                <li><a href="{{speaker.get_absolute_url}}">County Speaker</a></li>
-	                <li><a href="{{deputy_speaker.get_absolute_url}}">Deputy County Speaker</a></li>
-	                <li><a href="{{county_clerk.get_absolute_url}}">County Clerk</a></li>
+	                <li><a href="{{county.current_county_assembly_speaker.get_absolute_url}}">County Speaker</a></li>
+	                <li><a href="{{county.current_deputy_county_assembly_speaker.get_absolute_url}}">Deputy County Speaker</a></li>
+	                <li><a href="{{county.current_county_clerk.get_absolute_url}}">County Clerk</a></li>
 
 	                
 	                <li><a href="{{county.get_absolute_url}}county-assembly">Members of County Assembly</a></li>
@@ -112,7 +115,7 @@
 	            <li class="dropdown">
 	              <a href="#" class="dropdown-toggle" data-toggle="dropdown">National Assembly <span class="caret"></span></a>
 	              <ul class="dropdown-menu" role="menu">
-	              <li><a href="{{womens_rep.get_absolute_url}}">Women's Representative </a></li>
+	              <li><a href="{{county.current_county_womens_rep.get_absolute_url}}">Women's Representative </a></li>
 	                <li><a href="{{county.get_absolute_url}}members-of-parliament">Members of Parliament</a></li>	                
 	              </ul>
 	            </li>
