@@ -159,13 +159,13 @@
 				      <div class="carousel-inner">
 
 
-							 {% if images %}
+							 {% if county.images.all %}
 				        <div class="item active">
-				          <img src="{{images.0.image.url}}" alt="First slide">
+				          <img src="{{county.images.all.0.image.url}}" alt="First slide">
 				          <div class="container">				           
 				          </div>
 				        </div>
-				      	{% for file in images|slice:"1:"%}
+				      	{% for file in county.images.all|slice:"1:"%}
 				      	 <div class="item">
 				          <img src="{{file.image.url}}" alt="First slide">
 				          <div class="container">				          
@@ -203,9 +203,11 @@
 								</div>
 							</div>
 							<div class="col-xs-8">
-								<h3 class="normagin"><a href="{{featured.get_absolute_url}}">{{featured.name}}</a></h3>
+								<h3 class="normagin">
+								<a href="{{featured.get_absolute_url}}">{{featured.name}}</a></h3>
 								<p>{{featured.summary|truncatechars:90}}<br/> 
-									<small><a class="nowrap" href="{{featured.get_absolute_url}}">read more &rarr;</a></small></p>
+									<small>
+									<a class="nowrap" href="{{featured.get_absolute_url}}">read more &rarr;</a></small></p>
 								
 							</div>
 						</div>
@@ -249,13 +251,13 @@
 		</div>
 	</div>
 	<div class="county-body">
-	{% if news %}
+	{% if county.newsentry_set.all %}
 		<div class="county-news">
 			<div class="container">
 				<div class="row">
 					<div class="col-md-10">
 						<p class="nomargin">
-						{% with news|random as item %}
+						{% with county.newsentry_set.all|random as item %}
 							News:   <a href="{{county.get_absolute_url}}news/{{item.slug}}">{{item.title}} <i class="fa fa-arrow-circle-right color-aji"></i></a>
 						
 						{% endwith %}
@@ -283,10 +285,10 @@
 							</div>
 							<div class="cont-body">
 
-								{%if news %}
+								{%if county.newsentry_set.all %}
 							
 								<ul class="nopadding nomargin listnone">
-								{% with news|slice:"5" as items %}	
+								{% with county.newsentry_set.all|slice:"5" as items %}	
 								{% for item in items %}								
 									<li>
 										<a href="">
