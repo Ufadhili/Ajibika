@@ -76,11 +76,13 @@
 										
 										</div>
 										{% endif %}
-										{% if object.date_of_birth %}
+										{% if object.date_of_birth%}
+										
 										<div class="Profile-content-wrap">
 											<b class="profile-cont-label">Born</b>
 											<p>{{object.date_of_birth}}</p>
 										</div>
+										
 										{% endif %}
 										<!-- contact details -->
 									{% if contacts %}
