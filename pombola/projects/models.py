@@ -2,7 +2,7 @@ import datetime
 
 from django.contrib.gis.db import models
 from django.contrib.gis.geos import Point
-
+from markitup.fields import MarkupField
 from pombola.core.models import Place
 from pombola.documents.models import Document
 from django.contrib.contenttypes import generic
@@ -30,14 +30,16 @@ class Project(models.Model):
     slug = models.SlugField(max_length=400, unique=True, help_text="created from project name")
     location_name = models.CharField(max_length=400,blank=True, null=True)
     sector = models.CharField(max_length=400, blank=True, null=True)   
-    summary = models.TextField(blank=True, null=True)
+    # summary = models.TextField(blank=True, null=True)
+    summary = MarkupField(blank=True, null=True, default='', help_text="Enter the project's summary")
     status = models.CharField(max_length=3, choices=PROJECT_STATUS_CHOICES,default=ONGOING)    
     images = generic.GenericRelation(Image)    
     estimated_cost = models.FloatField(blank=True, null=True)
     total_cost = models.FloatField(blank=True, null=True)
     first_funding_year = models.IntegerField(blank=True, null=True)
     contractor = models.CharField(max_length=400, blank=True, null=True)
-    remarks = models.TextField(blank=True, null=True)
+    # remarks = models.TextField(blank=True, null=True)
+    remarks = MarkupField(blank=True, null=True, default='', help_text="Enter any remarks about this project")
 
     class Meta():
         # NOTE - the templates rely on this default ordering. Really we should
