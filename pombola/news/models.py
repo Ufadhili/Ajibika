@@ -29,6 +29,7 @@ class NewsEntry(models.Model):
 
 	class Meta:
 		verbose_name_plural = "News Entries"
+		ordering = ["-publication_date"]
 
 
 class NewsVideo(models.Model):	
