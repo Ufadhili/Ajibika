@@ -7,12 +7,6 @@ from cuisine import package_install, file_exists
 import datetime
 
 
-env.hosts = ['54.247.108.178']
-env.user = 'ubuntu'
-env.key_filename = '/home/james/Downloads/eumicro.pem'
-WEB_ROOT = '/var/www/ufadhili/'
-
-
 # New ajibika serve on ihub
 
 env.hosts = ['54.77.10.238']
