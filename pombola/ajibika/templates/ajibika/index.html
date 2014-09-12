@@ -7,7 +7,7 @@
 
  {% block content %}
 
-<!--     <div class="home-cover">
+  <!--   <div class="home-cover">
     	<div class="container">
 			<div class="row">
 				<div class="col-md-1"></div>
@@ -18,7 +18,7 @@
 							<form>
 								<div class="col-md-3"></div>
 								<div class="col-md-4">									
-										<select id="select-county" class="form-control">
+										<select class="form-control aji-select-county">
 										  <option value="">-- Select County -- </option>
                       {% for county in counties %}
 										  <option value="{{county.get_absolute_url}}">{{county.name}}</option>
@@ -28,7 +28,7 @@
                 </form>
 								<div class="col-md-2">
 									<div>
-									      <button id="enter-county" class="btn btn-default">Enter County</button>
+									      <button class="btn btn-default aji-enter-county">Enter County</button>
 									  </div>
 								</div>
 							
@@ -38,8 +38,8 @@
 				<div class="col-md-1"></div>
 			</div>
     	</div><!-- /.container 
-    </div> -->
-    
+    </div>
+     -->
 
 
 
@@ -47,7 +47,7 @@
     <div class="home-cver">
     	<div class="container-fluid-home">
 			<div id="myCarousel" class="carousel slide" data-ride="carousel">
-		      <!-- Indicators -->
+		      
 		      <ol class="carousel-indicators">
 		        <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
 		        <li data-target="#myCarousel" data-slide-to="1"></li>
@@ -61,10 +61,10 @@
 		              <div class="home-jumbo">
 						<p class="tcenter twhite">Ajibika! Ni Mimi Na Wewe.</p>
 						<div class="home-action-btn">
-							<form action="/county/index.php" method="post">
+							<form>
 								<div class="col-md-3"></div>
 								<div class="col-md-4">
-									<select id="select-county" class="form-control">
+									<select id="e-1" class="form-control aji-select-county">
 										  <option value="">-- Select County -- </option>
 										  {% for county in counties %}
 										  <option value="{{county.get_absolute_url}}">{{county.name}}
@@ -73,8 +73,8 @@
 									</select>
 								</div>
 								<div class="col-md-2">
-									<div class="form-group">
-									      <button type="submit" class="btn btn-default">Enter County</button>
+									<div>
+									      <button id="e-1" class="btn btn-default aji-enter-county">Enter County</button>
 									  </div>
 								</div>
 							</form>
@@ -90,11 +90,11 @@
 		              <div class="home-jumbo">
 						<p class="tcenter twhite">Ajibika! Ni Mimi Na Wewe.</p>
 						<div class="home-action-btn">
-							<form action="/county/index.php" method="post">
+							<form>
 								<div class="col-md-3"></div>
 								<div class="col-md-4">
 									
-										<select class="form-control">
+										<select id="e-2" class="form-control aji-select-county">
 										   <option value="">-- Select County -- </option>
 										  {% for county in counties %}
 										  <option value="{{county.get_absolute_url}}">{{county.name}}
@@ -103,8 +103,8 @@
 										</select>
 								</div>
 								<div class="col-md-2">
-									<div class="form-group">
-									      <button type="submit" class="btn btn-default">Enter County</button>
+									<div>
+									      <button id="e-2" class="btn btn-default aji-enter-county">Enter County</button>
 									  </div>
 								</div>
 							</form>
@@ -120,10 +120,10 @@
 		              <div class="home-jumbo">
 							<p class="tcenter twhite">Ajibika! Ni Mimi Na Wewe.</p>
 							<div class="home-action-btn">
-								<form action="/county/index.php" method="post">
+								<form>
 									<div class="col-md-3"></div>
 									<div class="col-md-4">										
-											<select class="form-control">
+											<select id="e-3" class="form-control aji-select-county">
 											  <option value="">-- Select County -- </option>
 											  {% for county in counties %}
 											  <option value="{{county.get_absolute_url}}">{{county.name}}
@@ -132,8 +132,8 @@
 											</select>
 									</div>
 									<div class="col-md-2">
-										<div class="form-group">
-										      <button type="submit" class="btn btn-default">Enter County</button>
+										<div>
+										      <button id="e-3" class="btn btn-default aji-enter-county">Enter County</button>
 										  </div>
 									</div>
 								</form>
@@ -151,9 +151,9 @@
 		        <span class="glyphicon glyphicon-chevron-right"></span>
 		        <span class="sr-only">Next</span>
 		      </a>
-		    </div><!-- /.carousel -->
+		    </div>
 				    
-    	</div><!-- /.container -->
+    	</div>
     </div>
 
 
