@@ -52,10 +52,11 @@
 		        <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
 		        <li data-target="#myCarousel" data-slide-to="1"></li>
 		        <li data-target="#myCarousel" data-slide-to="2"></li>
+		        <li data-target="#myCarousel" data-slide-to="3"></li>
 		      </ol>
 		      <div class="carousel-inner" role="listbox">
 		        <div class="item active">
-		          <img src="{{STATIC_URL}}img/slider/home.jpg" alt="First slide">
+		          <img src="{{STATIC_URL}}img/slider/land2.jpg" alt="First slide">
 		          <div class="container">
 		            <div class="carousel-caption">
 		              <div class="home-jumbo">
@@ -84,7 +85,7 @@
 		          </div>
 		        </div>
 		        <div class="item">
-		          <img src="{{STATIC_URL}}img/slider/home.jpg" alt="Second slide">
+		          <img src="{{STATIC_URL}}img/slider/land.jpg" alt="Second slide">
 		          <div class="container">
 		            <div class="carousel-caption">
 		              <div class="home-jumbo">
@@ -113,8 +114,38 @@
 		            </div>
 		          </div>
 		        </div>
+		       <div class="item">
+		          <img src="{{STATIC_URL}}img/slider/nai.jpg" alt="Second slide">
+		          <div class="container">
+		            <div class="carousel-caption">
+		              <div class="home-jumbo">
+						<p class="tcenter twhite">Ajibika! Ni Mimi Na Wewe.</p>
+						<div class="home-action-btn">
+							<form>
+								<div class="col-md-3"></div>
+								<div class="col-md-4">
+									
+										<select id="e-3" class="form-control aji-select-county">
+										   <option value="">-- Select County -- </option>
+										  {% for county in counties %}
+										  <option value="{{county.get_absolute_url}}">{{county.name}}
+										  </option>
+										  {% endfor %}
+										</select>
+								</div>
+								<div class="col-md-2">
+									<div>
+									      <button id="e-3" class="btn btn-default aji-enter-county">Enter County</button>
+									  </div>
+								</div>
+							</form>
+						</div>
+					</div>
+		            </div>
+		          </div>
+		        </div>
 		        <div class="item">
-		          <img src="{{STATIC_URL}}img/slider/home.jpg" alt="Third slide">
+		          <img src="{{STATIC_URL}}img/slider/nandi.jpg" alt="Third slide">
 		          <div class="container">
 		            <div class="carousel-caption">
 		              <div class="home-jumbo">
@@ -123,7 +154,7 @@
 								<form>
 									<div class="col-md-3"></div>
 									<div class="col-md-4">										
-											<select id="e-3" class="form-control aji-select-county">
+											<select id="e-4" class="form-control aji-select-county">
 											  <option value="">-- Select County -- </option>
 											  {% for county in counties %}
 											  <option value="{{county.get_absolute_url}}">{{county.name}}
@@ -133,7 +164,7 @@
 									</div>
 									<div class="col-md-2">
 										<div>
-										      <button id="e-3" class="btn btn-default aji-enter-county">Enter County</button>
+										      <button id="e-4" class="btn btn-default aji-enter-county">Enter County</button>
 										  </div>
 									</div>
 								</form>
