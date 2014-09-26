@@ -49,6 +49,15 @@ class AboutAjibikaView(TemplateView):
         context['videos']   = AjibikaVideo.objects.all()
         return context
 
+class DisqusView(TemplateView):
+    template_name = 'ajibika/ajibika_disqus.html'
+
+    def get_context_data(self, **kwargs):
+        context = super(DisqusView, self).get_context_data(**kwargs)
+        context['identifier'] = self.request.GET.get('identifier')
+        return context
+
+
 class AjibikaResourcesView(TemplateView):
     template_name = 'ajibika/ajibika_resources.html'
     def get_context_data(self, **kwargs):
