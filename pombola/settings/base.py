@@ -429,7 +429,7 @@ INSTALLED_APPS = (
     'pombola.ajibika_resources',
     'django_nose',
     'storages',
-    'dbbackup',
+    # 'dbbackup',
     'django_crontab',
 )
 if config.get('DEBUG_TOOLBAR', True):
