@@ -153,7 +153,7 @@ if DEBUG:
 else:
     DEFAULT_FILE_STORAGE = 'pombola.settings.ajibika_s3utils.MediaRootS3BotoStorage'
     STATICFILES_STORAGE = 'storages.backends.s3boto.S3BotoStorage'    
-    STATIC_URL = 'http://static.ajibika.org.s3-eu-west-1.amazonaws.com/'
+    STATIC_URL = 'http://ajibika2.s3-eu-west-1.amazonaws.com/'
     
 
 # Make this unique, and don't share it with anybody.
