@@ -131,16 +131,16 @@ STATICFILES_FINDERS = (
 )
 
 # Store all files on amazon s3
-AWS_SECRET_ACCESS_KEY = aws_config.get('AWS_SECRET_ACCESS_KEY')
-AWS_ACCESS_KEY_ID = aws_config.get('AWS_ACCESS_KEY_ID')
+AWS_SECRET_ACCESS_KEY = config.get('AWS_SECRET_ACCESS_KEY')
+AWS_ACCESS_KEY_ID = config.get('AWS_ACCESS_KEY_ID')
 AWS_STORAGE_BUCKET_NAME = config.get('AWS_STORAGE_BUCKET_NAME')
 
 
 # postgresql backup to s3
 DBBACKUP_STORAGE = 'dbbackup.storage.s3_storage'
 DBBACKUP_S3_BUCKET = config.get('AWS_STORAGE_BUCKET_NAME')
-DBBACKUP_S3_ACCESS_KEY = aws_config.get('AWS_ACCESS_KEY_ID')
-DBBACKUP_S3_SECRET_KEY = aws_config.get('AWS_SECRET_ACCESS_KEY')
+DBBACKUP_S3_ACCESS_KEY = config.get('AWS_ACCESS_KEY_ID')
+DBBACKUP_S3_SECRET_KEY = config.get('AWS_SECRET_ACCESS_KEY')
 DBBACKUP_S3_DIRECTORY = 'postgresql-backups'
 DBBACKUP_S3_DOMAIN = 's3-eu-west-1.amazonaws.com'
 
