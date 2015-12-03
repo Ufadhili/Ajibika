@@ -377,7 +377,11 @@ updated: "2014-05-26T12:28:50.032372"
 		positions = [st.__dict__ for st in county.all_related_positions()]
 		for org in positions:
 			position =[st.__dict__ for st in PositionTitle.objects.filter(id=org["title_id"])]
-			org['title'] = position[0]['name']
+			print position 
+			try:
+				org['title'] = position[0]['name']
+			except:
+				org['title'] = None
 			for field in fields_to_hide:
 				org.pop(field)
 
