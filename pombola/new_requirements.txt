@@ -90,7 +90,7 @@ gunicorn==17.5
 gyp==0.1
 howdoi==1.1.5
 html5lib==0.999
-httplib2==0.8
+httplib2==0.18.0
 ipython==1.2.1
 jmespath==0.0.2
 jsbeautifier==1.4.2
