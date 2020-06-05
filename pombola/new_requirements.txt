@@ -1,7 +1,7 @@
 BeautifulSoup==3.2.1
 CDApplet==1.0
 CDBashApplet==1.0
-Django==1.6.2
+Django==1.11.29
 Django-Select2==4.2.2
 Fabric==1.5.1
 GDAL==1.9.0
