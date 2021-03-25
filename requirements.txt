@@ -4,7 +4,7 @@
 
 ### General useful bits
 py-bcrypt==0.4
-PyYAML==3.10
+PyYAML==5.4
 Mercurial==2.9
 Pillow==2.3.1
 
