@@ -61,7 +61,7 @@ django-autocomplete-light==2.0.0a15
 django-bleach==0.2.0
 django-celery==3.1.9
 django-date-extensions==0.1dev
-django-debug-toolbar==1.0.1
+django-debug-toolbar==1.11.1
 django-haystack==2.1.0
 django-mapit==1.0.3
 django-markitup==2.1
