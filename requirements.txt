@@ -70,7 +70,7 @@ python-dateutil==2.2
 
 # Packages that are helpful for development:
 coverage==3.7.1
-django-debug-toolbar==1.0.1
+django-debug-toolbar==1.11.1
 
 ## votematch
 django-model-utils==2.0.2
