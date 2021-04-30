@@ -158,7 +158,7 @@ reportlab==3.0
 requests==2.2.1
 requests-cache==0.4.4
 rhythmbox-ubuntuone==13.10
-rsa==3.1.1
+rsa==4.7
 selenium==2.40.0
 sessioninstaller==0.0.0
 simplegeneric==0.8.1
