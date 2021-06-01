@@ -173,7 +173,7 @@ supervisor==3.0b2
 system-service==0.1.6
 ubuntuone-storage-protocol==13.10
 unity-lens-photos==1.0
-urllib3==1.7.1
+urllib3==1.26.5
 virtualenv==1.11.4
 virtualenv-clone==0.2.4
 virtualenvwrapper==4.1.1
