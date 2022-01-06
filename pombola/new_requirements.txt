@@ -40,7 +40,7 @@ boom==0.7
 boto==2.10.0
 botocore==0.16.0
 ccsm==0.9.11
-celery==3.1.9
+celery==5.2.2
 chardet==2.2.1
 chromelogger==0.3.0
 colorama==0.2.5
