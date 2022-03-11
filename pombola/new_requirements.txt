@@ -11,7 +11,7 @@ Markdown==2.4
 MarkupSafe==0.18
 MySQL-python==1.2.3
 PAM==0.4.2
-Pillow==2.3.1
+Pillow==9.0.1
 -e git://github.com/mysociety/popit-python.git@88f2c6b3b8c122d4bd4bd4b4edf9afe87df0bd08#egg=PopIt_Python-origin/updates-for-current-popit
 PyYAML==3.10
 Pygments==1.6
