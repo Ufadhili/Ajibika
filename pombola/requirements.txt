@@ -112,7 +112,7 @@ six==1.5.2
 slumber==0.6.0
 sqlparse==0.1.11
 virtualenv==1.11.4
-waitress==0.8.8
+waitress==2.1.1
 wsgi-intercept==0.6.1
 wsgiref==0.1.2
 
