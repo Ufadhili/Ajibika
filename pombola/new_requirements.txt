@@ -117,7 +117,7 @@ numpy==1.8.0
 oauth==1.0.1
 oauthlib==0.6.1
 oneconf==0.3.7
-paramiko==1.9.0
+paramiko==2.10.1
 parsedatetime==1.2
 parslepy==0.2.0
 pexpect==3.1
