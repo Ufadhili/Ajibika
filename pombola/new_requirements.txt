@@ -89,7 +89,7 @@ greenlet==0.4.1
 gunicorn==17.5
 gyp==0.1
 howdoi==1.1.5
-html5lib==0.999
+html5lib==0.99999999
 httplib2==0.8
 ipython==1.2.1
 jmespath==0.0.2
