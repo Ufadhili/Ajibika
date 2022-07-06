@@ -96,7 +96,7 @@ django-celery==3.1.9
 django-qmethod==0.0.3
 django-subdomain-instances==0.1
 django-tastypie==0.11.0
-html5lib==0.999
+html5lib==0.999999999
 kombu==3.0.13
 lxml==3.3.2
 mechanize==0.2.5
