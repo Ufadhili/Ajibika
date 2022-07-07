@@ -155,7 +155,7 @@ pytidylib==0.1.2
 pytz==2013.9
 pyxdg==0.25
 reportlab==3.0
-requests==2.2.1
+requests==2.20.0
 requests-cache==0.4.4
 rhythmbox-ubuntuone==13.10
 rsa==3.1.1

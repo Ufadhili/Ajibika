@@ -33,7 +33,7 @@ Markdown==2.4
 # useful as a reference.
 django-markitup==2.1
 
-requests==2.2.1
+requests==2.20.0
 pyelasticsearch==0.6.1
 django-haystack==2.1.0
 
