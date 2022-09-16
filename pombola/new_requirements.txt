@@ -6,7 +6,7 @@ Django-Select2==4.2.2
 Fabric==1.5.1
 GDAL==1.9.0
 GnuPGInterface==0.3.2
-Mako==0.9.1
+Mako==1.2.2
 Markdown==2.4
 MarkupSafe==0.18
 MySQL-python==1.2.3
