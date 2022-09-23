@@ -126,7 +126,7 @@ piston-mini-client==0.7.5
 ply==3.4
 -e git://github.com/mysociety/popit-django@a11ef97919f2ae35ef1ef1e2a3f0553ad1ba1e6d#egg=popit_django-origin/feature/factor-out-get-paginated
 popit-resolver==0.1
-protobuf==2.5.0
+protobuf==3.18.3
 psycopg2==2.5.2
 py-bcrypt==0.4
 pyOpenSSL==0.13
